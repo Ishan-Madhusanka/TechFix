@@ -1,15 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.techfix.techfix"
+    namespace = "com.techfix.app"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.techfix.techfix"
+        applicationId = "com.techfix.app"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
