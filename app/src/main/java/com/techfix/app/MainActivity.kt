@@ -11,11 +11,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.LocationServices
+import com.techfix.app.model.Branch
 import com.techfix.app.repository.BranchRepository
+import com.techfix.app.utils.LocationUtils
 
 class MainActivity : AppCompatActivity() {
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
+    private var branches: List<Branch> = emptyList()
+
+    private var currentLatitude: Double? = null
+    private var currentLongitude: Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,23 +31,34 @@ class MainActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
 
-        // Firestore branch test
         val branchRepository = BranchRepository()
 
         branchRepository.getBranches(
-            onSuccess = { branches ->
+            onSuccess = { branchList ->
+
+                branches = branchList
+
                 branches.forEach { branch ->
                     Log.d(
                         "TECHFIX_BRANCH",
                         "${branch.name} - ${branch.city} - ${branch.latitude}, ${branch.longitude}"
                     )
                 }
+
+                calculateBranchDistances()
             },
+
             onFailure = { exception ->
+
                 Log.e(
                     "TECHFIX_BRANCH",
                     "Firestore error: ${exception.message}"
@@ -48,7 +66,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        // GPS location
         checkLocationPermission()
     }
 
@@ -60,8 +77,11 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
+
             getCurrentLocation()
+
         } else {
+
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -87,15 +107,23 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        fusedLocationClient.lastLocation
+        fusedLocationClient.getCurrentLocation(
+            com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
+            null
+        )
             .addOnSuccessListener { location ->
 
                 if (location != null) {
+
+                    currentLatitude = location.latitude
+                    currentLongitude = location.longitude
 
                     Log.d(
                         "TECHFIX_LOCATION",
                         "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
                     )
+
+                    calculateBranchDistances()
 
                 } else {
 
@@ -114,6 +142,56 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun calculateBranchDistances() {
+
+        val userLat = currentLatitude
+        val userLng = currentLongitude
+
+        if (
+            userLat == null ||
+            userLng == null ||
+            branches.isEmpty()
+        ) {
+            return
+        }
+
+        branches.forEach { branch ->
+
+            val distance = LocationUtils.calculateDistance(
+                userLatitude = userLat,
+                userLongitude = userLng,
+                branchLatitude = branch.latitude,
+                branchLongitude = branch.longitude
+            )
+
+            Log.d(
+                "TECHFIX_DISTANCE",
+                "${branch.name} = %.2f km".format(distance)
+            )
+        }
+
+        val nearestBranch = LocationUtils.findNearestBranch(
+            userLatitude = userLat,
+            userLongitude = userLng,
+            branches = branches
+        )
+
+        if (nearestBranch != null) {
+
+            val nearestDistance = LocationUtils.calculateDistance(
+                userLatitude = userLat,
+                userLongitude = userLng,
+                branchLatitude = nearestBranch.latitude,
+                branchLongitude = nearestBranch.longitude
+            )
+
+            Log.d(
+                "TECHFIX_NEAREST",
+                "Nearest Branch: ${nearestBranch.name} - %.2f km".format(nearestDistance)
+            )
+        }
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -130,8 +208,11 @@ class MainActivity : AppCompatActivity() {
             grantResults.isNotEmpty() &&
             grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
+
             getCurrentLocation()
+
         } else {
+
             Log.d(
                 "TECHFIX_LOCATION",
                 "Location permission denied"
