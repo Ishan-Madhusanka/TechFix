@@ -12,8 +12,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.LocationServices
 import com.techfix.app.model.Branch
+import com.techfix.app.model.SparePart
 import com.techfix.app.repository.BranchRepository
 import com.techfix.app.utils.LocationUtils
+
+import com.techfix.app.repository.SparePartRepository
 
 class MainActivity : AppCompatActivity() {
 
@@ -189,34 +192,70 @@ class MainActivity : AppCompatActivity() {
                 "TECHFIX_NEAREST",
                 "Nearest Branch: ${nearestBranch.name} - %.2f km".format(nearestDistance)
             )
-        }
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(
-            requestCode,
-            permissions,
-            grantResults
-        )
-
-        if (
-            requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
-            grantResults.isNotEmpty() &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
-        ) {
-
-            getCurrentLocation()
-
-        } else {
+            val sparePartRepository = SparePartRepository()
 
             Log.d(
-                "TECHFIX_LOCATION",
-                "Location permission denied"
+                "TECHFIX_SPARE_QUERY",
+                "Checking spare parts for branchId: ${nearestBranch.id}"
             )
+            sparePartRepository.getAvailableSparePartsByBranch(
+                branchId = nearestBranch.id,
+
+                onSuccess = { spareParts ->
+
+                    Log.d(
+                        "TECHFIX_SPARE_QUERY",
+                        "Documents found: ${spareParts.size}"
+                    )
+
+                    spareParts.forEach { sparepart ->
+
+                        Log.d(
+                            "TECHFIX_SPARE_QUERY",
+                            "${sparepart.name} - Qty: ${sparepart.quantity} - price: ${sparepart.price}"
+                        )
+                    }
+                },
+
+                onFailure = { exception ->
+
+                    Log.e(
+                        "TECHFIX_SPARE_QUERY",
+                        "Firestore error: ${exception.message}"
+                    )
+                }
+            )
+        }
+
+
+
+        fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        ) {
+            super.onRequestPermissionsResult(
+                requestCode,
+                permissions,
+                grantResults
+            )
+
+            if (
+                requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
+                grantResults.isNotEmpty() &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+
+                getCurrentLocation()
+
+            } else {
+
+                Log.d(
+                    "TECHFIX_LOCATION",
+                    "Location permission denied"
+                )
+            }
         }
     }
 }
