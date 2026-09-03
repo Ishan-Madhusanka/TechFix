@@ -1,8 +1,8 @@
 package com.techfix.app.admin
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import com.techfix.app.R
 import com.techfix.app.adapter.BranchAdapter
 import com.techfix.app.model.Branch
@@ -137,136 +139,126 @@ class ManageBranchesActivity : AppCompatActivity() {
 
     private fun showEditBranchDialog(branch: Branch) {
 
-        val container = android.widget.LinearLayout(this)
+        val dialogView = LayoutInflater.from(this)
+            .inflate(
+                R.layout.dialog_edit_branch,
+                null
+            )
 
-        container.orientation =
-            android.widget.LinearLayout.VERTICAL
+        val editName =
+            dialogView.findViewById<TextInputEditText>(
+                R.id.editBranchName
+            )
 
-        val padding = (20 * resources.displayMetrics.density).toInt()
+        val editCity =
+            dialogView.findViewById<TextInputEditText>(
+                R.id.editBranchCity
+            )
 
-        container.setPadding(
-            padding,
-            padding,
-            padding,
-            0
-        )
+        val editLatitude =
+            dialogView.findViewById<TextInputEditText>(
+                R.id.editBranchLatitude
+            )
 
-        val editName = EditText(this)
-        editName.hint = "Branch Name"
+        val editLongitude =
+            dialogView.findViewById<TextInputEditText>(
+                R.id.editBranchLongitude
+            )
+
+        val btnCancel =
+            dialogView.findViewById<MaterialButton>(
+                R.id.btnCancelEditBranch
+            )
+
+        val btnUpdate =
+            dialogView.findViewById<MaterialButton>(
+                R.id.btnUpdateBranch
+            )
+
         editName.setText(branch.name)
-
-        val editCity = EditText(this)
-        editCity.hint = "City"
         editCity.setText(branch.city)
+        editLatitude.setText(branch.latitude.toString())
+        editLongitude.setText(branch.longitude.toString())
 
-        val editLatitude = EditText(this)
-        editLatitude.hint = "Latitude"
-        editLatitude.inputType =
-            android.text.InputType.TYPE_CLASS_NUMBER or
-                    android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
-
-        editLatitude.setText(
-            branch.latitude.toString()
-        )
-
-        val editLongitude = EditText(this)
-        editLongitude.hint = "Longitude"
-        editLongitude.inputType =
-            android.text.InputType.TYPE_CLASS_NUMBER or
-                    android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL or
-                    android.text.InputType.TYPE_NUMBER_FLAG_SIGNED
-
-        editLongitude.setText(
-            branch.longitude.toString()
-        )
-
-        container.addView(editName)
-        container.addView(editCity)
-        container.addView(editLatitude)
-        container.addView(editLongitude)
-
-        AlertDialog.Builder(this)
-            .setTitle("Edit Branch")
-            .setView(container)
-            .setPositiveButton("Update", null)
-            .setNegativeButton("Cancel", null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
             .create()
-            .apply {
 
-                setOnShowListener {
+        dialog.window?.setBackgroundDrawableResource(
+            android.R.color.transparent
+        )
 
-                    getButton(
-                        AlertDialog.BUTTON_POSITIVE
-                    ).setOnClickListener {
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
 
-                        val name =
-                            editName.text.toString().trim()
+        btnUpdate.setOnClickListener {
 
-                        val city =
-                            editCity.text.toString().trim()
+            val name =
+                editName.text.toString().trim()
 
-                        val latitude =
-                            editLatitude.text.toString()
-                                .trim()
-                                .toDoubleOrNull()
+            val city =
+                editCity.text.toString().trim()
 
-                        val longitude =
-                            editLongitude.text.toString()
-                                .trim()
-                                .toDoubleOrNull()
+            val latitude =
+                editLatitude.text.toString()
+                    .trim()
+                    .toDoubleOrNull()
 
-                        if (
-                            name.isEmpty() ||
-                            city.isEmpty() ||
-                            latitude == null ||
-                            longitude == null
-                        ) {
+            val longitude =
+                editLongitude.text.toString()
+                    .trim()
+                    .toDoubleOrNull()
 
-                            Toast.makeText(
-                                this@ManageBranchesActivity,
-                                "Please enter valid branch details",
-                                Toast.LENGTH_SHORT
-                            ).show()
+            if (
+                name.isEmpty() ||
+                city.isEmpty() ||
+                latitude == null ||
+                longitude == null
+            ) {
 
-                            return@setOnClickListener
-                        }
+                Toast.makeText(
+                    this,
+                    "Please enter valid branch details",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                        val updatedBranch = branch.copy(
-                            name = name,
-                            city = city,
-                            latitude = latitude,
-                            longitude = longitude
-                        )
-
-                        branchRepository.updateBranch(
-                            branch = updatedBranch,
-
-                            onSuccess = {
-
-                                Toast.makeText(
-                                    this@ManageBranchesActivity,
-                                    "Branch updated successfully",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                dismiss()
-                                loadBranches()
-                            },
-
-                            onFailure = { exception ->
-
-                                Toast.makeText(
-                                    this@ManageBranchesActivity,
-                                    "Error: ${exception.message}",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        )
-                    }
-                }
-
-                show()
+                return@setOnClickListener
             }
+
+            val updatedBranch = branch.copy(
+                name = name,
+                city = city,
+                latitude = latitude,
+                longitude = longitude
+            )
+
+            branchRepository.updateBranch(
+                branch = updatedBranch,
+
+                onSuccess = {
+
+                    Toast.makeText(
+                        this,
+                        "Branch updated successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    dialog.dismiss()
+                    loadBranches()
+                },
+
+                onFailure = { exception ->
+
+                    Toast.makeText(
+                        this,
+                        "Error: ${exception.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            )
+        }
+
+        dialog.show()
     }
 }
