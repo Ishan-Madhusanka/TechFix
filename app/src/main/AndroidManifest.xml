@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Location Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -13,44 +16,64 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TechFix">
+
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Admin Dashboard -->
+        <!-- TEMPORARY launcher activity for testing -->
+        <activity
+            android:name=".admin.AdminDashboardActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".admin.AdminDashboardActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Manage Branches -->
         <activity
             android:name=".admin.ManageBranchesActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Manage Services -->
         <activity
             android:name=".admin.ManageServicesActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Manage Technicians -->
         <activity
             android:name=".admin.ManageTechniciansActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Manage Spare Parts -->
         <activity
             android:name=".admin.ManageSparePartsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Branch Map -->
         <activity
             android:name=".branch.BranchMapActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Booking Confirmation -->
         <activity
             android:name=".branch.BookingConfirmationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
