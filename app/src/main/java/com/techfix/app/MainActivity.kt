@@ -18,6 +18,8 @@ import com.techfix.app.utils.LocationUtils
 
 import com.techfix.app.repository.SparePartRepository
 
+import com.techfix.app.repository.TechnicianRepository
+
 class MainActivity : AppCompatActivity() {
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
@@ -222,6 +224,40 @@ class MainActivity : AppCompatActivity() {
 
                     Log.e(
                         "TECHFIX_SPARE_QUERY",
+                        "Firestore error: ${exception.message}"
+                    )
+                }
+            )
+            val technicianRepository = TechnicianRepository()
+
+            Log.d(
+                "TECHFIX_TECH_QUERY",
+                "Checking technicians for branchId: ${nearestBranch.id}"
+            )
+
+            technicianRepository.getAvailableTechniciansByBranch(
+                branchId = nearestBranch.id,
+
+                onSuccess = { technicians ->
+
+                    Log.d(
+                        "TECHFIX_TECH_QUERY",
+                        "Available technicians found: ${technicians.size}"
+                    )
+
+                    technicians.forEach { technician ->
+
+                        Log.d(
+                            "TECHFIX_TECH_QUERY",
+                            "${technician.name} - ${technician.specialization}"
+                        )
+                    }
+                },
+
+                onFailure = { exception ->
+
+                    Log.e(
+                        "TECHFIX_TECH_QUERY",
                         "Firestore error: ${exception.message}"
                     )
                 }
