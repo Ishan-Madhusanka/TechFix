@@ -12,13 +12,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.LocationServices
 import com.techfix.app.model.Branch
-import com.techfix.app.model.SparePart
 import com.techfix.app.repository.BranchRepository
-import com.techfix.app.utils.LocationUtils
-
 import com.techfix.app.repository.SparePartRepository
-
 import com.techfix.app.repository.TechnicianRepository
+import com.techfix.app.utils.LocationUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,31 +28,48 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        ViewCompat.setOnApplyWindowInsetsListener(
+            findViewById(R.id.main)
+        ) { v, insets ->
+
+            val systemBars =
+                insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
             v.setPadding(
                 systemBars.left,
                 systemBars.top,
                 systemBars.right,
                 systemBars.bottom
             )
+
             insets
         }
+
+        loadBranches()
+
+        checkLocationPermission()
+    }
+
+    private fun loadBranches() {
 
         val branchRepository = BranchRepository()
 
         branchRepository.getBranches(
+
             onSuccess = { branchList ->
 
                 branches = branchList
 
                 branches.forEach { branch ->
+
                     Log.d(
                         "TECHFIX_BRANCH",
-                        "${branch.name} - ${branch.city} - ${branch.latitude}, ${branch.longitude}"
+                        "${branch.name} - ${branch.city} - " +
+                                "${branch.latitude}, ${branch.longitude}"
                     )
                 }
 
@@ -70,8 +84,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         )
-
-        checkLocationPermission()
     }
 
     private fun checkLocationPermission() {
@@ -125,7 +137,8 @@ class MainActivity : AppCompatActivity() {
 
                     Log.d(
                         "TECHFIX_LOCATION",
-                        "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
+                        "Latitude: ${location.latitude}, " +
+                                "Longitude: ${location.longitude}"
                     )
 
                     calculateBranchDistances()
@@ -160,14 +173,16 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        // Calculate distance for every branch
         branches.forEach { branch ->
 
-            val distance = LocationUtils.calculateDistance(
-                userLatitude = userLat,
-                userLongitude = userLng,
-                branchLatitude = branch.latitude,
-                branchLongitude = branch.longitude
-            )
+            val distance =
+                LocationUtils.calculateDistance(
+                    userLatitude = userLat,
+                    userLongitude = userLng,
+                    branchLatitude = branch.latitude,
+                    branchLongitude = branch.longitude
+                )
 
             Log.d(
                 "TECHFIX_DISTANCE",
@@ -175,123 +190,229 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        val nearestBranch = LocationUtils.findNearestBranch(
-            userLatitude = userLat,
-            userLongitude = userLng,
-            branches = branches
+        // Sort branches from nearest to farthest
+        val sortedBranches =
+            branches.sortedBy { branch ->
+
+                LocationUtils.calculateDistance(
+                    userLatitude = userLat,
+                    userLongitude = userLng,
+                    branchLatitude = branch.latitude,
+                    branchLongitude = branch.longitude
+                )
+            }
+
+        // Start checking available resources
+        findSuitableBranch(
+            sortedBranches = sortedBranches,
+            index = 0
+        )
+    }
+
+    private fun findSuitableBranch(
+        sortedBranches: List<Branch>,
+        index: Int
+    ) {
+
+        // All branches checked
+        if (index >= sortedBranches.size) {
+
+            Log.d(
+                "TECHFIX_SUITABLE_BRANCH",
+                "No suitable branch found"
+            )
+
+            return
+        }
+
+        val branch = sortedBranches[index]
+
+        val userLat = currentLatitude
+        val userLng = currentLongitude
+
+        Log.d(
+            "TECHFIX_SUITABLE_BRANCH",
+            "Checking branch: ${branch.name}"
         )
 
-        if (nearestBranch != null) {
+        // Display distance of currently checked branch
+        if (
+            userLat != null &&
+            userLng != null
+        ) {
 
-            val nearestDistance = LocationUtils.calculateDistance(
-                userLatitude = userLat,
-                userLongitude = userLng,
-                branchLatitude = nearestBranch.latitude,
-                branchLongitude = nearestBranch.longitude
-            )
-
-            Log.d(
-                "TECHFIX_NEAREST",
-                "Nearest Branch: ${nearestBranch.name} - %.2f km".format(nearestDistance)
-            )
-
-            val sparePartRepository = SparePartRepository()
+            val distance =
+                LocationUtils.calculateDistance(
+                    userLatitude = userLat,
+                    userLongitude = userLng,
+                    branchLatitude = branch.latitude,
+                    branchLongitude = branch.longitude
+                )
 
             Log.d(
-                "TECHFIX_SPARE_QUERY",
-                "Checking spare parts for branchId: ${nearestBranch.id}"
-            )
-            sparePartRepository.getAvailableSparePartsByBranch(
-                branchId = nearestBranch.id,
-
-                onSuccess = { spareParts ->
-
-                    Log.d(
-                        "TECHFIX_SPARE_QUERY",
-                        "Documents found: ${spareParts.size}"
-                    )
-
-                    spareParts.forEach { sparepart ->
-
-                        Log.d(
-                            "TECHFIX_SPARE_QUERY",
-                            "${sparepart.name} - Qty: ${sparepart.quantity} - price: ${sparepart.price}"
-                        )
-                    }
-                },
-
-                onFailure = { exception ->
-
-                    Log.e(
-                        "TECHFIX_SPARE_QUERY",
-                        "Firestore error: ${exception.message}"
-                    )
-                }
-            )
-            val technicianRepository = TechnicianRepository()
-
-            Log.d(
-                "TECHFIX_TECH_QUERY",
-                "Checking technicians for branchId: ${nearestBranch.id}"
-            )
-
-            technicianRepository.getAvailableTechniciansByBranch(
-                branchId = nearestBranch.id,
-
-                onSuccess = { technicians ->
-
-                    Log.d(
-                        "TECHFIX_TECH_QUERY",
-                        "Available technicians found: ${technicians.size}"
-                    )
-
-                    technicians.forEach { technician ->
-
-                        Log.d(
-                            "TECHFIX_TECH_QUERY",
-                            "${technician.name} - ${technician.specialization}"
-                        )
-                    }
-                },
-
-                onFailure = { exception ->
-
-                    Log.e(
-                        "TECHFIX_TECH_QUERY",
-                        "Firestore error: ${exception.message}"
-                    )
-                }
+                "TECHFIX_SUITABLE_BRANCH",
+                "${branch.name} distance = %.2f km".format(distance)
             )
         }
 
+        val sparePartRepository =
+            SparePartRepository()
 
+        val technicianRepository =
+            TechnicianRepository()
 
-        fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
-            )
+        // First check spare parts
+        sparePartRepository.getAvailableSparePartsByBranch(
 
-            if (
-                requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
-                grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-            ) {
+            branchId = branch.id,
 
-                getCurrentLocation()
-
-            } else {
+            onSuccess = { spareParts ->
 
                 Log.d(
-                    "TECHFIX_LOCATION",
-                    "Location permission denied"
+                    "TECHFIX_SPARE_QUERY",
+                    "${branch.name}: Spare parts found = ${spareParts.size}"
+                )
+
+                if (spareParts.isNotEmpty()) {
+
+                    // Spare parts available
+                    // Now check technicians
+
+                    technicianRepository.getAvailableTechniciansByBranch(
+
+                        branchId = branch.id,
+
+                        onSuccess = { technicians ->
+
+                            Log.d(
+                                "TECHFIX_TECH_QUERY",
+                                "${branch.name}: Available technicians = ${technicians.size}"
+                            )
+
+                            if (technicians.isNotEmpty()) {
+
+                                // Suitable branch found
+                                Log.d(
+                                    "TECHFIX_SUITABLE_BRANCH",
+                                    "Suitable Branch: ${branch.name}"
+                                )
+
+                                Log.d(
+                                    "TECHFIX_SUITABLE_BRANCH",
+                                    "Branch ID: ${branch.id}"
+                                )
+
+                                Log.d(
+                                    "TECHFIX_SUITABLE_BRANCH",
+                                    "Spare Parts: ${spareParts.size}"
+                                )
+
+                                Log.d(
+                                    "TECHFIX_SUITABLE_BRANCH",
+                                    "Technicians: ${technicians.size}"
+                                )
+
+                                // Show available spare parts
+                                spareParts.forEach { sparePart ->
+
+                                    Log.d(
+                                        "TECHFIX_SUITABLE_BRANCH",
+                                        "Spare Part: ${sparePart.name} | " +
+                                                "Qty: ${sparePart.quantity} | " +
+                                                "Price: ${sparePart.price}"
+                                    )
+                                }
+
+                                // Show available technicians
+                                technicians.forEach { technician ->
+
+                                    Log.d(
+                                        "TECHFIX_SUITABLE_BRANCH",
+                                        "Technician: ${technician.name} | " +
+                                                "Specialization: ${technician.specialization}"
+                                    )
+                                }
+
+                            } else {
+
+                                // Technician unavailable
+                                // Check next nearest branch
+
+                                Log.d(
+                                    "TECHFIX_SUITABLE_BRANCH",
+                                    "${branch.name}: No available technicians"
+                                )
+
+                                findSuitableBranch(
+                                    sortedBranches = sortedBranches,
+                                    index = index + 1
+                                )
+                            }
+                        },
+
+                        onFailure = { exception ->
+
+                            Log.e(
+                                "TECHFIX_SUITABLE_BRANCH",
+                                "Technician error: ${exception.message}"
+                            )
+                        }
+                    )
+
+                } else {
+
+                    // Spare parts unavailable
+                    // Check next nearest branch
+
+                    Log.d(
+                        "TECHFIX_SUITABLE_BRANCH",
+                        "${branch.name}: No available spare parts"
+                    )
+
+                    findSuitableBranch(
+                        sortedBranches = sortedBranches,
+                        index = index + 1
+                    )
+                }
+            },
+
+            onFailure = { exception ->
+
+                Log.e(
+                    "TECHFIX_SUITABLE_BRANCH",
+                    "Spare part error: ${exception.message}"
                 )
             }
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
+
+        if (
+            requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+
+            getCurrentLocation()
+
+        } else {
+
+            Log.d(
+                "TECHFIX_LOCATION",
+                "Location permission denied"
+            )
         }
     }
 }
