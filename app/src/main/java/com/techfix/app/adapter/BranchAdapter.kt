@@ -5,11 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.techfix.app.R
 import com.techfix.app.model.Branch
 
 class BranchAdapter(
-    private var branchList: List<Branch>
+    private var branchList: List<Branch>,
+    private val onEditClick: (Branch) -> Unit,
+    private val onToggleClick: (Branch) -> Unit
 ) : RecyclerView.Adapter<BranchAdapter.BranchViewHolder>() {
 
     class BranchViewHolder(itemView: View) :
@@ -26,6 +29,12 @@ class BranchAdapter(
 
         val tvBranchStatus: TextView =
             itemView.findViewById(R.id.tvBranchStatus)
+
+        val btnEditBranch: MaterialButton =
+            itemView.findViewById(R.id.btnEditBranch)
+
+        val btnToggleBranch: MaterialButton =
+            itemView.findViewById(R.id.btnToggleBranch)
     }
 
     override fun onCreateViewHolder(
@@ -59,12 +68,24 @@ class BranchAdapter(
         holder.tvBranchLocation.text =
             "Location: ${branch.latitude}, ${branch.longitude}"
 
-        holder.tvBranchStatus.text =
-            if (branch.isActive) {
-                "Active"
-            } else {
-                "Inactive"
-            }
+        if (branch.isActive) {
+
+            holder.tvBranchStatus.text = "Active"
+            holder.btnToggleBranch.text = "Deactivate"
+
+        } else {
+
+            holder.tvBranchStatus.text = "Inactive"
+            holder.btnToggleBranch.text = "Activate"
+        }
+
+        holder.btnEditBranch.setOnClickListener {
+            onEditClick(branch)
+        }
+
+        holder.btnToggleBranch.setOnClickListener {
+            onToggleClick(branch)
+        }
     }
 
     override fun getItemCount(): Int {

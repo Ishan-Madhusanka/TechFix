@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp"
     app:strokeColor="#1565C0"
-    app:strokeWidth="1dp"
-    app:cardBackgroundColor="#FFFFFF">
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,6 +18,7 @@
         android:orientation="vertical"
         android:padding="18dp">
 
+        <!-- Branch Name -->
         <TextView
             android:id="@+id/tvBranchName"
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!-- City -->
         <TextView
             android:id="@+id/tvBranchCity"
             android:layout_width="match_parent"
@@ -36,6 +38,7 @@
             android:textColor="#333333"
             android:textSize="15sp" />
 
+        <!-- Location -->
         <TextView
             android:id="@+id/tvBranchLocation"
             android:layout_width="match_parent"
@@ -45,6 +48,7 @@
             android:textColor="#555555"
             android:textSize="14sp" />
 
+        <!-- Status -->
         <TextView
             android:id="@+id/tvBranchStatus"
             android:layout_width="wrap_content"
@@ -59,6 +63,45 @@
             android:textColor="#1565C0"
             android:textSize="14sp"
             android:textStyle="bold" />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Edit Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditBranch"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="Edit"
+                android:textAllCaps="false"
+                android:textColor="#1565C0"
+                android:textStyle="bold"
+                app:backgroundTint="#FFFFFF"
+                app:cornerRadius="10dp"
+                app:strokeColor="#1565C0"
+                app:strokeWidth="2dp" />
+
+            <!-- Activate / Deactivate Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnToggleBranch"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="Deactivate"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:backgroundTint="#1565C0"
+                app:cornerRadius="10dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
