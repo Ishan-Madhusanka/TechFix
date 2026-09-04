@@ -329,7 +329,7 @@ class MainActivity : AppCompatActivity() {
                                     Log.d(
                                         "TECHFIX_SUITABLE_BRANCH",
                                         "Technician: ${technician.name} | " +
-                                                "Specialization: ${technician.specialization}"
+                                                "Speciality: ${technician.speciality}"
                                     )
                                 }
 
