@@ -17,6 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TechFix">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
@@ -24,7 +28,6 @@
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Admin Dashboard -->
-        <!-- TEMPORARY launcher activity for testing -->
         <activity
             android:name=".admin.AdminDashboardActivity"
             android:exported="true"

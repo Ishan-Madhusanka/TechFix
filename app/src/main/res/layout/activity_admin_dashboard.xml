@@ -14,7 +14,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="700dp">
+        android:minHeight="760dp">
 
         <!-- Blue Header -->
         <LinearLayout
@@ -139,7 +139,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginBottom="30dp"
             android:text="Manage Spare Parts"
             android:textAllCaps="false"
             android:textColor="#1565C0"
@@ -150,6 +149,26 @@
             app:strokeColor="#1565C0"
             app:strokeWidth="2dp"
             app:layout_constraintTop_toBottomOf="@id/btnManageTechnicians"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Branch Map -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewBranchMap"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="30dp"
+            android:text="View Branch Map"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:backgroundTint="#1565C0"
+            app:cornerRadius="14dp"
+            app:layout_constraintTop_toBottomOf="@id/btnManageSpareParts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

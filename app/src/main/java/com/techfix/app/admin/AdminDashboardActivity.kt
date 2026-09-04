@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.techfix.app.R
+import com.techfix.app.branch.BranchMapActivity
 
 class AdminDashboardActivity : AppCompatActivity() {
 
@@ -43,6 +44,19 @@ class AdminDashboardActivity : AppCompatActivity() {
         val btnManageSpareParts =
             findViewById<MaterialButton>(R.id.btnManageSpareParts)
 
+        val btnViewBranchMap =
+            findViewById<MaterialButton>(R.id.btnViewBranchMap)
+
+        // View Branch Map
+        btnViewBranchMap.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                BranchMapActivity::class.java
+            )
+
+            startActivity(intent)
+        }
 
         // Manage Branches
         btnManageBranches.setOnClickListener {
