@@ -19,10 +19,7 @@ class SparePartRepository {
             .addOnSuccessListener { result ->
 
                 val spareParts = result.documents.mapNotNull { document ->
-
-                    val sparePart = document.toObject(SparePart::class.java)
-
-                    sparePart?.apply {
+                    document.toObject(SparePart::class.java)?.apply {
                         id = document.id
                     }
                 }.filter { sparePart ->
@@ -30,6 +27,98 @@ class SparePartRepository {
                 }
 
                 onSuccess(spareParts)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun getAllSpareParts(
+        onSuccess: (List<SparePart>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("spareParts")
+            .get()
+            .addOnSuccessListener { result ->
+
+                val spareParts = result.documents.mapNotNull { document ->
+                    document.toObject(SparePart::class.java)?.apply {
+                        id = document.id
+                    }
+                }
+
+                onSuccess(spareParts)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun addSparePart(
+        sparePart: SparePart,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val sparePartData = hashMapOf<String, Any>(
+            "name" to sparePart.name,
+            "categoryId" to sparePart.categoryId,
+            "branchId" to sparePart.branchId,
+            "quantity" to sparePart.quantity,
+            "price" to sparePart.price,
+            "isAvailable" to sparePart.isAvailable
+        )
+
+        db.collection("spareParts")
+            .add(sparePartData)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun updateSparePart(
+        sparePart: SparePart,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        if (sparePart.id.isEmpty()) {
+            onFailure(Exception("Spare Part ID is empty"))
+            return
+        }
+
+        val sparePartData = hashMapOf<String, Any>(
+            "name" to sparePart.name,
+            "categoryId" to sparePart.categoryId,
+            "branchId" to sparePart.branchId,
+            "quantity" to sparePart.quantity,
+            "price" to sparePart.price,
+            "isAvailable" to sparePart.isAvailable
+        )
+
+        db.collection("spareParts")
+            .document(sparePart.id)
+            .update(sparePartData)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun updateSparePartAvailability(
+        sparePartId: String,
+        isAvailable: Boolean,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("spareParts")
+            .document(sparePartId)
+            .update("isAvailable", isAvailable)
+            .addOnSuccessListener {
+                onSuccess()
             }
             .addOnFailureListener { exception ->
                 onFailure(exception)

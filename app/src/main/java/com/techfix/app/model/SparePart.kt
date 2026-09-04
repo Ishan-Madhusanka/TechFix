@@ -1,13 +1,22 @@
 package com.techfix.app.model
 
-import android.util.Log
+import com.google.firebase.firestore.PropertyName
 
 data class SparePart(
+
     var id: String = "",
+
     var name: String = "",
-    var category: String = "",
-    var branch: String = "",
+
+    var categoryId: String = "",
+
+    var branchId: String = "",
+
     var quantity: Long = 0,
+
     var price: Double = 0.0,
-    var isAvilable: Boolean = true
-    )
+
+    @get:PropertyName("isAvailable")
+    @set:PropertyName("isAvailable")
+    var isAvailable: Boolean = true
+)
