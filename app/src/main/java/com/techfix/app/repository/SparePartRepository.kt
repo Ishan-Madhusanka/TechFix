@@ -124,4 +124,33 @@ class SparePartRepository {
                 onFailure(exception)
             }
     }
+    fun getRequiredSparePartByBranch(
+        branchId: String,
+        requiredPartId: String,
+        onSuccess: (SparePart?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("spareParts")
+            .whereEqualTo("branchId", branchId)
+            .whereEqualTo("isAvailable", true)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val requiredSparePart = result.documents
+                    .mapNotNull { document ->
+                        document.toObject(SparePart::class.java)?.apply {
+                            id = document.id
+                        }
+                    }
+                    .firstOrNull { sparePart ->
+                        sparePart.id == requiredPartId &&
+                                sparePart.quantity > 0
+                    }
+
+                onSuccess(requiredSparePart)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
 }

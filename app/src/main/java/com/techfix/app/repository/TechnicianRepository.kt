@@ -14,20 +14,34 @@ class TechnicianRepository {
     ) {
         db.collection("technicians")
             .whereEqualTo("branchId", branchId)
-            .whereEqualTo("isAvailable", true)
-            .whereEqualTo("isActive", true)
             .get()
             .addOnSuccessListener { result ->
 
-                val technicians = result.documents.mapNotNull { document ->
-                    document.toObject(Technician::class.java)?.apply {
-                        id = document.id
+                val technicians = result.documents
+                    .mapNotNull { document ->
+
+                        document.toObject(Technician::class.java)?.apply {
+                            id = document.id
+                        }
                     }
-                }
+                    .filter { technician ->
+                        technician.isAvailable && technician.isActive
+                    }
+
+                android.util.Log.d(
+                    "TECHFIX_TECH_QUERY",
+                    "Branch $branchId -> ${technicians.size} available technicians"
+                )
 
                 onSuccess(technicians)
             }
             .addOnFailureListener { exception ->
+
+                android.util.Log.e(
+                    "TECHFIX_TECH_QUERY",
+                    "Technician query error: ${exception.message}"
+                )
+
                 onFailure(exception)
             }
     }

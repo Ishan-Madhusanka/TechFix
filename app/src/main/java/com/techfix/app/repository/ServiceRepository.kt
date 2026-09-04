@@ -97,5 +97,26 @@ class ServiceRepository {
             .addOnFailureListener { exception ->
                 onFailure(exception)
             }
+
+    }
+    fun getServiceById(
+        serviceId: String,
+        onSuccess: (Service?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("services")
+            .document(serviceId)
+            .get()
+            .addOnSuccessListener { document ->
+
+                val service = document.toObject(Service::class.java)?.apply {
+                    id = document.id
+                }
+
+                onSuccess(service)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
     }
 }
