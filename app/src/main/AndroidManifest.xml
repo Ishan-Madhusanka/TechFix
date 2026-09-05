@@ -27,7 +27,6 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-
         <!-- Admin Dashboard -->
         <activity
             android:name=".admin.AdminDashboardActivity"

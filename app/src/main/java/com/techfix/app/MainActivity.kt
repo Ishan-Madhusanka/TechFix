@@ -17,7 +17,8 @@ import com.techfix.app.repository.ServiceRepository
 import com.techfix.app.repository.SparePartRepository
 import com.techfix.app.repository.TechnicianRepository
 import com.techfix.app.utils.LocationUtils
-
+import android.content.Intent
+import com.techfix.app.branch.BookingConfirmationActivity
 class MainActivity : AppCompatActivity() {
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
@@ -454,7 +455,21 @@ class MainActivity : AppCompatActivity() {
                             "Required Part: $requiredPartName"
                         )
 
-                    } else {
+                        val selectedTechnician = technicians.first()
+
+                        val confirmationIntent =
+                            Intent(this@MainActivity, BookingConfirmationActivity::class.java)
+
+                        confirmationIntent.putExtra("SERVICE_ID", selectedServiceId)
+                        confirmationIntent.putExtra("BRANCH_ID", branch.id)
+                        confirmationIntent.putExtra("BRANCH_NAME", branch.name)
+                        confirmationIntent.putExtra("TECHNICIAN_ID", selectedTechnician.id)
+                        confirmationIntent.putExtra("TECHNICIAN_NAME", selectedTechnician.name)
+
+                        startActivity(confirmationIntent)
+                    }
+
+                    else {
 
                         Log.d(
                             "TECHFIX_SUITABLE_BRANCH",
