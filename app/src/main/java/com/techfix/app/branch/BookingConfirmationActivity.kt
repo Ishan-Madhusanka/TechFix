@@ -2,18 +2,24 @@ package com.techfix.app.branch
 
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.techfix.app.R
+import com.techfix.app.model.RepairRequest
+import com.techfix.app.repository.RepairRequestRepository
 
 class BookingConfirmationActivity : AppCompatActivity() {
 
     private var branchId: String? = null
     private var branchName: String? = null
     private var serviceId: String? = null
+
+    private var technicianId: String? = null
+    private var technicianName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,9 @@ class BookingConfirmationActivity : AppCompatActivity() {
         branchName = intent.getStringExtra("BRANCH_NAME")
         serviceId = intent.getStringExtra("SERVICE_ID")
 
+        technicianId = intent.getStringExtra("TECHNICIAN_ID")
+        technicianName = intent.getStringExtra("TECHNICIAN_NAME")
+
         // UI
         val tvSelectedService =
             findViewById<TextView>(R.id.tvSelectedService)
@@ -69,10 +78,78 @@ class BookingConfirmationActivity : AppCompatActivity() {
         tvBranchId.text =
             "Branch ID: ${branchId ?: "--"}"
 
-        // Confirm button
+        // Confirm Booking
         btnConfirmBooking.setOnClickListener {
-            // Actual repair request creation will be integrated
-            // with the booking flow later.
+
+            val currentBranchId = branchId
+            val currentServiceId = serviceId
+            val currentTechnicianId = technicianId
+
+            if (
+                currentBranchId.isNullOrBlank() ||
+                currentServiceId.isNullOrBlank() ||
+                currentTechnicianId.isNullOrBlank()
+            ) {
+
+                Toast.makeText(
+                    this,
+                    "Booking information is incomplete",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            btnConfirmBooking.isEnabled = false
+            btnConfirmBooking.text = "Confirming..."
+
+            val repairRequest = RepairRequest(
+                serviceId = currentServiceId,
+                branchId = currentBranchId,
+                technicianId = currentTechnicianId,
+                status = "Pending"
+            )
+
+            val repairRequestRepository =
+                RepairRequestRepository()
+
+            repairRequestRepository.createRepairRequest(
+
+                repairRequest = repairRequest,
+
+                onSuccess = { requestId ->
+
+                    Toast.makeText(
+                        this,
+                        "Booking confirmed successfully",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    btnConfirmBooking.text = "Booking Confirmed"
+
+                    android.util.Log.d(
+                        "TECHFIX_BOOKING",
+                        "Repair Request Created: $requestId"
+                    )
+                },
+
+                onFailure = { exception ->
+
+                    btnConfirmBooking.isEnabled = true
+                    btnConfirmBooking.text = "Confirm Booking"
+
+                    Toast.makeText(
+                        this,
+                        "Booking failed: ${exception.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    android.util.Log.e(
+                        "TECHFIX_BOOKING",
+                        "Booking error: ${exception.message}"
+                    )
+                }
+            )
         }
 
         // Cancel
