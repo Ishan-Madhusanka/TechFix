@@ -12,7 +12,8 @@ data class RepairRequest(
     var branchId: String = "",
     var technicianId: String = "",
     var appointmentDate: String = "",
-    var status: String = "Pending",
+    var status: String = RepairStatus.PENDING.name,
     var price: Double = 0.0,
+    var repairNotes: String = "",
     var createdAt: Long = System.currentTimeMillis()
 )
