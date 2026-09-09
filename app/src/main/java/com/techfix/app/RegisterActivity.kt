@@ -1,6 +1,7 @@
 package com.techfix.app
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -84,13 +85,27 @@ class RegisterActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
+                    Log.d(
+                        "TECHFIX_AUTH",
+                        "SUCCESS - User created: ${auth.currentUser?.uid}"
+                    )
+
                 } else {
+
+                    val errorMessage =
+                        task.exception?.message ?: "Unknown error"
 
                     Toast.makeText(
                         this,
-                        "Registration failed: ${task.exception?.message}",
+                        "Registration failed: $errorMessage",
                         Toast.LENGTH_LONG
                     ).show()
+
+                    Log.e(
+                        "TECHFIX_AUTH",
+                        "FAILED - $errorMessage",
+                        task.exception
+                    )
                 }
             }
     }

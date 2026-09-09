@@ -1,9 +1,11 @@
 package com.techfix.app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -12,11 +14,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.LocationServices
 import com.techfix.app.model.Branch
-import com.techfix.app.model.SparePart
 import com.techfix.app.repository.BranchRepository
-import com.techfix.app.utils.LocationUtils
-
 import com.techfix.app.repository.SparePartRepository
+import com.techfix.app.utils.LocationUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,31 +29,50 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        ViewCompat.setOnApplyWindowInsetsListener(
+            findViewById(R.id.main)
+        ) { v, insets ->
+
+            val systemBars =
+                insets.getInsets(WindowInsetsCompat.Type.systemBars())
+
             v.setPadding(
                 systemBars.left,
                 systemBars.top,
                 systemBars.right,
                 systemBars.bottom
             )
+
             insets
         }
 
+        // Create Account button
+        val btnRegister = findViewById<Button>(R.id.btnRegister)
+
+        btnRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Branch Repository
         val branchRepository = BranchRepository()
 
         branchRepository.getBranches(
+
             onSuccess = { branchList ->
 
                 branches = branchList
 
                 branches.forEach { branch ->
+
                     Log.d(
                         "TECHFIX_BRANCH",
-                        "${branch.name} - ${branch.city} - ${branch.latitude}, ${branch.longitude}"
+                        "${branch.name} - ${branch.city} - " +
+                                "${branch.latitude}, ${branch.longitude}"
                     )
                 }
 
@@ -123,7 +142,8 @@ class MainActivity : AppCompatActivity() {
 
                     Log.d(
                         "TECHFIX_LOCATION",
-                        "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
+                        "Latitude: ${location.latitude}, " +
+                                "Longitude: ${location.longitude}"
                     )
 
                     calculateBranchDistances()
@@ -190,7 +210,8 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(
                 "TECHFIX_NEAREST",
-                "Nearest Branch: ${nearestBranch.name} - %.2f km".format(nearestDistance)
+                "Nearest Branch: ${nearestBranch.name} - " +
+                        "%.2f km".format(nearestDistance)
             )
 
             val sparePartRepository = SparePartRepository()
@@ -199,6 +220,7 @@ class MainActivity : AppCompatActivity() {
                 "TECHFIX_SPARE_QUERY",
                 "Checking spare parts for branchId: ${nearestBranch.id}"
             )
+
             sparePartRepository.getAvailableSparePartsByBranch(
                 branchId = nearestBranch.id,
 
@@ -209,11 +231,13 @@ class MainActivity : AppCompatActivity() {
                         "Documents found: ${spareParts.size}"
                     )
 
-                    spareParts.forEach { sparepart ->
+                    spareParts.forEach { sparePart ->
 
                         Log.d(
                             "TECHFIX_SPARE_QUERY",
-                            "${sparepart.name} - Qty: ${sparepart.quantity} - price: ${sparepart.price}"
+                            "${sparePart.name} - " +
+                                    "Qty: ${sparePart.quantity} - " +
+                                    "price: ${sparePart.price}"
                         )
                     }
                 },
@@ -227,35 +251,34 @@ class MainActivity : AppCompatActivity() {
                 }
             )
         }
+    }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
 
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults
+        )
 
-        fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        if (
+            requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
+            grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
         ) {
-            super.onRequestPermissionsResult(
-                requestCode,
-                permissions,
-                grantResults
+
+            getCurrentLocation()
+
+        } else {
+
+            Log.d(
+                "TECHFIX_LOCATION",
+                "Location permission denied"
             )
-
-            if (
-                requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
-                grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                getCurrentLocation()
-
-            } else {
-
-                Log.d(
-                    "TECHFIX_LOCATION",
-                    "Location permission denied"
-                )
-            }
         }
     }
 }
