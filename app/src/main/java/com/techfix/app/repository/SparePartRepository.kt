@@ -6,38 +6,18 @@ import com.techfix.app.model.SparePart
 class SparePartRepository {
 
     private val db = FirebaseFirestore.getInstance()
+    private val sparePartsCollection = db.collection("spareParts")
 
-    fun getAvailableSparePartsByBranch(
-        branchId: String,
-        onSuccess: (List<SparePart>) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        db.collection("spareParts")
-            .whereEqualTo("branchId", branchId)
-            .whereEqualTo("isAvailable", true)
-            .get()
-            .addOnSuccessListener { result ->
 
-                val spareParts = result.documents.mapNotNull { document ->
-                    document.toObject(SparePart::class.java)?.apply {
-                        id = document.id
-                    }
-                }.filter { sparePart ->
-                    sparePart.quantity > 0
-                }
-
-                onSuccess(spareParts)
-            }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
-    }
+    // =========================================================
+    // MEMBER 1 - ADMIN FUNCTIONS
+    // =========================================================
 
     fun getAllSpareParts(
         onSuccess: (List<SparePart>) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        db.collection("spareParts")
+        sparePartsCollection
             .get()
             .addOnSuccessListener { result ->
 
@@ -53,23 +33,20 @@ class SparePartRepository {
                 onFailure(exception)
             }
     }
+
 
     fun addSparePart(
         sparePart: SparePart,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        val sparePartData = hashMapOf<String, Any>(
-            "name" to sparePart.name,
-            "categoryId" to sparePart.categoryId,
-            "branchId" to sparePart.branchId,
-            "quantity" to sparePart.quantity,
-            "price" to sparePart.price,
-            "isAvailable" to sparePart.isAvailable
-        )
+        val documentReference =
+            sparePartsCollection.document()
 
-        db.collection("spareParts")
-            .add(sparePartData)
+        sparePart.id = documentReference.id
+
+        documentReference
+            .set(sparePart)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -77,6 +54,7 @@ class SparePartRepository {
                 onFailure(exception)
             }
     }
+
 
     fun updateSparePart(
         sparePart: SparePart,
@@ -84,22 +62,15 @@ class SparePartRepository {
         onFailure: (Exception) -> Unit
     ) {
         if (sparePart.id.isEmpty()) {
-            onFailure(Exception("Spare Part ID is empty"))
+            onFailure(
+                Exception("Spare part ID not found")
+            )
             return
         }
 
-        val sparePartData = hashMapOf<String, Any>(
-            "name" to sparePart.name,
-            "categoryId" to sparePart.categoryId,
-            "branchId" to sparePart.branchId,
-            "quantity" to sparePart.quantity,
-            "price" to sparePart.price,
-            "isAvailable" to sparePart.isAvailable
-        )
-
-        db.collection("spareParts")
+        sparePartsCollection
             .document(sparePart.id)
-            .update(sparePartData)
+            .set(sparePart)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -107,6 +78,155 @@ class SparePartRepository {
                 onFailure(exception)
             }
     }
+
+
+    // =========================================================
+    // SHARED / MEMBER 3 FUNCTIONS
+    // =========================================================
+
+    fun getAvailableSparePartsByBranch(
+        branchId: String,
+        onSuccess: (List<SparePart>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        sparePartsCollection
+            .whereEqualTo("branchId", branchId)
+            .whereEqualTo("isAvailable", true)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val spareParts =
+                    result.documents.mapNotNull { document ->
+
+                        document.toObject(
+                            SparePart::class.java
+                        )?.apply {
+                            id = document.id
+                        }
+                    }.filter {
+                        it.quantity > 0
+                    }
+
+                onSuccess(spareParts)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
+    fun getRequiredSparePartByBranch(
+        branchId: String,
+        requiredPartId: String,
+        onSuccess: (SparePart?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        sparePartsCollection
+            .whereEqualTo("branchId", branchId)
+            .whereEqualTo("categoryId", requiredPartId)
+            .whereEqualTo("isAvailable", true)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val sparePart =
+                    result.documents
+                        .mapNotNull { document ->
+
+                            document.toObject(
+                                SparePart::class.java
+                            )?.apply {
+                                id = document.id
+                            }
+                        }
+                        .firstOrNull {
+                            it.quantity > 0
+                        }
+
+                onSuccess(sparePart)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
+    fun getSparePartById(
+        sparePartId: String,
+        onSuccess: (SparePart?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        sparePartsCollection
+            .document(sparePartId)
+            .get()
+            .addOnSuccessListener { document ->
+
+                val sparePart =
+                    document.toObject(
+                        SparePart::class.java
+                    )?.apply {
+                        id = document.id
+                    }
+
+                onSuccess(sparePart)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
+    fun reduceSparePartQuantity(
+        sparePartId: String,
+        usedQuantity: Long,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val sparePartReference =
+            sparePartsCollection.document(sparePartId)
+
+        db.runTransaction { transaction ->
+
+            val snapshot =
+                transaction.get(sparePartReference)
+
+            val currentQuantity =
+                snapshot.getLong("quantity") ?: 0L
+
+            if (usedQuantity <= 0) {
+                throw Exception(
+                    "Invalid quantity"
+                )
+            }
+
+            if (currentQuantity < usedQuantity) {
+                throw Exception(
+                    "Not enough spare parts available"
+                )
+            }
+
+            val newQuantity =
+                currentQuantity - usedQuantity
+
+            transaction.update(
+                sparePartReference,
+                "quantity",
+                newQuantity
+            )
+
+            transaction.update(
+                sparePartReference,
+                "isAvailable",
+                newQuantity > 0
+            )
+        }
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
 
     fun updateSparePartAvailability(
         sparePartId: String,
@@ -114,40 +234,14 @@ class SparePartRepository {
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        db.collection("spareParts")
+        sparePartsCollection
             .document(sparePartId)
-            .update("isAvailable", isAvailable)
+            .update(
+                "isAvailable",
+                isAvailable
+            )
             .addOnSuccessListener {
                 onSuccess()
-            }
-            .addOnFailureListener { exception ->
-                onFailure(exception)
-            }
-    }
-    fun getRequiredSparePartByBranch(
-        branchId: String,
-        requiredPartId: String,
-        onSuccess: (SparePart?) -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        db.collection("spareParts")
-            .whereEqualTo("branchId", branchId)
-            .whereEqualTo("isAvailable", true)
-            .get()
-            .addOnSuccessListener { result ->
-
-                val requiredSparePart = result.documents
-                    .mapNotNull { document ->
-                        document.toObject(SparePart::class.java)?.apply {
-                            id = document.id
-                        }
-                    }
-                    .firstOrNull { sparePart ->
-                        sparePart.id == requiredPartId &&
-                                sparePart.quantity > 0
-                    }
-
-                onSuccess(requiredSparePart)
             }
             .addOnFailureListener { exception ->
                 onFailure(exception)
