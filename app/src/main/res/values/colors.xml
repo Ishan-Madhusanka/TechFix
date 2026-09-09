@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="techfix_blue">#246BC4</color>
+    <color name="techfix_gray">#6B7280</color>
 </resources>

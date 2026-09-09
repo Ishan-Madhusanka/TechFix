@@ -42,11 +42,14 @@ class MyRepairsActivity : AppCompatActivity() {
             emptyList()
         ) { repairRequest ->
 
-            Toast.makeText(
+            val intent = android.content.Intent(
                 this,
-                "Repair: ${repairRequest.id}",
-                Toast.LENGTH_SHORT
-            ).show()
+                RepairDetailsActivity::class.java
+            )
+
+            intent.putExtra("repairId", repairRequest.id)
+
+            startActivity(intent)
         }
 
         recyclerRepairs.layoutManager = LinearLayoutManager(this)
