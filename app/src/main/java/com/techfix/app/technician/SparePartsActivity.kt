@@ -15,6 +15,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.techfix.app.R
 import com.techfix.app.adapter.SparePartTechnicianAdapter
 import com.techfix.app.model.SparePart
+import com.techfix.app.model.UsedSparePart
+import com.techfix.app.repository.RepairRequestRepository
 import com.techfix.app.repository.SparePartRepository
 
 class SparePartsActivity : AppCompatActivity() {
@@ -25,20 +27,37 @@ class SparePartsActivity : AppCompatActivity() {
     private lateinit var layoutSparePartsEmpty: LinearLayout
     private lateinit var sparePartAdapter: SparePartTechnicianAdapter
 
-    private val sparePartRepository = SparePartRepository()
+    private val sparePartRepository =
+        SparePartRepository()
+
+    private val repairRepository =
+        RepairRequestRepository()
 
     private var branchId: String = ""
+    private var repairId: String = ""
+    private var technicianId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_spare_parts)
+
+        setContentView(
+            R.layout.activity_spare_parts
+        )
 
         initializeViews()
         setupRecyclerView()
 
-        branchId = intent.getStringExtra("branchId") ?: ""
+        branchId =
+            intent.getStringExtra("branchId") ?: ""
+
+        repairId =
+            intent.getStringExtra("repairId") ?: ""
+
+        technicianId =
+            intent.getStringExtra("technicianId") ?: ""
 
         if (branchId.isEmpty()) {
+
             showEmptyState()
 
             Toast.makeText(
@@ -50,7 +69,15 @@ class SparePartsActivity : AppCompatActivity() {
             return
         }
 
-        txtSparePartsBranch.text = "Branch: $branchId"
+        txtSparePartsBranch.text =
+            if (repairId.isNotEmpty()) {
+
+                "Branch: $branchId\nRepair ID: $repairId"
+
+            } else {
+
+                "Branch: $branchId"
+            }
 
         loadSpareParts()
     }
@@ -58,24 +85,36 @@ class SparePartsActivity : AppCompatActivity() {
     private fun initializeViews() {
 
         txtSparePartsBranch =
-            findViewById(R.id.txtSparePartsBranch)
+            findViewById(
+                R.id.txtSparePartsBranch
+            )
 
         recyclerSpareParts =
-            findViewById(R.id.recyclerSpareParts)
+            findViewById(
+                R.id.recyclerSpareParts
+            )
 
         progressSpareParts =
-            findViewById(R.id.progressSpareParts)
+            findViewById(
+                R.id.progressSpareParts
+            )
 
         layoutSparePartsEmpty =
-            findViewById(R.id.layoutSparePartsEmpty)
+            findViewById(
+                R.id.layoutSparePartsEmpty
+            )
     }
 
     private fun setupRecyclerView() {
 
         sparePartAdapter =
-            SparePartTechnicianAdapter(emptyList()) { sparePart ->
+            SparePartTechnicianAdapter(
+                emptyList()
+            ) { sparePart ->
 
-                showUsePartDialog(sparePart)
+                showUsePartDialog(
+                    sparePart
+                )
             }
 
         recyclerSpareParts.layoutManager =
@@ -89,59 +128,108 @@ class SparePartsActivity : AppCompatActivity() {
 
         showLoading()
 
-        sparePartRepository.getAvailableSparePartsByBranch(
-            branchId = branchId,
+        sparePartRepository
+            .getAvailableSparePartsByBranch(
+                branchId = branchId,
 
-            onSuccess = { spareParts ->
+                onSuccess = { spareParts ->
 
-                progressSpareParts.visibility = View.GONE
+                    progressSpareParts.visibility =
+                        View.GONE
 
-                if (spareParts.isEmpty()) {
+                    if (spareParts.isEmpty()) {
 
-                    showEmptyState()
+                        showEmptyState()
 
-                } else {
+                    } else {
 
-                    layoutSparePartsEmpty.visibility = View.GONE
-                    recyclerSpareParts.visibility = View.VISIBLE
+                        layoutSparePartsEmpty.visibility =
+                            View.GONE
 
-                    sparePartAdapter.updateData(spareParts)
+                        recyclerSpareParts.visibility =
+                            View.VISIBLE
+
+                        sparePartAdapter.updateData(
+                            spareParts
+                        )
+                    }
+                },
+
+                onFailure = { exception ->
+
+                    progressSpareParts.visibility =
+                        View.GONE
+
+                    recyclerSpareParts.visibility =
+                        View.GONE
+
+                    layoutSparePartsEmpty.visibility =
+                        View.VISIBLE
+
+                    Toast.makeText(
+                        this,
+                        "Failed to load spare parts: ${exception.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-            },
-
-            onFailure = { exception ->
-
-                progressSpareParts.visibility = View.GONE
-                recyclerSpareParts.visibility = View.GONE
-
-                Toast.makeText(
-                    this,
-                    "Failed to load spare parts: ${exception.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        )
+            )
     }
 
-    private fun showUsePartDialog(sparePart: SparePart) {
+    private fun showUsePartDialog(
+        sparePart: SparePart
+    ) {
 
-        val input = EditText(this)
+        val input =
+            EditText(this)
 
-        input.hint = "Enter quantity"
-        input.inputType = InputType.TYPE_CLASS_NUMBER
-        input.setPadding(40, 20, 40, 20)
+        input.hint =
+            "Enter quantity"
+
+        input.inputType =
+            InputType.TYPE_CLASS_NUMBER
+
+        input.setPadding(
+            40,
+            20,
+            40,
+            20
+        )
+
+        val message =
+            if (repairId.isNotEmpty()) {
+
+                "${sparePart.name}\n" +
+                        "Available quantity: ${sparePart.quantity}\n" +
+                        "Repair ID: $repairId"
+
+            } else {
+
+                "${sparePart.name}\n" +
+                        "Available quantity: ${sparePart.quantity}"
+            }
 
         MaterialAlertDialogBuilder(this)
-            .setTitle("Use Spare Part")
-            .setMessage(
-                "${sparePart.name}\nAvailable quantity: ${sparePart.quantity}"
+            .setTitle(
+                "Use Spare Part"
             )
-            .setView(input)
-            .setNegativeButton("Cancel", null)
-            .setPositiveButton("Use") { _, _ ->
+            .setMessage(
+                message
+            )
+            .setView(
+                input
+            )
+            .setNegativeButton(
+                "Cancel",
+                null
+            )
+            .setPositiveButton(
+                "Use"
+            ) { _, _ ->
 
                 val quantityText =
-                    input.text.toString().trim()
+                    input.text
+                        .toString()
+                        .trim()
 
                 if (quantityText.isEmpty()) {
 
@@ -157,7 +245,10 @@ class SparePartsActivity : AppCompatActivity() {
                 val usedQuantity =
                     quantityText.toLongOrNull()
 
-                if (usedQuantity == null || usedQuantity <= 0) {
+                if (
+                    usedQuantity == null ||
+                    usedQuantity <= 0
+                ) {
 
                     Toast.makeText(
                         this,
@@ -168,7 +259,10 @@ class SparePartsActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
-                if (usedQuantity > sparePart.quantity) {
+                if (
+                    usedQuantity >
+                    sparePart.quantity
+                ) {
 
                     Toast.makeText(
                         this,
@@ -179,7 +273,7 @@ class SparePartsActivity : AppCompatActivity() {
                     return@setPositiveButton
                 }
 
-                reduceSparePartQuantity(
+                useSparePart(
                     sparePart = sparePart,
                     usedQuantity = usedQuantity
                 )
@@ -187,48 +281,100 @@ class SparePartsActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun reduceSparePartQuantity(
+    private fun useSparePart(
         sparePart: SparePart,
         usedQuantity: Long
     ) {
 
-        sparePartRepository.reduceSparePartQuantity(
-            sparePartId = sparePart.id,
-            usedQuantity = usedQuantity,
+        sparePartRepository
+            .reduceSparePartQuantity(
+                sparePartId = sparePart.id,
+                usedQuantity = usedQuantity,
 
-            onSuccess = {
+                onSuccess = {
 
-                Toast.makeText(
-                    this,
-                    "Spare part quantity updated",
-                    Toast.LENGTH_SHORT
-                ).show()
+                    if (repairId.isEmpty()) {
 
-                loadSpareParts()
-            },
+                        Toast.makeText(
+                            this,
+                            "Spare part quantity updated",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-            onFailure = { exception ->
+                        loadSpareParts()
 
-                Toast.makeText(
-                    this,
-                    "Failed to update quantity: ${exception.message}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        )
+                        return@reduceSparePartQuantity
+                    }
+
+                    val usedSparePart =
+                        UsedSparePart(
+                            sparePartId = sparePart.id,
+                            name = sparePart.name,
+                            quantity = usedQuantity,
+                            unitPrice = sparePart.price
+                        )
+
+                    repairRepository
+                        .addUsedSparePart(
+                            repairId = repairId,
+                            usedSparePart = usedSparePart,
+
+                            onSuccess = {
+
+                                Toast.makeText(
+                                    this,
+                                    "${sparePart.name} added to repair",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                loadSpareParts()
+                            },
+
+                            onFailure = { exception ->
+
+                                Toast.makeText(
+                                    this,
+                                    "Stock updated, but failed to save repair usage: ${exception.message}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                loadSpareParts()
+                            }
+                        )
+                },
+
+                onFailure = { exception ->
+
+                    Toast.makeText(
+                        this,
+                        "Failed to update quantity: ${exception.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            )
     }
 
     private fun showLoading() {
 
-        progressSpareParts.visibility = View.VISIBLE
-        recyclerSpareParts.visibility = View.GONE
-        layoutSparePartsEmpty.visibility = View.GONE
+        progressSpareParts.visibility =
+            View.VISIBLE
+
+        recyclerSpareParts.visibility =
+            View.GONE
+
+        layoutSparePartsEmpty.visibility =
+            View.GONE
     }
 
     private fun showEmptyState() {
 
-        progressSpareParts.visibility = View.GONE
-        recyclerSpareParts.visibility = View.GONE
-        layoutSparePartsEmpty.visibility = View.VISIBLE
+        progressSpareParts.visibility =
+            View.GONE
+
+        recyclerSpareParts.visibility =
+            View.GONE
+
+        layoutSparePartsEmpty.visibility =
+            View.VISIBLE
     }
 }

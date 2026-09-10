@@ -15,5 +15,7 @@ data class RepairRequest(
     var status: String = RepairStatus.PENDING.name,
     var price: Double = 0.0,
     var repairNotes: String = "",
-    var createdAt: Long = System.currentTimeMillis()
+    var usedSpareParts: MutableList<UsedSparePart> = mutableListOf(),
+    var createdAt: Long = System.currentTimeMillis(),
+    var updatedAt: Long = System.currentTimeMillis()
 )

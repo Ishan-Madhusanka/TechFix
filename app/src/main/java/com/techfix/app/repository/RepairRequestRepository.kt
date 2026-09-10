@@ -1,8 +1,10 @@
 package com.techfix.app.repository
 
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.techfix.app.model.RepairRequest
 import com.techfix.app.model.RepairStatus
+import com.techfix.app.model.UsedSparePart
 
 class RepairRequestRepository {
 
@@ -102,9 +104,14 @@ class RepairRequestRepository {
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
+        val updateData = hashMapOf<String, Any>(
+            "status" to status.name,
+            "updatedAt" to System.currentTimeMillis()
+        )
+
         repairRequestsCollection
             .document(repairId)
-            .update("status", status.name)
+            .update(updateData)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -119,9 +126,38 @@ class RepairRequestRepository {
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
+        val updateData = hashMapOf<String, Any>(
+            "repairNotes" to repairNotes,
+            "updatedAt" to System.currentTimeMillis()
+        )
+
         repairRequestsCollection
             .document(repairId)
-            .update("repairNotes", repairNotes)
+            .update(updateData)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun addUsedSparePart(
+        repairId: String,
+        usedSparePart: UsedSparePart,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val repairDocument =
+            repairRequestsCollection.document(repairId)
+
+        repairDocument
+            .update(
+                mapOf(
+                    "usedSpareParts" to FieldValue.arrayUnion(usedSparePart),
+                    "updatedAt" to System.currentTimeMillis()
+                )
+            )
             .addOnSuccessListener {
                 onSuccess()
             }

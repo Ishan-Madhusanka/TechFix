@@ -26,12 +26,15 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
 
     private lateinit var btnUpdateStatus: MaterialButton
     private lateinit var btnSaveRepairNotes: MaterialButton
+    private lateinit var btnUseSpareParts: MaterialButton
     private lateinit var btnRecordPayment: MaterialButton
 
-    private val repairRepository = RepairRequestRepository()
+    private val repairRepository =
+        RepairRequestRepository()
 
     private var repairId: String = ""
     private var technicianId: String = ""
+    private var branchId: String = ""
 
     private val statusList = listOf(
         RepairStatus.PENDING,
@@ -46,13 +49,19 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_technician_repair_details)
+
+        setContentView(
+            R.layout.activity_technician_repair_details
+        )
 
         initializeViews()
         setupStatusSpinner()
 
-        repairId = intent.getStringExtra("repairId") ?: ""
-        technicianId = intent.getStringExtra("technicianId") ?: ""
+        repairId =
+            intent.getStringExtra("repairId") ?: ""
+
+        technicianId =
+            intent.getStringExtra("technicianId") ?: ""
 
         if (repairId.isEmpty()) {
 
@@ -76,24 +85,12 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
             saveRepairNotes()
         }
 
+        btnUseSpareParts.setOnClickListener {
+            openSpareParts()
+        }
+
         btnRecordPayment.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                PaymentActivity::class.java
-            )
-
-            intent.putExtra(
-                "repairId",
-                repairId
-            )
-
-            intent.putExtra(
-                "technicianId",
-                technicianId
-            )
-
-            startActivity(intent)
+            openPayment()
         }
     }
 
@@ -126,27 +123,33 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
         btnSaveRepairNotes =
             findViewById(R.id.btnSaveRepairNotes)
 
+        btnUseSpareParts =
+            findViewById(R.id.btnUseSpareParts)
+
         btnRecordPayment =
             findViewById(R.id.btnRecordPayment)
     }
 
     private fun setupStatusSpinner() {
 
-        val statusNames = statusList.map {
-            it.name.replace("_", " ")
-        }
+        val statusNames =
+            statusList.map {
+                it.name.replace("_", " ")
+            }
 
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            statusNames
-        )
+        val adapter =
+            ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                statusNames
+            )
 
         adapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        spinnerRepairStatus.adapter = adapter
+        spinnerRepairStatus.adapter =
+            adapter
     }
 
     private fun loadRepairDetails() {
@@ -166,6 +169,9 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
 
                     return@getRepairById
                 }
+
+                // Save branch ID for spare parts
+                branchId = repair.branchId
 
                 txtTechRepairId.text =
                     "Repair ID: ${repair.id}"
@@ -220,7 +226,9 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
             }
 
         if (position >= 0) {
-            spinnerRepairStatus.setSelection(position)
+            spinnerRepairStatus.setSelection(
+                position
+            )
         }
     }
 
@@ -314,6 +322,68 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+        )
+    }
+
+    private fun openSpareParts() {
+
+        if (branchId.isEmpty()) {
+
+            Toast.makeText(
+                this,
+                "Branch ID not found for this repair",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        val sparePartsIntent =
+            Intent(
+                this,
+                SparePartsActivity::class.java
+            )
+
+        sparePartsIntent.putExtra(
+            "repairId",
+            repairId
+        )
+
+        sparePartsIntent.putExtra(
+            "branchId",
+            branchId
+        )
+
+        sparePartsIntent.putExtra(
+            "technicianId",
+            technicianId
+        )
+
+        startActivity(
+            sparePartsIntent
+        )
+    }
+
+    private fun openPayment() {
+
+        val paymentIntent =
+            Intent(
+                this,
+                PaymentActivity::class.java
+            )
+
+        paymentIntent.putExtra(
+            "repairId",
+            repairId
+        )
+
+        paymentIntent.putExtra(
+            "technicianId",
+            technicianId
+        )
+
+        startActivity(
+            paymentIntent
         )
     }
 }
