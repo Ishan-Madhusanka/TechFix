@@ -103,6 +103,9 @@
             android:name=".technician.SparePartsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".technician.PaymentActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

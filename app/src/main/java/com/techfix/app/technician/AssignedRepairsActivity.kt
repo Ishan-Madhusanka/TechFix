@@ -45,14 +45,26 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
         repairAdapter = RepairAdapter(emptyList()) { repair ->
 
-            val intent = android.content.Intent(
-                this,
-                TechnicianRepairDetailsActivity::class.java
+            val technicianId =
+                intent.getStringExtra("technicianId") ?: ""
+
+            val detailsIntent =
+                android.content.Intent(
+                    this,
+                    TechnicianRepairDetailsActivity::class.java
+                )
+
+            detailsIntent.putExtra(
+                "repairId",
+                repair.id
             )
 
-            intent.putExtra("repairId", repair.id)
+            detailsIntent.putExtra(
+                "technicianId",
+                technicianId
+            )
 
-            startActivity(intent)
+            startActivity(detailsIntent)
         }
 
         recyclerAssignedRepairs.layoutManager =
