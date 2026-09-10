@@ -80,17 +80,14 @@
             android:name=".repair.RepairDetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".repair.RepairTrackingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".technician.TechnicianDashboardActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".technician.AssignedRepairsActivity"
             android:exported="false"
@@ -109,6 +106,10 @@
         <activity
             android:name=".repair.RepairHistoryActivity"
             android:exported="false" />
+        <activity
+            android:name=".technician.TechnicianLoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
