@@ -24,10 +24,13 @@
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" >
 
-        <!-- Admin Dashboard -->
+        </activity>
+
+
+    <!-- Admin Dashboard -->
         <activity
             android:name=".admin.AdminDashboardActivity"
             android:exported="true"

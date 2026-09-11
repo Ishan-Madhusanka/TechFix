@@ -1,27 +1,39 @@
 package com.techfix.app
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.techfix.app.branch.BookingConfirmationActivity
 import com.techfix.app.model.Branch
 import com.techfix.app.repository.BranchRepository
 import com.techfix.app.repository.ServiceRepository
 import com.techfix.app.repository.SparePartRepository
 import com.techfix.app.repository.TechnicianRepository
 import com.techfix.app.utils.LocationUtils
-import android.content.Intent
-import com.techfix.app.branch.BookingConfirmationActivity
+
 class MainActivity : AppCompatActivity() {
 
-    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    }
+
+    private val branchRepository = BranchRepository()
+    private val serviceRepository = ServiceRepository()
+    private val sparePartRepository = SparePartRepository()
+    private val technicianRepository = TechnicianRepository()
+
+    private val fusedLocationClient by lazy {
+        LocationServices.getFusedLocationProviderClient(this)
+    }
 
     private var branches: List<Branch> = emptyList()
 
@@ -29,7 +41,11 @@ class MainActivity : AppCompatActivity() {
     private var currentLongitude: Double? = null
 
     private var selectedServiceId: String? = null
-    private var requiredPartId: String? = null
+    private var requiredPartId: String = ""
+
+    private var serviceLoaded = false
+    private var locationLoaded = false
+    private var branchesLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,78 +53,186 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(
-            findViewById(R.id.main)
-        ) { v, insets ->
-
-            val systemBars =
-                insets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            v.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
-
-            insets
-        }
-
+        /*
+         * TEMPORARY TEST
+         *
+         * We are testing the Windows Installation service.
+         * Firestore document ID:
+         * desktop_os_install
+         *
+         * IMPORTANT:
+         * After testing, restore this line to:
+         *
+         * selectedServiceId = intent.getStringExtra("SERVICE_ID")
+         */
         selectedServiceId = intent.getStringExtra("SERVICE_ID")
 
-        selectedServiceId?.let { serviceId ->
-            loadRequiredPartForService(serviceId)
-        }
-
         loadBranches()
-
+        loadSelectedService()
         checkLocationPermission()
     }
 
+    // ---------------------------------------------------------
+    // LOAD SELECTED SERVICE
+    // ---------------------------------------------------------
 
-     // Load active TechFix branches
+    private fun loadSelectedService() {
+
+        val serviceId = selectedServiceId
+
+        if (serviceId.isNullOrEmpty()) {
+
+            Log.e(
+                "TECHFIX_SERVICE",
+                "No SERVICE_ID received"
+            )
+
+            Toast.makeText(
+                this,
+                "Service not selected",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        Log.d(
+            "TECHFIX_SERVICE",
+            "Loading service: $serviceId"
+        )
+
+        serviceRepository.getServiceById(
+
+            serviceId = serviceId,
+
+            onSuccess = { service ->
+
+                Log.d(
+                    "TECHFIX_TEST",
+                    "Service loaded = ${service?.name}"
+                )
+
+                if (service == null) {
+
+                    Log.e(
+                        "TECHFIX_SERVICE",
+                        "Service not found: $serviceId"
+                    )
+
+                    Toast.makeText(
+                        this,
+                        "Service not found",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    return@getServiceById
+                }
+
+                requiredPartId = service.requiredPartId.trim()
+
+                serviceLoaded = true
+
+                Log.d(
+                    "TECHFIX_SERVICE",
+                    "Service: ${service.name}"
+                )
+
+                Log.d(
+                    "TECHFIX_SERVICE",
+                    "Required Part ID: '$requiredPartId'"
+                )
+
+                if (requiredPartId.isEmpty()) {
+
+                    Log.d(
+                        "TECHFIX_SERVICE",
+                        "No spare part required for this service"
+                    )
+                }
+
+                tryToFindSuitableBranch()
+            },
+
+            onFailure = { exception ->
+
+                Log.e(
+                    "TECHFIX_SERVICE",
+                    "Service loading failed: ${exception.message}",
+                    exception
+                )
+
+                Toast.makeText(
+                    this,
+                    "Failed to load service",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        )
+    }
+
+    // ---------------------------------------------------------
+    // LOAD ACTIVE BRANCHES
+    // ---------------------------------------------------------
 
     private fun loadBranches() {
-
-        val branchRepository = BranchRepository()
 
         branchRepository.getBranches(
 
             onSuccess = { branchList ->
 
-                branches = branchList
+                branches = branchList.filter {
+                    it.isActive
+                }
+
+                branchesLoaded = true
+
+                Log.d(
+                    "TECHFIX_BRANCH",
+                    "Active branches found: ${branches.size}"
+                )
 
                 branches.forEach { branch ->
 
                     Log.d(
                         "TECHFIX_BRANCH",
-                        "${branch.name} - ${branch.city} - " +
-                                "${branch.latitude}, ${branch.longitude}"
+                        "${branch.name} | ${branch.city} | ${branch.latitude}, ${branch.longitude}"
                     )
                 }
 
-                calculateBranchDistances()
+                tryToFindSuitableBranch()
             },
 
             onFailure = { exception ->
 
                 Log.e(
                     "TECHFIX_BRANCH",
-                    "Firestore error: ${exception.message}"
+                    "Branch loading failed: ${exception.message}",
+                    exception
                 )
+
+                Toast.makeText(
+                    this,
+                    "Failed to load branches",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         )
     }
 
-    /*
-     * Check runtime location permission
-     */
+    // ---------------------------------------------------------
+    // LOCATION PERMISSION
+    // ---------------------------------------------------------
+
     private fun checkLocationPermission() {
 
         if (
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
 
@@ -127,392 +251,91 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*
-     * Get current GPS location
-     */
-    private fun getCurrentLocation() {
+    // ---------------------------------------------------------
+    // GET CURRENT GPS LOCATION
+    // ---------------------------------------------------------
 
-        val fusedLocationClient =
-            LocationServices.getFusedLocationProviderClient(this)
+    private fun getCurrentLocation() {
 
         if (
             ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             return
         }
 
-        fusedLocationClient.getCurrentLocation(
-            com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
-            null
+        Log.d(
+            "TECHFIX_LOCATION",
+            "Requesting current location..."
         )
+
+        fusedLocationClient
+            .getCurrentLocation(
+                Priority.PRIORITY_HIGH_ACCURACY,
+                null
+            )
             .addOnSuccessListener { location ->
 
-                if (location != null) {
+                if (location == null) {
 
-                    currentLatitude = location.latitude
-                    currentLongitude = location.longitude
-
-                    Log.d(
+                    Log.e(
                         "TECHFIX_LOCATION",
-                        "Latitude: ${location.latitude}, " +
-                                "Longitude: ${location.longitude}"
+                        "Current location is null"
                     )
 
-                    calculateBranchDistances()
+                    Toast.makeText(
+                        this,
+                        "Unable to get current location",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                } else {
-
-                    Log.d(
-                        "TECHFIX_LOCATION",
-                        "Location is null"
-                    )
+                    return@addOnSuccessListener
                 }
+
+                currentLatitude = location.latitude
+                currentLongitude = location.longitude
+
+                locationLoaded = true
+
+                Log.d(
+                    "TECHFIX_LOCATION",
+                    "Latitude = ${location.latitude}"
+                )
+
+                Log.d(
+                    "TECHFIX_LOCATION",
+                    "Longitude = ${location.longitude}"
+                )
+
+                tryToFindSuitableBranch()
             }
+
             .addOnFailureListener { exception ->
 
                 Log.e(
                     "TECHFIX_LOCATION",
-                    "Location error: ${exception.message}"
+                    "Location error: ${exception.message}",
+                    exception
                 )
+
+                Toast.makeText(
+                    this,
+                    "Location error",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
-    /*
-     * Load selected service and get requiredPartId
-     */
-    private fun loadRequiredPartForService(serviceId: String) {
+    // ---------------------------------------------------------
+    // PERMISSION RESULT
+    // ---------------------------------------------------------
 
-        val serviceRepository = ServiceRepository()
-
-        serviceRepository.getServiceById(
-
-            serviceId = serviceId,
-
-            onSuccess = { service ->
-
-                if (service != null) {
-
-                    requiredPartId = service.requiredPartId
-
-                    Log.d(
-                        "TECHFIX_SERVICE",
-                        "Service: ${service.name} | " +
-                                "Required Part ID: ${service.requiredPartId}"
-                    )
-
-                    calculateBranchDistances()
-
-                } else {
-
-                    Log.d(
-                        "TECHFIX_SERVICE",
-                        "Service not found"
-                    )
-                }
-            },
-
-            onFailure = { exception ->
-
-                Log.e(
-                    "TECHFIX_SERVICE",
-                    "Service error: ${exception.message}"
-                )
-            }
-        )
-    }
-
-    /*
-     * Calculate distance from user to branches
-     * and sort nearest -> farthest
-     */
-    private fun calculateBranchDistances() {
-
-        val userLat = currentLatitude
-        val userLng = currentLongitude
-
-        if (
-            userLat == null ||
-            userLng == null ||
-            branches.isEmpty()
-        ) {
-            return
-        }
-
-        branches.forEach { branch ->
-
-            val distance =
-                LocationUtils.calculateDistance(
-                    userLatitude = userLat,
-                    userLongitude = userLng,
-                    branchLatitude = branch.latitude,
-                    branchLongitude = branch.longitude
-                )
-
-            Log.d(
-                "TECHFIX_DISTANCE",
-                "${branch.name} = %.2f km".format(distance)
-            )
-        }
-
-        val sortedBranches =
-            branches.sortedBy { branch ->
-
-                LocationUtils.calculateDistance(
-                    userLatitude = userLat,
-                    userLongitude = userLng,
-                    branchLatitude = branch.latitude,
-                    branchLongitude = branch.longitude
-                )
-            }
-
-        findSuitableBranch(
-            sortedBranches = sortedBranches,
-            index = 0
-        )
-    }
-
-    /*
-     * Find nearest suitable branch
-     *
-     * Checks:
-     * 1. Exact required spare part (if required)
-     * 2. Spare part available
-     * 3. Quantity > 0
-     * 4. Technician available
-     */
-    private fun findSuitableBranch(
-        sortedBranches: List<Branch>,
-        index: Int
-    ) {
-
-        if (index >= sortedBranches.size) {
-
-            Log.d(
-                "TECHFIX_SUITABLE_BRANCH",
-                "No suitable branch found"
-            )
-
-            return
-        }
-
-        val branch = sortedBranches[index]
-
-        val userLat = currentLatitude
-        val userLng = currentLongitude
-
-        Log.d(
-            "TECHFIX_SUITABLE_BRANCH",
-            "Checking branch: ${branch.name}"
-        )
-
-        if (
-            userLat != null &&
-            userLng != null
-        ) {
-
-            val distance =
-                LocationUtils.calculateDistance(
-                    userLatitude = userLat,
-                    userLongitude = userLng,
-                    branchLatitude = branch.latitude,
-                    branchLongitude = branch.longitude
-                )
-
-            Log.d(
-                "TECHFIX_SUITABLE_BRANCH",
-                "${branch.name} distance = %.2f km".format(distance)
-            )
-        }
-
-        val technicianRepository =
-            TechnicianRepository()
-
-        val partId = requiredPartId
-
-        /*
-         * CASE 1
-         * Service does not require a spare part
-         */
-        if (partId.isNullOrBlank()) {
-
-            Log.d(
-                "TECHFIX_SPARE_QUERY",
-                "${branch.name}: Service does not require a spare part"
-            )
-
-            checkTechnicianAvailability(
-                branch = branch,
-                sortedBranches = sortedBranches,
-                index = index,
-                technicianRepository = technicianRepository,
-                requiredPartName = null
-            )
-
-            return
-        }
-
-        /*
-         * CASE 2
-         * Service requires an exact spare part
-         */
-        val sparePartRepository =
-            SparePartRepository()
-
-        sparePartRepository.getRequiredSparePartByBranch(
-
-            branchId = branch.id,
-            requiredPartId = partId,
-
-            onSuccess = { sparePart ->
-
-                if (sparePart != null) {
-
-                    Log.d(
-                        "TECHFIX_SPARE_QUERY",
-                        "${branch.name}: Required spare part available"
-                    )
-
-                    Log.d(
-                        "TECHFIX_SPARE_QUERY",
-                        "Part: ${sparePart.name} | " +
-                                "Qty: ${sparePart.quantity} | " +
-                                "Price: ${sparePart.price}"
-                    )
-
-                    checkTechnicianAvailability(
-                        branch = branch,
-                        sortedBranches = sortedBranches,
-                        index = index,
-                        technicianRepository = technicianRepository,
-                        requiredPartName = sparePart.name
-                    )
-
-                } else {
-
-                    Log.d(
-                        "TECHFIX_SPARE_QUERY",
-                        "${branch.name}: Required spare part $partId unavailable"
-                    )
-
-                    findSuitableBranch(
-                        sortedBranches = sortedBranches,
-                        index = index + 1
-                    )
-                }
-            },
-
-            onFailure = { exception ->
-
-                Log.e(
-                    "TECHFIX_SUITABLE_BRANCH",
-                    "Spare part error: ${exception.message}"
-                )
-            }
-        )
-    }
-
-    /*
-     * Check technician availability
-     */
-    private fun checkTechnicianAvailability(
-        branch: Branch,
-        sortedBranches: List<Branch>,
-        index: Int,
-        technicianRepository: TechnicianRepository,
-        requiredPartName: String?
-    ) {
-
-        technicianRepository.getAvailableTechniciansByBranch(
-
-            branchId = branch.id,
-
-            onSuccess = { technicians ->
-
-                Log.d(
-                    "TECHFIX_TECH_QUERY",
-                    "${branch.name}: Available technicians = ${technicians.size}"
-                )
-
-                if (technicians.isNotEmpty()) {
-
-                    Log.d(
-                        "TECHFIX_SUITABLE_BRANCH",
-                        "Suitable Branch: ${branch.name}"
-                    )
-
-                    Log.d(
-                        "TECHFIX_SUITABLE_BRANCH",
-                        "Branch ID: ${branch.id}"
-                    )
-
-                    if (requiredPartName != null) {
-
-                        Log.d(
-                            "TECHFIX_SUITABLE_BRANCH",
-                            "Required Part: $requiredPartName"
-                        )
-
-                        val selectedTechnician = technicians.first()
-
-                        val confirmationIntent =
-                            Intent(this@MainActivity, BookingConfirmationActivity::class.java)
-
-                        confirmationIntent.putExtra("SERVICE_ID", selectedServiceId)
-                        confirmationIntent.putExtra("BRANCH_ID", branch.id)
-                        confirmationIntent.putExtra("BRANCH_NAME", branch.name)
-                        confirmationIntent.putExtra("TECHNICIAN_ID", selectedTechnician.id)
-                        confirmationIntent.putExtra("TECHNICIAN_NAME", selectedTechnician.name)
-
-                        startActivity(confirmationIntent)
-                    }
-
-                    else {
-
-                        Log.d(
-                            "TECHFIX_SUITABLE_BRANCH",
-                            "Required Part: Not required"
-                        )
-                    }
-
-                    technicians.forEach { technician ->
-
-                        Log.d(
-                            "TECHFIX_SUITABLE_BRANCH",
-                            "Technician: ${technician.name} | " +
-                                    "Speciality: ${technician.speciality}"
-                        )
-                    }
-
-                } else {
-
-                    Log.d(
-                        "TECHFIX_SUITABLE_BRANCH",
-                        "${branch.name}: No available technicians"
-                    )
-
-                    findSuitableBranch(
-                        sortedBranches = sortedBranches,
-                        index = index + 1
-                    )
-                }
-            },
-
-            onFailure = { exception ->
-
-                Log.e(
-                    "TECHFIX_SUITABLE_BRANCH",
-                    "Technician error: ${exception.message}"
-                )
-            }
-        )
-    }
-
-    /*
-     * Location permission result
-     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -525,21 +348,387 @@ class MainActivity : AppCompatActivity() {
             grantResults
         )
 
-        if (
-            requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
-            grantResults.isNotEmpty() &&
-            grantResults[0] ==
-            PackageManager.PERMISSION_GRANTED
-        ) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
 
-            getCurrentLocation()
+            if (
+                grantResults.isNotEmpty() &&
+                grantResults.any {
+                    it == PackageManager.PERMISSION_GRANTED
+                }
+            ) {
 
-        } else {
+                getCurrentLocation()
+
+            } else {
+
+                Toast.makeText(
+                    this,
+                    "Location permission is required",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    // ---------------------------------------------------------
+    // WAIT UNTIL EVERYTHING IS READY
+    // ---------------------------------------------------------
+
+    private fun tryToFindSuitableBranch() {
+
+        Log.d(
+            "TECHFIX_FLOW",
+            "Ready status -> Service=$serviceLoaded, Branches=$branchesLoaded, Location=$locationLoaded"
+        )
+
+        if (!serviceLoaded) {
+            return
+        }
+
+        if (!branchesLoaded) {
+            return
+        }
+
+        if (!locationLoaded) {
+            return
+        }
+
+        if (branches.isEmpty()) {
+
+            Toast.makeText(
+                this,
+                "No active branches available",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        calculateBranchDistances()
+    }
+
+    // ---------------------------------------------------------
+    // CALCULATE DISTANCES
+    // ---------------------------------------------------------
+
+    private fun calculateBranchDistances() {
+
+        val userLatitude = currentLatitude ?: return
+        val userLongitude = currentLongitude ?: return
+
+        val sortedBranches = branches.sortedBy { branch ->
+
+            val distance = LocationUtils.calculateDistance(
+                userLatitude,
+                userLongitude,
+                branch.latitude,
+                branch.longitude
+            )
 
             Log.d(
-                "TECHFIX_LOCATION",
-                "Location permission denied"
+                "TECHFIX_DISTANCE",
+                "${branch.name} distance = ${"%.2f".format(distance)} km"
             )
+
+            distance
         }
+
+        if (sortedBranches.isEmpty()) {
+
+            Toast.makeText(
+                this,
+                "No branches available",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            return
+        }
+
+        Log.d(
+            "TECHFIX_FLOW",
+            "Starting suitable branch search"
+        )
+
+        findSuitableBranch(
+            sortedBranches = sortedBranches,
+            index = 0
+        )
+    }
+
+    // ---------------------------------------------------------
+    // FIND SUITABLE BRANCH
+    // ---------------------------------------------------------
+
+    private fun findSuitableBranch(
+        sortedBranches: List<Branch>,
+        index: Int
+    ) {
+
+        if (index >= sortedBranches.size) {
+
+            Log.d(
+                "TECHFIX_FLOW",
+                "No suitable branch found"
+            )
+
+            Toast.makeText(
+                this,
+                "No suitable branch available",
+                Toast.LENGTH_LONG
+            ).show()
+
+            return
+        }
+
+        val branch = sortedBranches[index]
+
+        Log.d(
+            "TECHFIX_FLOW",
+            "Checking branch: ${branch.name}"
+        )
+
+        /*
+         * If requiredPartId is empty,
+         * this service does NOT need a spare part.
+         *
+         * Therefore skip the spare-part check
+         * and directly check technician availability.
+         */
+
+        if (requiredPartId.isEmpty()) {
+
+            Log.d(
+                "TECHFIX_SPARE_QUERY",
+                "${branch.name}: No spare part required - skipping spare part check"
+            )
+
+            checkTechnicianAvailability(
+                branch = branch,
+                sortedBranches = sortedBranches,
+                index = index,
+                requiredPartName = "Not Required"
+            )
+
+            return
+        }
+
+        /*
+         * Service needs a specific spare part.
+         */
+
+        Log.d(
+            "TECHFIX_SPARE_QUERY",
+            "Checking required part '$requiredPartId' at branch ${branch.id}"
+        )
+
+        sparePartRepository.getRequiredSparePartByBranch(
+
+            branchId = branch.id,
+            requiredPartId = requiredPartId,
+
+            onSuccess = { sparePart ->
+
+                if (sparePart != null) {
+
+                    Log.d(
+                        "TECHFIX_SPARE_QUERY",
+                        "Required part found: ${sparePart.name}"
+                    )
+
+                    checkTechnicianAvailability(
+                        branch = branch,
+                        sortedBranches = sortedBranches,
+                        index = index,
+                        requiredPartName = sparePart.name
+                    )
+
+                } else {
+
+                    Log.d(
+                        "TECHFIX_SPARE_QUERY",
+                        "Required part not available at ${branch.name}"
+                    )
+
+                    findSuitableBranch(
+                        sortedBranches,
+                        index + 1
+                    )
+                }
+            },
+
+            onFailure = { exception ->
+
+                Log.e(
+                    "TECHFIX_SPARE_QUERY",
+                    "Spare part query failed: ${exception.message}",
+                    exception
+                )
+
+                findSuitableBranch(
+                    sortedBranches,
+                    index + 1
+                )
+            }
+        )
+    }
+
+    // ---------------------------------------------------------
+    // CHECK TECHNICIAN
+    // ---------------------------------------------------------
+
+    private fun checkTechnicianAvailability(
+        branch: Branch,
+        sortedBranches: List<Branch>,
+        index: Int,
+        requiredPartName: String
+    ) {
+
+        Log.d(
+            "TECHFIX_TECH_QUERY",
+            "Checking technicians at ${branch.name}"
+        )
+
+        technicianRepository.getAvailableTechniciansByBranch(
+
+            branchId = branch.id,
+
+            onSuccess = { technicians ->
+
+                Log.d(
+                    "TECHFIX_TECH_QUERY",
+                    "${branch.name} -> ${technicians.size} available technicians"
+                )
+
+                if (technicians.isNotEmpty()) {
+
+                    val selectedTechnician = technicians.first()
+
+                    val latitude = currentLatitude
+                    val longitude = currentLongitude
+
+                    val distance =
+                        if (latitude != null && longitude != null) {
+
+                            LocationUtils.calculateDistance(
+                                latitude,
+                                longitude,
+                                branch.latitude,
+                                branch.longitude
+                            )
+
+                        } else {
+                            0f
+                        }
+
+                    Log.d(
+                        "TECHFIX_RESULT",
+                        "Suitable Branch: ${branch.name}"
+                    )
+
+                    Log.d(
+                        "TECHFIX_RESULT",
+                        "Branch ID: ${branch.id}"
+                    )
+
+                    Log.d(
+                        "TECHFIX_RESULT",
+                        "Distance: ${"%.2f".format(distance)} km"
+                    )
+
+                    Log.d(
+                        "TECHFIX_RESULT",
+                        "Required Part: $requiredPartName"
+                    )
+
+                    Log.d(
+                        "TECHFIX_RESULT",
+                        "Technician: ${selectedTechnician.name} | Speciality: ${selectedTechnician.speciality}"
+                    )
+
+                    openBookingConfirmation(
+                        branch = branch,
+                        technicianId = selectedTechnician.id,
+                        technicianName = selectedTechnician.name
+                    )
+
+                } else {
+
+                    Log.d(
+                        "TECHFIX_TECH_QUERY",
+                        "No available technician at ${branch.name}. Checking next branch."
+                    )
+
+                    findSuitableBranch(
+                        sortedBranches,
+                        index + 1
+                    )
+                }
+            },
+
+            onFailure = { exception ->
+
+                Log.e(
+                    "TECHFIX_TECH_QUERY",
+                    "Technician query failed: ${exception.message}",
+                    exception
+                )
+
+                findSuitableBranch(
+                    sortedBranches,
+                    index + 1
+                )
+            }
+        )
+    }
+
+    // ---------------------------------------------------------
+    // OPEN BOOKING CONFIRMATION
+    // ---------------------------------------------------------
+
+    private fun openBookingConfirmation(
+        branch: Branch,
+        technicianId: String,
+        technicianName: String
+    ) {
+
+        val serviceId = selectedServiceId ?: return
+
+        Log.d(
+            "TECHFIX_FLOW",
+            "Opening BookingConfirmationActivity"
+        )
+
+        val confirmationIntent =
+            Intent(
+                this,
+                BookingConfirmationActivity::class.java
+            )
+
+        confirmationIntent.putExtra(
+            "SERVICE_ID",
+            serviceId
+        )
+
+        confirmationIntent.putExtra(
+            "BRANCH_ID",
+            branch.id
+        )
+
+        confirmationIntent.putExtra(
+            "BRANCH_NAME",
+            branch.name
+        )
+
+        confirmationIntent.putExtra(
+            "TECHNICIAN_ID",
+            technicianId
+        )
+
+        confirmationIntent.putExtra(
+            "TECHNICIAN_NAME",
+            technicianName
+        )
+
+        startActivity(confirmationIntent)
     }
 }
