@@ -102,6 +102,9 @@ class ManageSparePartsActivity : AppCompatActivity() {
         val editName =
             dialogView.findViewById<TextInputEditText>(R.id.editSparePartName)
 
+        val editPartId =
+            dialogView.findViewById<TextInputEditText>(R.id.editSparePartPartId)
+
         val editCategory =
             dialogView.findViewById<TextInputEditText>(R.id.editSparePartCategory)
 
@@ -126,6 +129,7 @@ class ManageSparePartsActivity : AppCompatActivity() {
         if (sparePart != null) {
 
             editName.setText(sparePart.name)
+            editPartId.setText(sparePart.partId)
             editCategory.setText(sparePart.categoryId)
             editBranch.setText(sparePart.branchId)
             editQuantity.setText(sparePart.quantity.toString())
@@ -151,6 +155,7 @@ class ManageSparePartsActivity : AppCompatActivity() {
         btnSave.setOnClickListener {
 
             val name = editName.text.toString().trim()
+            val partId = editPartId.text.toString().trim().lowercase()
             val categoryId = editCategory.text.toString().trim().lowercase()
             val branchId = editBranch.text.toString().trim().lowercase()
 
@@ -161,6 +166,7 @@ class ManageSparePartsActivity : AppCompatActivity() {
 
             if (
                 name.isEmpty() ||
+                partId.isEmpty() ||
                 categoryId.isEmpty() ||
                 branchId.isEmpty() ||
                 quantityText.isEmpty() ||
@@ -205,6 +211,7 @@ class ManageSparePartsActivity : AppCompatActivity() {
 
                 val newSparePart = SparePart(
                     name = name,
+                    partId = partId,
                     categoryId = categoryId,
                     branchId = branchId,
                     quantity = quantity,
@@ -239,6 +246,7 @@ class ManageSparePartsActivity : AppCompatActivity() {
 
                 val updatedSparePart = sparePart.copy(
                     name = name,
+                    partId = partId,
                     categoryId = categoryId,
                     branchId = branchId,
                     quantity = quantity,

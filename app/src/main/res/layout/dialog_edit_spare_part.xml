@@ -31,6 +31,7 @@
             android:textColor="#666666"
             android:textSize="14sp" />
 
+        <!-- Spare Part Name -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +45,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Part ID -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Part ID"
+            app:boxStrokeColor="#1565C0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editSparePartPartId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Category ID -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +77,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Branch ID -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,6 +92,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Quantity -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +107,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Price -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,6 +122,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Available Switch -->
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchSparePartAvailable"
             android:layout_width="match_parent"
@@ -111,6 +134,7 @@
             app:thumbTint="#1565C0"
             app:trackTint="#90CAF9" />
 
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
