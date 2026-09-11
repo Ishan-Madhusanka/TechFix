@@ -38,5 +38,11 @@
             android:name=".LoginActivity"
             android:exported="false" />
 
+        <!-- Profile Activity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
     </application>
+
 </manifest>

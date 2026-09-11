@@ -66,6 +66,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Profile button
+        val btnProfile = findViewById<Button>(R.id.btnProfile)
+
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         // Branch Repository
         val branchRepository = BranchRepository()
 
