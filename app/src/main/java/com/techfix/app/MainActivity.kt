@@ -58,6 +58,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Login button
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         // Branch Repository
         val branchRepository = BranchRepository()
 

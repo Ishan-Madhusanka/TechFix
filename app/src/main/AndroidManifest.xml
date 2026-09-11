@@ -33,5 +33,10 @@
             android:name=".RegisterActivity"
             android:exported="false" />
 
+        <!-- Login Activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
     </application>
 </manifest>
