@@ -8,10 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     private lateinit var etName: EditText
     private lateinit var etEmail: EditText
@@ -24,8 +26,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        // Firebase
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
+        // Connect UI elements
         etName = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
@@ -45,6 +50,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = etPassword.text.toString()
         val confirmPassword = etConfirmPassword.text.toString()
 
+        // Validation
         if (name.isEmpty()) {
             etName.error = "Enter your name"
             return
@@ -72,25 +78,67 @@ class RegisterActivity : AppCompatActivity() {
 
         btnRegister.isEnabled = false
 
+        // Create Firebase Authentication account
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
 
-                btnRegister.isEnabled = true
-
                 if (task.isSuccessful) {
 
-                    Toast.makeText(
-                        this,
-                        "Registration successful!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val user = auth.currentUser
 
-                    Log.d(
-                        "TECHFIX_AUTH",
-                        "SUCCESS - User created: ${auth.currentUser?.uid}"
-                    )
+                    if (user != null) {
+
+                        val userId = user.uid
+
+                        // User data for Firestore
+                        val userData = hashMapOf(
+                            "name" to name,
+                            "email" to email,
+                            "role" to "CUSTOMER",
+                            "createdAt" to com.google.firebase.Timestamp.now()
+                        )
+
+                        // Save user data in Firestore
+                        firestore.collection("users")
+                            .document(userId)
+                            .set(userData)
+                            .addOnSuccessListener {
+
+                                btnRegister.isEnabled = true
+
+                                Toast.makeText(
+                                    this,
+                                    "Registration successful!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                Log.d(
+                                    "TECHFIX_FIRESTORE",
+                                    "User saved successfully: $userId"
+                                )
+                            }
+                            .addOnFailureListener { exception ->
+
+                                btnRegister.isEnabled = true
+
+                                Toast.makeText(
+                                    this,
+                                    "Account created, but profile save failed.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                Log.e(
+                                    "TECHFIX_FIRESTORE",
+                                    "Failed to save user: ${exception.message}",
+                                    exception
+                                )
+                            }
+
+                    }
 
                 } else {
+
+                    btnRegister.isEnabled = true
 
                     val errorMessage =
                         task.exception?.message ?: "Unknown error"
