@@ -76,8 +76,8 @@ class LoginActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    // Temporary: go to MainActivity
-                    val intent = Intent(this, MainActivity::class.java)
+                    // Go to Home screen
+                    val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
 
