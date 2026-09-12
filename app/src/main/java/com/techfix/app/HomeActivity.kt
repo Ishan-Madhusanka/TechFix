@@ -31,11 +31,8 @@ class HomeActivity : AppCompatActivity() {
 
         // Repair Services
         btnServices.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Repair Services coming soon",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, RepairServicesActivity::class.java)
+            startActivity(intent)
         }
 
         // My Profile

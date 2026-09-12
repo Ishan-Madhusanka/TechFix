@@ -53,6 +53,11 @@
             android:name=".DeviceCategoriesActivity"
             android:exported="false" />
 
+        <!-- Repair Services Activity -->
+        <activity
+            android:name=".RepairServicesActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
