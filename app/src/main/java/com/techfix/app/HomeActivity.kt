@@ -25,11 +25,8 @@ class HomeActivity : AppCompatActivity() {
 
         // Device Categories
         btnCategories.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Device Categories coming soon",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, DeviceCategoriesActivity::class.java)
+            startActivity(intent)
         }
 
         // Repair Services

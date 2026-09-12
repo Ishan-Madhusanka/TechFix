@@ -48,6 +48,11 @@
             android:name=".HomeActivity"
             android:exported="false" />
 
+        <!-- Device Categories Activity -->
+        <activity
+            android:name=".DeviceCategoriesActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
