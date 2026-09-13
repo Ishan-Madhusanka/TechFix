@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tvBookRepairTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Repair"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:id="@+id/tvSelectedService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Selected Service: Screen Repair"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp" />
+
+        <EditText
+            android:id="@+id/etDeviceBrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Device Brand"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/etDeviceModel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Device Model"
+            android:inputType="text"
+            app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:hint="Describe the problem"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/etAppointmentDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Appointment Date"
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none"
+            app:layout_constraintTop_toBottomOf="@id/etDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Upload Damage Image"
+            app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnSubmitBooking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Submit Booking"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="30dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

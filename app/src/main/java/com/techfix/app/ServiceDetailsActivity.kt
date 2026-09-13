@@ -1,9 +1,9 @@
 package com.techfix.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class ServiceDetailsActivity : AppCompatActivity() {
@@ -26,13 +26,14 @@ class ServiceDetailsActivity : AppCompatActivity() {
             tvServiceName.text = serviceName
         }
 
+        // Book Repair button
         btnBookRepair.setOnClickListener {
 
-            Toast.makeText(
-                this,
-                "Booking screen coming next!",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, BookRepairActivity::class.java)
+
+            intent.putExtra("serviceName", serviceName)
+
+            startActivity(intent)
         }
     }
 }
