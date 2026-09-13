@@ -82,12 +82,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
+        <!-- Selected damage image -->
+        <ImageView
+            android:id="@+id/ivDamageImage"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Selected damage image"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <Button
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Upload Damage Image"
-            app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
+            app:layout_constraintTop_toBottomOf="@id/ivDamageImage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp" />

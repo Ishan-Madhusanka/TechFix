@@ -1,11 +1,14 @@
 package com.techfix.app
 
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Calendar
 
@@ -16,8 +19,31 @@ class BookRepairActivity : AppCompatActivity() {
     private lateinit var etDeviceModel: EditText
     private lateinit var etDescription: EditText
     private lateinit var etAppointmentDate: EditText
+    private lateinit var ivDamageImage: ImageView
     private lateinit var btnUploadImage: Button
     private lateinit var btnSubmitBooking: Button
+
+    private var selectedImageUri: Uri? = null
+
+    // Gallery image picker
+    private val imagePicker =
+        registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ) { uri ->
+
+            if (uri != null) {
+                selectedImageUri = uri
+
+                ivDamageImage.setImageURI(uri)
+                ivDamageImage.visibility = ImageView.VISIBLE
+
+                Toast.makeText(
+                    this,
+                    "Image selected successfully!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +55,7 @@ class BookRepairActivity : AppCompatActivity() {
         etDeviceModel = findViewById(R.id.etDeviceModel)
         etDescription = findViewById(R.id.etDescription)
         etAppointmentDate = findViewById(R.id.etAppointmentDate)
+        ivDamageImage = findViewById(R.id.ivDamageImage)
         btnUploadImage = findViewById(R.id.btnUploadImage)
         btnSubmitBooking = findViewById(R.id.btnSubmitBooking)
 
@@ -69,14 +96,10 @@ class BookRepairActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        // Upload image - functionality will be added next
+        // Open gallery
         btnUploadImage.setOnClickListener {
 
-            Toast.makeText(
-                this,
-                "Image upload coming next!",
-                Toast.LENGTH_SHORT
-            ).show()
+            imagePicker.launch("image/*")
         }
 
         // Submit booking
@@ -104,6 +127,15 @@ class BookRepairActivity : AppCompatActivity() {
 
             if (appointmentDate.isEmpty()) {
                 etAppointmentDate.error = "Select appointment date"
+                return@setOnClickListener
+            }
+
+            if (selectedImageUri == null) {
+                Toast.makeText(
+                    this,
+                    "Please upload a damage image",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
