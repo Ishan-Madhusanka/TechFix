@@ -10,6 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class BookRepairActivity : AppCompatActivity() {
@@ -24,6 +27,10 @@ class BookRepairActivity : AppCompatActivity() {
     private lateinit var btnSubmitBooking: Button
 
     private var selectedImageUri: Uri? = null
+
+    // Firebase
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     // Gallery image picker
     private val imagePicker =
@@ -110,6 +117,19 @@ class BookRepairActivity : AppCompatActivity() {
             val description = etDescription.text.toString().trim()
             val appointmentDate = etAppointmentDate.text.toString().trim()
 
+            val currentUser = auth.currentUser
+
+            // Check logged-in user
+            if (currentUser == null) {
+                Toast.makeText(
+                    this,
+                    "Please login before booking.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            // Validation
             if (brand.isEmpty()) {
                 etDeviceBrand.error = "Enter device brand"
                 return@setOnClickListener
@@ -139,11 +159,71 @@ class BookRepairActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            Toast.makeText(
-                this,
-                "Booking details are valid!",
-                Toast.LENGTH_SHORT
-            ).show()
+            // Disable button while saving
+            btnSubmitBooking.isEnabled = false
+            btnSubmitBooking.text = "Saving..."
+
+            // Selected service
+            val selectedService = serviceName ?: "Unknown Service"
+
+            // Booking data
+            val booking = hashMapOf(
+                "customerId" to currentUser.uid,
+                "customerEmail" to (currentUser.email ?: ""),
+                "serviceName" to selectedService,
+                "deviceBrand" to brand,
+                "deviceModel" to model,
+                "description" to description,
+                "appointmentDate" to appointmentDate,
+
+                // Option 2:
+                // Image is NOT uploaded to Firebase Storage.
+                "imageSelected" to true,
+                "imageUri" to selectedImageUri.toString(),
+
+                // Initial repair status
+                "status" to "PENDING",
+
+                // Created time
+                "createdAt" to FieldValue.serverTimestamp()
+            )
+
+            // Save booking to Firestore
+            db.collection("repairRequests")
+                .add(booking)
+                .addOnSuccessListener {
+
+                    Toast.makeText(
+                        this,
+                        "Booking submitted successfully!",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    btnSubmitBooking.isEnabled = true
+                    btnSubmitBooking.text = "Submit Booking"
+
+                    // Clear form
+                    etDeviceBrand.text.clear()
+                    etDeviceModel.text.clear()
+                    etDescription.text.clear()
+                    etAppointmentDate.text.clear()
+
+                    ivDamageImage.setImageDrawable(null)
+                    ivDamageImage.visibility = ImageView.GONE
+
+                    selectedImageUri = null
+                }
+                .addOnFailureListener { error ->
+
+                    Toast.makeText(
+                        this,
+                        "Booking failed: ${error.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    btnSubmitBooking.isEnabled = true
+                    btnSubmitBooking.text = "Submit Booking"
+                }
         }
     }
 }
