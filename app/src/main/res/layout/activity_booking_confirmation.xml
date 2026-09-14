@@ -1,10 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".branch.BookingConfirmationActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tvConfirmationTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Booking Confirmed!"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp" />
+
+        <TextView
+            android:id="@+id/tvConfirmationMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Your repair booking has been submitted successfully."
+            android:textSize="17sp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tvConfirmationService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Service: Screen Repair"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationMessage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp" />
+
+        <TextView
+            android:id="@+id/tvConfirmationDevice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Device: Samsung A15"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationService"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvConfirmationDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Appointment Date: 2026-09-15"
+            android:textSize="17sp"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationDevice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvConfirmationStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Status: PENDING"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btnBackToHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Back to Home"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,6 +1,7 @@
 package com.techfix.app
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -32,13 +33,14 @@ class BookRepairActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    // Gallery image picker
+    // Image picker
     private val imagePicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri ->
 
             if (uri != null) {
+
                 selectedImageUri = uri
 
                 ivDamageImage.setImageURI(uri)
@@ -57,6 +59,7 @@ class BookRepairActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_book_repair)
 
+        // Connect XML views
         tvSelectedService = findViewById(R.id.tvSelectedService)
         etDeviceBrand = findViewById(R.id.etDeviceBrand)
         etDeviceModel = findViewById(R.id.etDeviceModel)
@@ -73,7 +76,7 @@ class BookRepairActivity : AppCompatActivity() {
             tvSelectedService.text = "Selected Service: $serviceName"
         }
 
-        // Open calendar when date field is clicked
+        // Appointment date picker
         etAppointmentDate.setOnClickListener {
 
             val calendar = Calendar.getInstance()
@@ -103,7 +106,7 @@ class BookRepairActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        // Open gallery
+        // Upload damage image
         btnUploadImage.setOnClickListener {
 
             imagePicker.launch("image/*")
@@ -119,43 +122,59 @@ class BookRepairActivity : AppCompatActivity() {
 
             val currentUser = auth.currentUser
 
-            // Check logged-in user
+            // Check login
             if (currentUser == null) {
+
                 Toast.makeText(
                     this,
                     "Please login before booking.",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 return@setOnClickListener
             }
 
-            // Validation
+            // Validate brand
             if (brand.isEmpty()) {
+
                 etDeviceBrand.error = "Enter device brand"
+
                 return@setOnClickListener
             }
 
+            // Validate model
             if (model.isEmpty()) {
+
                 etDeviceModel.error = "Enter device model"
+
                 return@setOnClickListener
             }
 
+            // Validate description
             if (description.isEmpty()) {
+
                 etDescription.error = "Describe the problem"
+
                 return@setOnClickListener
             }
 
+            // Validate appointment date
             if (appointmentDate.isEmpty()) {
+
                 etAppointmentDate.error = "Select appointment date"
+
                 return@setOnClickListener
             }
 
+            // Validate image
             if (selectedImageUri == null) {
+
                 Toast.makeText(
                     this,
                     "Please upload a damage image",
                     Toast.LENGTH_SHORT
                 ).show()
+
                 return@setOnClickListener
             }
 
@@ -163,28 +182,34 @@ class BookRepairActivity : AppCompatActivity() {
             btnSubmitBooking.isEnabled = false
             btnSubmitBooking.text = "Saving..."
 
-            // Selected service
             val selectedService = serviceName ?: "Unknown Service"
 
             // Booking data
             val booking = hashMapOf(
+
                 "customerId" to currentUser.uid,
+
                 "customerEmail" to (currentUser.email ?: ""),
+
                 "serviceName" to selectedService,
+
                 "deviceBrand" to brand,
+
                 "deviceModel" to model,
+
                 "description" to description,
+
                 "appointmentDate" to appointmentDate,
 
-                // Option 2:
-                // Image is NOT uploaded to Firebase Storage.
+                // Image selected locally
                 "imageSelected" to true,
+
                 "imageUri" to selectedImageUri.toString(),
 
-                // Initial repair status
+                // Initial status
                 "status" to "PENDING",
 
-                // Created time
+                // Firebase server timestamp
                 "createdAt" to FieldValue.serverTimestamp()
             )
 
@@ -196,22 +221,40 @@ class BookRepairActivity : AppCompatActivity() {
                     Toast.makeText(
                         this,
                         "Booking submitted successfully!",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
 
+                    // Open Booking Confirmation screen
+                    val confirmationIntent = Intent(
+                        this,
+                        BookingConfirmationActivity::class.java
+                    )
+
+                    confirmationIntent.putExtra(
+                        "serviceName",
+                        selectedService
+                    )
+
+                    confirmationIntent.putExtra(
+                        "deviceBrand",
+                        brand
+                    )
+
+                    confirmationIntent.putExtra(
+                        "deviceModel",
+                        model
+                    )
+
+                    confirmationIntent.putExtra(
+                        "appointmentDate",
+                        appointmentDate
+                    )
+
+                    startActivity(confirmationIntent)
+
+                    // Reset button
                     btnSubmitBooking.isEnabled = true
                     btnSubmitBooking.text = "Submit Booking"
-
-                    // Clear form
-                    etDeviceBrand.text.clear()
-                    etDeviceModel.text.clear()
-                    etDescription.text.clear()
-                    etAppointmentDate.text.clear()
-
-                    ivDamageImage.setImageDrawable(null)
-                    ivDamageImage.visibility = ImageView.GONE
-
-                    selectedImageUri = null
                 }
                 .addOnFailureListener { error ->
 

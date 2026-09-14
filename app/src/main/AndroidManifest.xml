@@ -24,7 +24,6 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,14 +57,24 @@
         <activity
             android:name=".RepairServicesActivity"
             android:exported="false" />
+
+        <!-- Service Details Activity -->
         <activity
             android:name=".ServiceDetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Book Repair Activity -->
         <activity
             android:name=".BookRepairActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- Booking Confirmation Activity -->
+        <activity
+            android:name=".BookingConfirmationActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
