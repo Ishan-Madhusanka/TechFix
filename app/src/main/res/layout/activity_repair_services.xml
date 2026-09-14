@@ -19,15 +19,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="60dp" />
 
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Services for: Device"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp" />
+
     <Button
         android:id="@+id/btnScreenRepair"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Screen Repair"
-        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvCategoryName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="30dp" />
 
     <Button
         android:id="@+id/btnBatteryRepair"
