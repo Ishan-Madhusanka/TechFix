@@ -19,8 +19,11 @@ class ServiceDetailsActivity : AppCompatActivity() {
         tvServiceName = findViewById(R.id.tvServiceName)
         btnBookRepair = findViewById(R.id.btnBookRepair)
 
-        // Get selected service name
+        // Get selected service
         val serviceName = intent.getStringExtra("serviceName")
+
+        // Get selected device category
+        val categoryName = intent.getStringExtra("categoryName")
 
         if (serviceName != null) {
             tvServiceName.text = serviceName
@@ -29,9 +32,22 @@ class ServiceDetailsActivity : AppCompatActivity() {
         // Book Repair button
         btnBookRepair.setOnClickListener {
 
-            val intent = Intent(this, BookRepairActivity::class.java)
+            val intent = Intent(
+                this,
+                BookRepairActivity::class.java
+            )
 
-            intent.putExtra("serviceName", serviceName)
+            // Send service name
+            intent.putExtra(
+                "serviceName",
+                serviceName
+            )
+
+            // Send device category
+            intent.putExtra(
+                "categoryName",
+                categoryName
+            )
 
             startActivity(intent)
         }

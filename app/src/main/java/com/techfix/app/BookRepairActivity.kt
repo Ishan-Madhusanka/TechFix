@@ -72,6 +72,9 @@ class BookRepairActivity : AppCompatActivity() {
         // Get selected service
         val serviceName = intent.getStringExtra("serviceName")
 
+        // Get selected device category
+        val categoryName = intent.getStringExtra("categoryName")
+
         if (serviceName != null) {
             tvSelectedService.text = "Selected Service: $serviceName"
         }
@@ -191,6 +194,8 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "customerEmail" to (currentUser.email ?: ""),
 
+                "categoryName" to (categoryName ?: "Unknown Category"),
+
                 "serviceName" to selectedService,
 
                 "deviceBrand" to brand,
@@ -233,6 +238,11 @@ class BookRepairActivity : AppCompatActivity() {
                     confirmationIntent.putExtra(
                         "serviceName",
                         selectedService
+                    )
+
+                    confirmationIntent.putExtra(
+                        "categoryName",
+                        categoryName
                     )
 
                     confirmationIntent.putExtra(

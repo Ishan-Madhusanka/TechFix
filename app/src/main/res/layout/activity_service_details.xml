@@ -35,7 +35,7 @@
         android:id="@+id/tvServiceDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Professional screen repair service for damaged or broken screens."
+        android:text="Professional repair service for your device."
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/tvServiceName"
         app:layout_constraintStart_toStartOf="parent"

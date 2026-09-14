@@ -25,21 +25,26 @@ class BookingConfirmationActivity : AppCompatActivity() {
         btnBackToHome = findViewById(R.id.btnBackToHome)
 
         // Get booking details
+        val categoryName = intent.getStringExtra("categoryName")
         val serviceName = intent.getStringExtra("serviceName")
         val deviceBrand = intent.getStringExtra("deviceBrand")
         val deviceModel = intent.getStringExtra("deviceModel")
         val appointmentDate = intent.getStringExtra("appointmentDate")
 
-        // Display booking details
+        // Display category and service
         tvConfirmationService.text =
-            "Service: ${serviceName ?: "Unknown Service"}"
+            "Category: ${categoryName ?: "Unknown Category"}\n" +
+                    "Service: ${serviceName ?: "Unknown Service"}"
 
+        // Display device
         tvConfirmationDevice.text =
             "Device: ${deviceBrand ?: ""} ${deviceModel ?: ""}"
 
+        // Display appointment date
         tvConfirmationDate.text =
             "Appointment Date: ${appointmentDate ?: ""}"
 
+        // Display status
         tvConfirmationStatus.text =
             "Status: PENDING"
 
