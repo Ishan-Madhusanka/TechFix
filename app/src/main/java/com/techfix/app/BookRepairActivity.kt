@@ -75,8 +75,15 @@ class BookRepairActivity : AppCompatActivity() {
         // Get selected device category
         val categoryName = intent.getStringExtra("categoryName")
 
+        // Get selected service price
+        val servicePrice = intent.getIntExtra(
+            "servicePrice",
+            0
+        )
+
         if (serviceName != null) {
-            tvSelectedService.text = "Selected Service: $serviceName"
+            tvSelectedService.text =
+                "Selected Service: $serviceName\nEstimated Price: Rs. $servicePrice"
         }
 
         // Appointment date picker
@@ -185,7 +192,11 @@ class BookRepairActivity : AppCompatActivity() {
             btnSubmitBooking.isEnabled = false
             btnSubmitBooking.text = "Saving..."
 
-            val selectedService = serviceName ?: "Unknown Service"
+            val selectedService =
+                serviceName ?: "Unknown Service"
+
+            val selectedCategory =
+                categoryName ?: "Unknown Category"
 
             // Booking data
             val booking = hashMapOf(
@@ -194,9 +205,11 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "customerEmail" to (currentUser.email ?: ""),
 
-                "categoryName" to (categoryName ?: "Unknown Category"),
+                "categoryName" to selectedCategory,
 
                 "serviceName" to selectedService,
+
+                "servicePrice" to servicePrice,
 
                 "deviceBrand" to brand,
 
@@ -242,7 +255,7 @@ class BookRepairActivity : AppCompatActivity() {
 
                     confirmationIntent.putExtra(
                         "categoryName",
-                        categoryName
+                        selectedCategory
                     )
 
                     confirmationIntent.putExtra(
@@ -258,6 +271,11 @@ class BookRepairActivity : AppCompatActivity() {
                     confirmationIntent.putExtra(
                         "appointmentDate",
                         appointmentDate
+                    )
+
+                    confirmationIntent.putExtra(
+                        "servicePrice",
+                        servicePrice
                     )
 
                     startActivity(confirmationIntent)

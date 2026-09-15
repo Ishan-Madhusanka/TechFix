@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 class ServiceDetailsActivity : AppCompatActivity() {
 
     private lateinit var tvServiceName: TextView
+    private lateinit var tvServicePrice: TextView
     private lateinit var btnBookRepair: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +18,7 @@ class ServiceDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_service_details)
 
         tvServiceName = findViewById(R.id.tvServiceName)
+        tvServicePrice = findViewById(R.id.tvServicePrice)
         btnBookRepair = findViewById(R.id.btnBookRepair)
 
         // Get selected service
@@ -28,6 +30,22 @@ class ServiceDetailsActivity : AppCompatActivity() {
         if (serviceName != null) {
             tvServiceName.text = serviceName
         }
+
+        // Set price according to service
+        val servicePrice = when (serviceName) {
+
+            "Screen Repair" -> 8000
+
+            "Battery Replacement" -> 6000
+
+            "Charging Port Repair" -> 2500
+
+            "Software Repair" -> 5500
+
+            else -> 5500
+        }
+
+        tvServicePrice.text = "Estimated Price: Rs. $servicePrice"
 
         // Book Repair button
         btnBookRepair.setOnClickListener {
@@ -47,6 +65,12 @@ class ServiceDetailsActivity : AppCompatActivity() {
             intent.putExtra(
                 "categoryName",
                 categoryName
+            )
+
+            // Send service price
+            intent.putExtra(
+                "servicePrice",
+                servicePrice
             )
 
             startActivity(intent)

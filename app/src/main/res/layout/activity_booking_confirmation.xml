@@ -49,12 +49,24 @@
             android:layout_marginTop="40dp" />
 
         <TextView
+            android:id="@+id/tvConfirmationPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Estimated Price: Rs. 8000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationService"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
             android:id="@+id/tvConfirmationDevice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Device: Samsung A15"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationService"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
