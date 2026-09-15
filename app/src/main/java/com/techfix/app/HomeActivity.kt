@@ -11,6 +11,7 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var btnCategories: Button
     private lateinit var btnServices: Button
+    private lateinit var btnMyBookings: Button
     private lateinit var btnProfile: Button
     private lateinit var btnLogout: Button
 
@@ -21,24 +22,47 @@ class HomeActivity : AppCompatActivity() {
 
         btnCategories = findViewById(R.id.btnCategories)
         btnServices = findViewById(R.id.btnServices)
+        btnMyBookings = findViewById(R.id.btnMyBookings)
         btnProfile = findViewById(R.id.btnProfile)
         btnLogout = findViewById(R.id.btnLogout)
 
         // Device Categories
         btnCategories.setOnClickListener {
-            val intent = Intent(this, DeviceCategoriesActivity::class.java)
+            val intent = Intent(
+                this,
+                DeviceCategoriesActivity::class.java
+            )
+
             startActivity(intent)
         }
 
         // Repair Services
         btnServices.setOnClickListener {
-            val intent = Intent(this, RepairServicesActivity::class.java)
+            val intent = Intent(
+                this,
+                RepairServicesActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+
+        // My Bookings
+        btnMyBookings.setOnClickListener {
+            val intent = Intent(
+                this,
+                MyBookingsActivity::class.java
+            )
+
             startActivity(intent)
         }
 
         // My Profile
         btnProfile.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
+            val intent = Intent(
+                this,
+                ProfileActivity::class.java
+            )
+
             startActivity(intent)
         }
 
@@ -53,7 +77,10 @@ class HomeActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
 
             startActivity(intent)
 
