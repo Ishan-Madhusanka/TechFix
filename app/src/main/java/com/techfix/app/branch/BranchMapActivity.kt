@@ -282,6 +282,7 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val userLongitude =
                     location.longitude
 
+
                 val nearestBranch =
                     LocationUtils.findNearestBranch(
                         userLatitude,
