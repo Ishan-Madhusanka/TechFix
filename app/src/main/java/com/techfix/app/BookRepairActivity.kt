@@ -29,18 +29,15 @@ class BookRepairActivity : AppCompatActivity() {
 
     private var selectedImageUri: Uri? = null
 
-    // Firebase
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    // Image picker
     private val imagePicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
         ) { uri ->
 
             if (uri != null) {
-
                 selectedImageUri = uri
 
                 ivDamageImage.setImageURI(uri)
@@ -59,7 +56,6 @@ class BookRepairActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_book_repair)
 
-        // Connect XML views
         tvSelectedService = findViewById(R.id.tvSelectedService)
         etDeviceBrand = findViewById(R.id.etDeviceBrand)
         etDeviceModel = findViewById(R.id.etDeviceModel)
@@ -69,17 +65,18 @@ class BookRepairActivity : AppCompatActivity() {
         btnUploadImage = findViewById(R.id.btnUploadImage)
         btnSubmitBooking = findViewById(R.id.btnSubmitBooking)
 
-        // Get selected service
-        val serviceName = intent.getStringExtra("serviceName")
+        // Selected service information
+        val serviceId =
+            intent.getStringExtra("serviceId")
 
-        // Get selected device category
-        val categoryName = intent.getStringExtra("categoryName")
+        val serviceName =
+            intent.getStringExtra("serviceName")
 
-        // Get selected service price
-        val servicePrice = intent.getIntExtra(
-            "servicePrice",
-            0
-        )
+        val categoryName =
+            intent.getStringExtra("categoryName")
+
+        val servicePrice =
+            intent.getIntExtra("servicePrice", 0)
 
         if (serviceName != null) {
             tvSelectedService.text =
@@ -118,17 +115,23 @@ class BookRepairActivity : AppCompatActivity() {
 
         // Upload damage image
         btnUploadImage.setOnClickListener {
-
             imagePicker.launch("image/*")
         }
 
         // Submit booking
         btnSubmitBooking.setOnClickListener {
 
-            val brand = etDeviceBrand.text.toString().trim()
-            val model = etDeviceModel.text.toString().trim()
-            val description = etDescription.text.toString().trim()
-            val appointmentDate = etAppointmentDate.text.toString().trim()
+            val brand =
+                etDeviceBrand.text.toString().trim()
+
+            val model =
+                etDeviceModel.text.toString().trim()
+
+            val description =
+                etDescription.text.toString().trim()
+
+            val appointmentDate =
+                etAppointmentDate.text.toString().trim()
 
             val currentUser = auth.currentUser
 
@@ -146,33 +149,25 @@ class BookRepairActivity : AppCompatActivity() {
 
             // Validate brand
             if (brand.isEmpty()) {
-
                 etDeviceBrand.error = "Enter device brand"
-
                 return@setOnClickListener
             }
 
             // Validate model
             if (model.isEmpty()) {
-
                 etDeviceModel.error = "Enter device model"
-
                 return@setOnClickListener
             }
 
             // Validate description
             if (description.isEmpty()) {
-
                 etDescription.error = "Describe the problem"
-
                 return@setOnClickListener
             }
 
             // Validate appointment date
             if (appointmentDate.isEmpty()) {
-
                 etAppointmentDate.error = "Select appointment date"
-
                 return@setOnClickListener
             }
 
@@ -188,7 +183,44 @@ class BookRepairActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Disable button while saving
+            // Required service/category values
+            val selectedServiceId =
+                serviceId ?: ""
+
+            val selectedCategoryId =
+                when (categoryName) {
+                    "Mobile" -> "mobile"
+                    "Laptop" -> "laptop"
+                    "Desktop" -> "desktop"
+                    "Gaming Console" -> "gaming_console"
+                    else -> categoryName
+                        ?.lowercase()
+                        ?.replace(" ", "_")
+                        ?: ""
+                }
+
+            if (selectedServiceId.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Service information missing.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            if (selectedCategoryId.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Category information missing.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
             btnSubmitBooking.isEnabled = false
             btnSubmitBooking.text = "Saving..."
 
@@ -198,42 +230,45 @@ class BookRepairActivity : AppCompatActivity() {
             val selectedCategory =
                 categoryName ?: "Unknown Category"
 
-            // Booking data
+            /*
+             * Create Firestore document reference first.
+             * This allows us to save the same ID inside
+             * the document as the shared repairRequests schema.
+             */
+            val bookingReference =
+                db.collection("repairRequests").document()
+
+            // Shared repairRequests structure
             val booking = hashMapOf(
+
+                "id" to bookingReference.id,
 
                 "customerId" to currentUser.uid,
 
-                "customerEmail" to (currentUser.email ?: ""),
-
-                "categoryName" to selectedCategory,
-
-                "serviceName" to selectedService,
-
-                "servicePrice" to servicePrice,
+                "categoryId" to selectedCategoryId,
 
                 "deviceBrand" to brand,
 
                 "deviceModel" to model,
 
+                "serviceId" to selectedServiceId,
+
                 "description" to description,
+
+                "imageUrl" to selectedImageUri.toString(),
 
                 "appointmentDate" to appointmentDate,
 
-                // Image selected locally
-                "imageSelected" to true,
+                "price" to servicePrice.toDouble(),
 
-                "imageUri" to selectedImageUri.toString(),
-
-                // Initial status
                 "status" to "PENDING",
 
-                // Firebase server timestamp
                 "createdAt" to FieldValue.serverTimestamp()
             )
 
             // Save booking to Firestore
-            db.collection("repairRequests")
-                .add(booking)
+            bookingReference
+                .set(booking)
                 .addOnSuccessListener {
 
                     Toast.makeText(
@@ -242,7 +277,7 @@ class BookRepairActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    // Open Booking Confirmation screen
+                    // Open confirmation screen
                     val confirmationIntent = Intent(
                         this,
                         BookingConfirmationActivity::class.java
@@ -280,7 +315,6 @@ class BookRepairActivity : AppCompatActivity() {
 
                     startActivity(confirmationIntent)
 
-                    // Reset button
                     btnSubmitBooking.isEnabled = true
                     btnSubmitBooking.text = "Submit Booking"
                 }
