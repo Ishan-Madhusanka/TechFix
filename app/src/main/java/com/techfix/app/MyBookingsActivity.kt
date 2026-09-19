@@ -1,7 +1,6 @@
 package com.techfix.app
 
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -32,7 +31,6 @@ class MyBookingsActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
 
-        // Check whether customer is logged in
         if (currentUser == null) {
 
             Toast.makeText(
@@ -47,7 +45,6 @@ class MyBookingsActivity : AppCompatActivity() {
 
         val customerId = currentUser.uid
 
-        // Get bookings belonging to the current customer
         db.collection("repairRequests")
             .whereEqualTo("customerId", customerId)
             .get()
@@ -64,20 +61,25 @@ class MyBookingsActivity : AppCompatActivity() {
 
                 tvNoBookings.visibility = TextView.GONE
 
-                // Display newest bookings first
+                // Newest bookings first
                 val bookings = documents.documents.sortedByDescending {
                     it.getTimestamp("createdAt")
                 }
 
                 for (document in bookings) {
 
-                    val categoryName =
-                        document.getString("categoryName")
-                            ?: "Unknown Category"
+                    val categoryId =
+                        document.getString("categoryId")
+                            ?: ""
 
-                    val serviceName =
-                        document.getString("serviceName")
-                            ?: "Unknown Service"
+                    val serviceId =
+                        document.getString("serviceId")
+                            ?: ""
+
+                    val price =
+                        document.getDouble("price")?.toInt()
+                            ?: document.getLong("price")?.toInt()
+                            ?: 0
 
                     val deviceBrand =
                         document.getString("deviceBrand")
@@ -85,6 +87,10 @@ class MyBookingsActivity : AppCompatActivity() {
 
                     val deviceModel =
                         document.getString("deviceModel")
+                            ?: ""
+
+                    val description =
+                        document.getString("description")
                             ?: ""
 
                     val appointmentDate =
@@ -95,14 +101,45 @@ class MyBookingsActivity : AppCompatActivity() {
                         document.getString("status")
                             ?: "PENDING"
 
-                    addBookingCard(
-                        categoryName,
-                        serviceName,
-                        deviceBrand,
-                        deviceModel,
-                        appointmentDate,
-                        status
-                    )
+                    val categoryName =
+                        getCategoryName(categoryId)
+
+                    // Get service name from Firebase
+                    db.collection("services")
+                        .document(serviceId)
+                        .get()
+                        .addOnSuccessListener { serviceDocument ->
+
+                            val serviceName =
+                                serviceDocument.getString("name")
+                                    ?: serviceId
+
+                            addBookingCard(
+                                categoryName = categoryName,
+                                serviceName = serviceName,
+                                price = price,
+                                deviceBrand = deviceBrand,
+                                deviceModel = deviceModel,
+                                description = description,
+                                appointmentDate = appointmentDate,
+                                status = status
+                            )
+                        }
+                        .addOnFailureListener {
+
+                            // If service cannot be loaded,
+                            // show the service ID instead.
+                            addBookingCard(
+                                categoryName = categoryName,
+                                serviceName = serviceId,
+                                price = price,
+                                deviceBrand = deviceBrand,
+                                deviceModel = deviceModel,
+                                description = description,
+                                appointmentDate = appointmentDate,
+                                status = status
+                            )
+                        }
                 }
             }
             .addOnFailureListener { error ->
@@ -115,18 +152,37 @@ class MyBookingsActivity : AppCompatActivity() {
             }
     }
 
+    private fun getCategoryName(categoryId: String): String {
+
+        return when (categoryId) {
+
+            "mobile" -> "Mobile"
+
+            "laptop" -> "Laptop"
+
+            "desktop" -> "Desktop"
+
+            "gaming_console" -> "Gaming Console"
+
+            else -> categoryId
+        }
+    }
+
     private fun addBookingCard(
         categoryName: String,
         serviceName: String,
+        price: Int,
         deviceBrand: String,
         deviceModel: String,
+        description: String,
         appointmentDate: String,
         status: String
     ) {
 
         val bookingLayout = LinearLayout(this)
 
-        bookingLayout.orientation = LinearLayout.VERTICAL
+        bookingLayout.orientation =
+            LinearLayout.VERTICAL
 
         bookingLayout.setPadding(
             20,
@@ -158,12 +214,31 @@ class MyBookingsActivity : AppCompatActivity() {
 
         serviceText.textSize = 17f
 
+        val priceText = TextView(this)
+
+        priceText.text =
+            "Estimated Price: Rs. $price"
+
+        priceText.textSize = 17f
+
+        priceText.setTypeface(
+            null,
+            android.graphics.Typeface.BOLD
+        )
+
         val deviceText = TextView(this)
 
         deviceText.text =
             "Device: $deviceBrand $deviceModel"
 
         deviceText.textSize = 16f
+
+        val descriptionText = TextView(this)
+
+        descriptionText.text =
+            "Problem: $description"
+
+        descriptionText.textSize = 16f
 
         val dateText = TextView(this)
 
@@ -186,7 +261,9 @@ class MyBookingsActivity : AppCompatActivity() {
 
         bookingLayout.addView(categoryText)
         bookingLayout.addView(serviceText)
+        bookingLayout.addView(priceText)
         bookingLayout.addView(deviceText)
+        bookingLayout.addView(descriptionText)
         bookingLayout.addView(dateText)
         bookingLayout.addView(statusText)
 
