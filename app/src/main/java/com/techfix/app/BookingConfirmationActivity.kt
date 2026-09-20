@@ -1,5 +1,6 @@
 package com.techfix.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -37,7 +38,6 @@ class BookingConfirmationActivity : AppCompatActivity() {
         btnBackToHome =
             findViewById(R.id.btnBackToHome)
 
-        // Get booking details
         val categoryName =
             intent.getStringExtra("categoryName")
 
@@ -56,29 +56,36 @@ class BookingConfirmationActivity : AppCompatActivity() {
         val appointmentDate =
             intent.getStringExtra("appointmentDate")
 
-        // Display category and service
         tvConfirmationService.text =
             "Category: ${categoryName ?: "Unknown Category"}\n" +
                     "Service: ${serviceName ?: "Unknown Service"}"
 
-        // Display price
         tvConfirmationPrice.text =
             "Estimated Price: Rs. $servicePrice"
 
-        // Display device
         tvConfirmationDevice.text =
             "Device: ${deviceBrand ?: ""} ${deviceModel ?: ""}"
 
-        // Display appointment date
         tvConfirmationDate.text =
             "Appointment Date: ${appointmentDate ?: ""}"
 
-        // Display status
         tvConfirmationStatus.text =
             "Status: PENDING"
 
         // Back to Home
         btnBackToHome.setOnClickListener {
+
+            val homeIntent = Intent(
+                this,
+                HomeActivity::class.java
+            )
+
+            homeIntent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                        Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+            startActivity(homeIntent)
+
             finish()
         }
     }
