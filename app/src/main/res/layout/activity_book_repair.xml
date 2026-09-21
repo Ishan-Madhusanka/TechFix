@@ -4,117 +4,271 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F9FF"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingBottom="35dp">
 
+        <!-- TechFix Logo -->
+        <TextView
+            android:id="@+id/tvBookLogo"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="38dp"
+            android:background="@drawable/bg_icon_circle"
+            android:gravity="center"
+            android:text="TF"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Title -->
         <TextView
             android:id="@+id/tvBookRepairTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
             android:text="Book Repair"
-            android:textSize="26sp"
+            android:textColor="#1565C0"
+            android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBookLogo" />
 
-        <TextView
-            android:id="@+id/tvSelectedService"
+        <!-- Small Blue Line -->
+        <View
+            android:id="@+id/bookRepairLine"
+            android:layout_width="45dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_small_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle" />
+
+        <!-- Selected Service Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/selectedServiceCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Selected Service: Screen Repair"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="#E3F2FD"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookRepairLine"
+            app:strokeColor="#BBDEFB"
+            app:strokeWidth="1dp">
 
-        <EditText
-            android:id="@+id/etDeviceBrand"
+            <TextView
+                android:id="@+id/tvSelectedService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Selected Service: Screen Repair"
+                android:textColor="#1565C0"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Device Brand -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDeviceBrand"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="10dp"
             android:hint="Device Brand"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
-            app:layout_constraintStart_toStartOf="parent"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#1565C0"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectedServiceCard">
 
-        <EditText
-            android:id="@+id/etDeviceModel"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDeviceBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#1F2937"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Device Model -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDeviceModel"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
             android:hint="Device Model"
-            android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
-            app:layout_constraintStart_toStartOf="parent"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#1565C0"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <EditText
-            android:id="@+id/etDescription"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:hint="Describe the problem"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@id/layoutDeviceBrand">
 
-        <EditText
-            android:id="@+id/etAppointmentDate"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDeviceModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#1F2937"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Problem Description -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Appointment Date"
-            android:focusable="false"
-            android:clickable="true"
-            android:inputType="none"
-            app:layout_constraintTop_toBottomOf="@id/etDescription"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Describe the problem"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#1565C0"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutDeviceModel">
 
-        <!-- Selected damage image -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:paddingTop="12dp"
+                android:textColor="#1F2937"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Appointment Date -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAppointmentDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Appointment Date"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#1565C0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutDescription">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAppointmentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:textColor="#1F2937"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Damage Image -->
         <ImageView
             android:id="@+id/ivDamageImage"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
+            android:layout_height="170dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            android:background="#E3F2FD"
             android:contentDescription="Selected damage image"
+            android:scaleType="centerCrop"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutAppointmentDate" />
 
-        <Button
+        <!-- Upload Image -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
             android:text="Upload Damage Image"
-            app:layout_constraintTop_toBottomOf="@id/ivDamageImage"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textAllCaps="false"
+            android:textColor="#1565C0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="#FFFFFF"
+            app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivDamageImage"
+            app:strokeColor="#1565C0"
+            app:strokeWidth="1dp" />
 
-        <Button
+        <!-- Submit -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitBooking"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="28dp"
             android:text="Submit Booking"
-            app:layout_constraintTop_toBottomOf="@id/btnUploadImage"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="#1565C0"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="30dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

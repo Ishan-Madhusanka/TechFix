@@ -27,6 +27,8 @@ class ServiceDetailsActivity : AppCompatActivity() {
         // Get selected device category
         val categoryName = intent.getStringExtra("categoryName")
 
+        val serviceId = intent.getStringExtra("SERVICE_ID")
+
         if (serviceName != null) {
             tvServiceName.text = serviceName
         }
@@ -56,6 +58,11 @@ class ServiceDetailsActivity : AppCompatActivity() {
             )
 
             // Send service name
+            intent.putExtra(
+                "SERVICE_ID",
+                serviceId
+            )
+
             intent.putExtra(
                 "serviceName",
                 serviceName

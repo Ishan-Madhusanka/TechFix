@@ -5,70 +5,198 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:background="#F5F9FF"
+    android:paddingStart="28dp"
+    android:paddingEnd="28dp">
 
+    <!-- TechFix Logo -->
+    <TextView
+        android:id="@+id/tvServicesLogo"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/bg_icon_circle"
+        android:gravity="center"
+        android:text="TF"
+        android:textColor="#FFFFFF"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Page Title -->
     <TextView
         android:id="@+id/tvServicesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Repair Services"
-        android:textSize="26sp"
+        android:textColor="#1565C0"
+        android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvServicesLogo" />
 
-    <TextView
-        android:id="@+id/tvCategoryName"
+    <!-- Small Blue Line -->
+    <View
+        android:id="@+id/servicesLine"
+        android:layout_width="45dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_small_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle" />
+
+    <!-- Selected Category -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/categoryCard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Services for: Device"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        app:cardBackgroundColor="#E3F2FD"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#BBDEFB"
+        app:strokeWidth="1dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/servicesLine">
 
-    <Button
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="13dp"
+            android:text="Services for: Device"
+            android:textColor="#1565C0"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Screen Repair -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnScreenRepair"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:paddingStart="22dp"
         android:text="Screen Repair"
-        app:layout_constraintTop_toBottomOf="@id/tvCategoryName"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#1565C0"
+        app:cornerRadius="14dp"
+        app:icon="@android:drawable/ic_menu_view"
+        app:iconGravity="textStart"
+        app:iconPadding="14dp"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryCard" />
 
-    <Button
+    <!-- Battery Replacement -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnBatteryRepair"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:paddingStart="22dp"
         android:text="Battery Replacement"
-        app:layout_constraintTop_toBottomOf="@id/btnScreenRepair"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#1565C0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="14dp"
+        app:icon="@android:drawable/ic_lock_idle_charging"
+        app:iconGravity="textStart"
+        app:iconPadding="14dp"
+        app:iconTint="#1565C0"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnScreenRepair"
+        app:strokeColor="#BBDEFB"
+        app:strokeWidth="1dp" />
 
-    <Button
+    <!-- Charging Port Repair -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnChargingRepair"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:paddingStart="22dp"
         android:text="Charging Port Repair"
-        app:layout_constraintTop_toBottomOf="@id/btnBatteryRepair"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#1565C0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="14dp"
+        app:icon="@android:drawable/ic_menu_manage"
+        app:iconGravity="textStart"
+        app:iconPadding="14dp"
+        app:iconTint="#1565C0"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBatteryRepair"
+        app:strokeColor="#BBDEFB"
+        app:strokeWidth="1dp" />
 
-    <Button
+    <!-- Software Repair -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSoftwareRepair"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center_vertical"
+        android:paddingStart="22dp"
         android:text="Software Repair"
-        app:layout_constraintTop_toBottomOf="@id/btnChargingRepair"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#1565C0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="14dp"
+        app:icon="@android:drawable/ic_menu_preferences"
+        app:iconGravity="textStart"
+        app:iconPadding="14dp"
+        app:iconTint="#1565C0"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnChargingRepair"
+        app:strokeColor="#BBDEFB"
+        app:strokeWidth="1dp" />
+
+    <!-- Footer -->
+    <TextView
+        android:id="@+id/tvServicesFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="TechFix Repair Services"
+        android:textColor="#90A4AE"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

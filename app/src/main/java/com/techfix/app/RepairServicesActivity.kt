@@ -36,26 +36,56 @@ class RepairServicesActivity : AppCompatActivity() {
 
         // Screen Repair
         btnScreenRepair.setOnClickListener {
-            openServiceDetails("Screen Repair", categoryName)
+
+            val serviceId = when (categoryName) {
+                "Laptop" -> "laptop_screen_repair"
+                "Mobile" -> "mobile_screen_repair"
+                else -> "laptop_screen_repair"
+            }
+
+            openServiceDetails(
+                serviceId,
+                "Screen Repair",
+                categoryName
+            )
         }
 
         // Battery Replacement
         btnBatteryRepair.setOnClickListener {
-            openServiceDetails("Battery Replacement", categoryName)
+            openServiceDetails(
+                "",
+                "Battery Replacement",
+                categoryName
+            )
         }
 
         // Charging Port Repair
         btnChargingRepair.setOnClickListener {
-            openServiceDetails("Charging Port Repair", categoryName)
+            openServiceDetails(
+                "",
+                "Charging Port Repair",
+                categoryName
+            )
         }
 
         // Software Repair
         btnSoftwareRepair.setOnClickListener {
-            openServiceDetails("Software Repair", categoryName)
+
+            val serviceId = when (categoryName) {
+                "Desktop" -> "desktop_os_install"
+                else -> ""
+            }
+
+            openServiceDetails(
+                serviceId,
+                "Software Repair",
+                categoryName
+            )
         }
     }
 
     private fun openServiceDetails(
+        serviceId: String,
         serviceName: String,
         categoryName: String?
     ) {
@@ -63,6 +93,12 @@ class RepairServicesActivity : AppCompatActivity() {
         val intent = Intent(
             this,
             ServiceDetailsActivity::class.java
+        )
+
+        // Firestore service document ID
+        intent.putExtra(
+            "SERVICE_ID",
+            serviceId
         )
 
         intent.putExtra(

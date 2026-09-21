@@ -2,24 +2,26 @@ package com.techfix.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var btnCategories: Button
-    private lateinit var btnServices: Button
-    private lateinit var btnMyBookings: Button
-    private lateinit var btnProfile: Button
-    private lateinit var btnLogout: Button
+    // These are clickable card layouts in activity_home.xml
+    private lateinit var btnCategories: View
+    private lateinit var btnServices: View
+    private lateinit var btnMyBookings: View
+    private lateinit var btnProfile: View
+    private lateinit var btnLogout: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_home)
 
+        // Connect UI elements
         btnCategories = findViewById(R.id.btnCategories)
         btnServices = findViewById(R.id.btnServices)
         btnMyBookings = findViewById(R.id.btnMyBookings)
@@ -28,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Device Categories
         btnCategories.setOnClickListener {
+
             val intent = Intent(
                 this,
                 DeviceCategoriesActivity::class.java
@@ -38,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
 
         // Repair Services
         btnServices.setOnClickListener {
+
             val intent = Intent(
                 this,
                 RepairServicesActivity::class.java
@@ -48,6 +52,7 @@ class HomeActivity : AppCompatActivity() {
 
         // My Bookings
         btnMyBookings.setOnClickListener {
+
             val intent = Intent(
                 this,
                 MyBookingsActivity::class.java
@@ -58,6 +63,7 @@ class HomeActivity : AppCompatActivity() {
 
         // My Profile
         btnProfile.setOnClickListener {
+
             val intent = Intent(
                 this,
                 ProfileActivity::class.java
@@ -69,7 +75,9 @@ class HomeActivity : AppCompatActivity() {
         // Logout
         btnLogout.setOnClickListener {
 
-            FirebaseAuth.getInstance().signOut()
+            FirebaseAuth
+                .getInstance()
+                .signOut()
 
             Toast.makeText(
                 this,

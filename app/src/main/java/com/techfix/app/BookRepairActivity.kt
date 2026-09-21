@@ -12,8 +12,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class BookRepairActivity : AppCompatActivity() {
@@ -29,11 +27,13 @@ class BookRepairActivity : AppCompatActivity() {
 
     private var selectedImageUri: Uri? = null
 
-    // Firebase
+    // Firebase Authentication
     private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
 
-    // Image picker
+    // ---------------------------------------------------------
+    // IMAGE PICKER
+    // ---------------------------------------------------------
+
     private val imagePicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
@@ -59,80 +59,145 @@ class BookRepairActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_book_repair)
 
-        // Connect XML views
-        tvSelectedService = findViewById(R.id.tvSelectedService)
-        etDeviceBrand = findViewById(R.id.etDeviceBrand)
-        etDeviceModel = findViewById(R.id.etDeviceModel)
-        etDescription = findViewById(R.id.etDescription)
-        etAppointmentDate = findViewById(R.id.etAppointmentDate)
-        ivDamageImage = findViewById(R.id.ivDamageImage)
-        btnUploadImage = findViewById(R.id.btnUploadImage)
-        btnSubmitBooking = findViewById(R.id.btnSubmitBooking)
+        // ---------------------------------------------------------
+        // CONNECT XML VIEWS
+        // ---------------------------------------------------------
 
-        // Get selected service
-        val serviceName = intent.getStringExtra("serviceName")
+        tvSelectedService =
+            findViewById(R.id.tvSelectedService)
 
-        // Get selected device category
-        val categoryName = intent.getStringExtra("categoryName")
+        etDeviceBrand =
+            findViewById(R.id.etDeviceBrand)
 
-        // Get selected service price
-        val servicePrice = intent.getIntExtra(
-            "servicePrice",
-            0
-        )
+        etDeviceModel =
+            findViewById(R.id.etDeviceModel)
+
+        etDescription =
+            findViewById(R.id.etDescription)
+
+        etAppointmentDate =
+            findViewById(R.id.etAppointmentDate)
+
+        ivDamageImage =
+            findViewById(R.id.ivDamageImage)
+
+        btnUploadImage =
+            findViewById(R.id.btnUploadImage)
+
+        btnSubmitBooking =
+            findViewById(R.id.btnSubmitBooking)
+
+        // ---------------------------------------------------------
+        // RECEIVE MEMBER 2 SERVICE DATA
+        // ---------------------------------------------------------
+
+        val serviceId =
+            intent.getStringExtra("SERVICE_ID")
+
+        val serviceName =
+            intent.getStringExtra("serviceName")
+
+        val categoryName =
+            intent.getStringExtra("categoryName")
+
+        val servicePrice =
+            intent.getIntExtra(
+                "servicePrice",
+                0
+            )
+
+        // ---------------------------------------------------------
+        // DISPLAY SELECTED SERVICE
+        // ---------------------------------------------------------
 
         if (serviceName != null) {
+
             tvSelectedService.text =
-                "Selected Service: $serviceName\nEstimated Price: Rs. $servicePrice"
+                "Selected Service: $serviceName\n" +
+                        "Estimated Price: Rs. $servicePrice"
         }
 
-        // Appointment date picker
+        // ---------------------------------------------------------
+        // APPOINTMENT DATE PICKER
+        // ---------------------------------------------------------
+
         etAppointmentDate.setOnClickListener {
 
-            val calendar = Calendar.getInstance()
+            val calendar =
+                Calendar.getInstance()
 
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val year =
+                calendar.get(Calendar.YEAR)
 
-            val datePickerDialog = DatePickerDialog(
-                this,
-                { _, selectedYear, selectedMonth, selectedDay ->
+            val month =
+                calendar.get(Calendar.MONTH)
 
-                    val formattedDate = String.format(
-                        "%04d-%02d-%02d",
-                        selectedYear,
-                        selectedMonth + 1,
-                        selectedDay
-                    )
+            val day =
+                calendar.get(Calendar.DAY_OF_MONTH)
 
-                    etAppointmentDate.setText(formattedDate)
-                },
-                year,
-                month,
-                day
-            )
+            val datePickerDialog =
+                DatePickerDialog(
+                    this,
+                    { _, selectedYear, selectedMonth, selectedDay ->
+
+                        val formattedDate =
+                            String.format(
+                                "%04d-%02d-%02d",
+                                selectedYear,
+                                selectedMonth + 1,
+                                selectedDay
+                            )
+
+                        etAppointmentDate.setText(
+                            formattedDate
+                        )
+                    },
+                    year,
+                    month,
+                    day
+                )
+
+            // Prevent selecting past dates
+            datePickerDialog.datePicker.minDate =
+                System.currentTimeMillis() - 1000
 
             datePickerDialog.show()
         }
 
-        // Upload damage image
+        // ---------------------------------------------------------
+        // SELECT DAMAGE IMAGE - OPTIONAL
+        // ---------------------------------------------------------
+
         btnUploadImage.setOnClickListener {
 
             imagePicker.launch("image/*")
         }
 
-        // Submit booking
+        // ---------------------------------------------------------
+        // SUBMIT BOOKING
+        // ---------------------------------------------------------
+
         btnSubmitBooking.setOnClickListener {
 
-            val brand = etDeviceBrand.text.toString().trim()
-            val model = etDeviceModel.text.toString().trim()
-            val description = etDescription.text.toString().trim()
-            val appointmentDate = etAppointmentDate.text.toString().trim()
+            val brand =
+                etDeviceBrand.text.toString().trim()
 
-            val currentUser = auth.currentUser
+            val model =
+                etDeviceModel.text.toString().trim()
 
-            // Check login
+            val description =
+                etDescription.text.toString().trim()
+
+            val appointmentDate =
+                etAppointmentDate.text.toString().trim()
+
+            val currentUser =
+                auth.currentUser
+
+            // -----------------------------------------------------
+            // VALIDATION
+            // -----------------------------------------------------
+
             if (currentUser == null) {
 
                 Toast.makeText(
@@ -144,157 +209,126 @@ class BookRepairActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validate brand
             if (brand.isEmpty()) {
 
-                etDeviceBrand.error = "Enter device brand"
+                etDeviceBrand.error =
+                    "Enter device brand"
 
                 return@setOnClickListener
             }
 
-            // Validate model
             if (model.isEmpty()) {
 
-                etDeviceModel.error = "Enter device model"
+                etDeviceModel.error =
+                    "Enter device model"
 
                 return@setOnClickListener
             }
 
-            // Validate description
             if (description.isEmpty()) {
 
-                etDescription.error = "Describe the problem"
+                etDescription.error =
+                    "Describe the problem"
 
                 return@setOnClickListener
             }
 
-            // Validate appointment date
             if (appointmentDate.isEmpty()) {
 
-                etAppointmentDate.error = "Select appointment date"
+                etAppointmentDate.error =
+                    "Select appointment date"
 
                 return@setOnClickListener
             }
 
-            // Validate image
-            if (selectedImageUri == null) {
+            // Damage image is OPTIONAL
+            // No validation required for selectedImageUri
+
+            // Member 1 MainActivity requires SERVICE_ID
+            if (serviceId.isNullOrBlank()) {
 
                 Toast.makeText(
                     this,
-                    "Please upload a damage image",
-                    Toast.LENGTH_SHORT
+                    "This service is not available for branch selection",
+                    Toast.LENGTH_LONG
                 ).show()
 
                 return@setOnClickListener
             }
 
-            // Disable button while saving
-            btnSubmitBooking.isEnabled = false
-            btnSubmitBooking.text = "Saving..."
+            // -----------------------------------------------------
+            // SAVE MEMBER 2 BOOKING DETAILS TEMPORARILY
+            // -----------------------------------------------------
 
-            val selectedService =
-                serviceName ?: "Unknown Service"
+            val bookingPreferences =
+                getSharedPreferences(
+                    "TECHFIX_BOOKING_DATA",
+                    MODE_PRIVATE
+                )
 
-            val selectedCategory =
-                categoryName ?: "Unknown Category"
+            bookingPreferences
+                .edit()
+                .putString(
+                    "customerId",
+                    currentUser.uid
+                )
+                .putString(
+                    "customerEmail",
+                    currentUser.email ?: ""
+                )
+                .putString(
+                    "categoryName",
+                    categoryName ?: ""
+                )
+                .putString(
+                    "serviceName",
+                    serviceName ?: ""
+                )
+                .putString(
+                    "deviceBrand",
+                    brand
+                )
+                .putString(
+                    "deviceModel",
+                    model
+                )
+                .putString(
+                    "description",
+                    description
+                )
+                .putString(
+                    "appointmentDate",
+                    appointmentDate
+                )
+                .putString(
+                    "imageUri",
+                    selectedImageUri?.toString() ?: ""
+                )
+                .putInt(
+                    "servicePrice",
+                    servicePrice
+                )
+                .apply()
 
-            // Booking data
-            val booking = hashMapOf(
+            // -----------------------------------------------------
+            // OPEN MEMBER 1 SUITABLE BRANCH LOGIC
+            // -----------------------------------------------------
 
-                "customerId" to currentUser.uid,
+            val suitableBranchIntent =
+                Intent(
+                    this,
+                    MainActivity::class.java
+                )
 
-                "customerEmail" to (currentUser.email ?: ""),
-
-                "categoryName" to selectedCategory,
-
-                "serviceName" to selectedService,
-
-                "servicePrice" to servicePrice,
-
-                "deviceBrand" to brand,
-
-                "deviceModel" to model,
-
-                "description" to description,
-
-                "appointmentDate" to appointmentDate,
-
-                // Image selected locally
-                "imageSelected" to true,
-
-                "imageUri" to selectedImageUri.toString(),
-
-                // Initial status
-                "status" to "PENDING",
-
-                // Firebase server timestamp
-                "createdAt" to FieldValue.serverTimestamp()
+            // Member 1 expects this exact key
+            suitableBranchIntent.putExtra(
+                "SERVICE_ID",
+                serviceId
             )
 
-            // Save booking to Firestore
-            db.collection("repairRequests")
-                .add(booking)
-                .addOnSuccessListener {
-
-                    Toast.makeText(
-                        this,
-                        "Booking submitted successfully!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    // Open Booking Confirmation screen
-                    val confirmationIntent = Intent(
-                        this,
-                        BookingConfirmationActivity::class.java
-                    )
-
-                    confirmationIntent.putExtra(
-                        "serviceName",
-                        selectedService
-                    )
-
-                    confirmationIntent.putExtra(
-                        "categoryName",
-                        selectedCategory
-                    )
-
-                    confirmationIntent.putExtra(
-                        "deviceBrand",
-                        brand
-                    )
-
-                    confirmationIntent.putExtra(
-                        "deviceModel",
-                        model
-                    )
-
-                    confirmationIntent.putExtra(
-                        "appointmentDate",
-                        appointmentDate
-                    )
-
-                    confirmationIntent.putExtra(
-                        "servicePrice",
-                        servicePrice
-                    )
-
-                    startActivity(confirmationIntent)
-
-                    // Reset button
-                    btnSubmitBooking.isEnabled = true
-                    btnSubmitBooking.text = "Submit Booking"
-                }
-                .addOnFailureListener { error ->
-
-                    Toast.makeText(
-                        this,
-                        "Booking failed: ${error.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    btnSubmitBooking.isEnabled = true
-                    btnSubmitBooking.text = "Submit Booking"
-                }
+            startActivity(
+                suitableBranchIntent
+            )
         }
     }
 }

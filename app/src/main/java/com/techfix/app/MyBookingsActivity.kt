@@ -1,7 +1,6 @@
 package com.techfix.app
 
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -79,6 +78,9 @@ class MyBookingsActivity : AppCompatActivity() {
                         document.getString("serviceName")
                             ?: "Unknown Service"
 
+                    val servicePrice =
+                        document.getLong("servicePrice")?.toInt() ?: 0
+
                     val deviceBrand =
                         document.getString("deviceBrand")
                             ?: ""
@@ -98,6 +100,7 @@ class MyBookingsActivity : AppCompatActivity() {
                     addBookingCard(
                         categoryName,
                         serviceName,
+                        servicePrice,
                         deviceBrand,
                         deviceModel,
                         appointmentDate,
@@ -118,6 +121,7 @@ class MyBookingsActivity : AppCompatActivity() {
     private fun addBookingCard(
         categoryName: String,
         serviceName: String,
+        servicePrice: Int,
         deviceBrand: String,
         deviceModel: String,
         appointmentDate: String,
@@ -158,6 +162,18 @@ class MyBookingsActivity : AppCompatActivity() {
 
         serviceText.textSize = 17f
 
+        val priceText = TextView(this)
+
+        priceText.text =
+            "Estimated Price: Rs. $servicePrice"
+
+        priceText.textSize = 17f
+
+        priceText.setTypeface(
+            null,
+            android.graphics.Typeface.BOLD
+        )
+
         val deviceText = TextView(this)
 
         deviceText.text =
@@ -186,6 +202,7 @@ class MyBookingsActivity : AppCompatActivity() {
 
         bookingLayout.addView(categoryText)
         bookingLayout.addView(serviceText)
+        bookingLayout.addView(priceText)
         bookingLayout.addView(deviceText)
         bookingLayout.addView(dateText)
         bookingLayout.addView(statusText)
