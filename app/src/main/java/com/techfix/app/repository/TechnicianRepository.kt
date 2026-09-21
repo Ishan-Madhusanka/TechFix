@@ -168,4 +168,33 @@ class TechnicianRepository {
                 onFailure(exception)
             }
     }
+
+    // Member 3 - Technician Login
+    fun loginTechnician(
+        phone: String,
+        onSuccess: (Technician?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("technicians")
+            .whereEqualTo("phone", phone)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val technician = result.documents
+                    .mapNotNull { document ->
+
+                        document.toObject(Technician::class.java)?.apply {
+                            id = document.id
+                        }
+                    }
+                    .firstOrNull { technician ->
+                        technician.isActive
+                    }
+
+                onSuccess(technician)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
 }

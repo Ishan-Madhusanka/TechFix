@@ -1,3 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">TechFix</string>
+
+    <!-- Member 3 - Repair Module -->
+    <string name="repair_sample_id">Repair #TF001</string>
+    <string name="repair_sample_status">REPAIRING</string>
+    <string name="repair_sample_device">Apple iPhone 15 Pro</string>
+    <string name="repair_sample_appointment">Appointment: 10 Sep 2026</string>
+    <string name="repair_sample_price">LKR 5,000.00</string>
+    <string name="view_details">View Details</string>
+
 </resources>

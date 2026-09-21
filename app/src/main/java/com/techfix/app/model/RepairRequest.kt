@@ -12,7 +12,10 @@ data class RepairRequest(
     var branchId: String = "",
     var technicianId: String = "",
     var appointmentDate: String = "",
-    var status: String = "Pending",
+    var status: String = RepairStatus.PENDING.name,
     var price: Double = 0.0,
-    var createdAt: Long = System.currentTimeMillis()
+    var repairNotes: String = "",
+    var usedSpareParts: MutableList<UsedSparePart> = mutableListOf(),
+    var createdAt: Long = System.currentTimeMillis(),
+    var updatedAt: Long = System.currentTimeMillis()
 )
