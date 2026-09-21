@@ -53,7 +53,6 @@
 
         </LinearLayout>
 
-
         <!-- MAIN CONTENT -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +71,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-
             <!-- ROW 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,13 +78,16 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
-
                 <!-- BRANCH CARD -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBranches"
                     android:layout_width="0dp"
                     android:layout_height="135dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="3dp"
@@ -127,13 +128,16 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-
                 <!-- SERVICE CARD -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardServices"
                     android:layout_width="0dp"
                     android:layout_height="135dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="3dp"
@@ -176,7 +180,6 @@
 
             </LinearLayout>
 
-
             <!-- ROW 2 -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -184,13 +187,16 @@
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal">
 
-
                 <!-- TECHNICIAN CARD -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTechnicians"
                     android:layout_width="0dp"
                     android:layout_height="135dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="3dp"
@@ -231,13 +237,16 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-
                 <!-- SPARE PART CARD -->
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSpareParts"
                     android:layout_width="0dp"
                     android:layout_height="135dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardBackgroundColor="#FFFFFF"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="3dp"
@@ -280,7 +289,6 @@
 
             </LinearLayout>
 
-
             <!-- MANAGEMENT -->
             <TextView
                 android:layout_width="wrap_content"
@@ -290,7 +298,6 @@
                 android:textColor="#1F2937"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageBranches"
@@ -304,7 +311,6 @@
                 android:textStyle="bold"
                 app:backgroundTint="#1565C0"
                 app:cornerRadius="14dp" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageServices"
@@ -321,7 +327,6 @@
                 app:strokeColor="#1565C0"
                 app:strokeWidth="2dp" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageTechnicians"
                 android:layout_width="match_parent"
@@ -334,7 +339,6 @@
                 android:textStyle="bold"
                 app:backgroundTint="#1565C0"
                 app:cornerRadius="14dp" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageSpareParts"
@@ -350,7 +354,6 @@
                 app:cornerRadius="14dp"
                 app:strokeColor="#1565C0"
                 app:strokeWidth="2dp" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnViewBranchMap"

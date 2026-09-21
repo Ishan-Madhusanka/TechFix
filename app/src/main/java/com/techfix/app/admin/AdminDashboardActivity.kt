@@ -2,15 +2,16 @@ package com.techfix.app.admin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.techfix.app.R
 import com.techfix.app.branch.BranchMapActivity
-import android.widget.TextView
-import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminDashboardActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin_dashboard)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
             val systemBars =
                 insets.getInsets(WindowInsetsCompat.Type.systemBars())
 
@@ -40,10 +42,35 @@ class AdminDashboardActivity : AppCompatActivity() {
 
             insets
         }
+
+        // =========================
+        // OVERVIEW COUNTS
+        // =========================
+
         tvBranchCount = findViewById(R.id.tvBranchCount)
         tvServiceCount = findViewById(R.id.tvServiceCount)
         tvTechnicianCount = findViewById(R.id.tvTechnicianCount)
         tvSparePartCount = findViewById(R.id.tvSparePartCount)
+
+        // =========================
+        // OVERVIEW CARDS
+        // =========================
+
+        val cardBranches =
+            findViewById<MaterialCardView>(R.id.cardBranches)
+
+        val cardServices =
+            findViewById<MaterialCardView>(R.id.cardServices)
+
+        val cardTechnicians =
+            findViewById<MaterialCardView>(R.id.cardTechnicians)
+
+        val cardSpareParts =
+            findViewById<MaterialCardView>(R.id.cardSpareParts)
+
+        // =========================
+        // MANAGEMENT BUTTONS
+        // =========================
 
         val btnManageBranches =
             findViewById<MaterialButton>(R.id.btnManageBranches)
@@ -60,6 +87,57 @@ class AdminDashboardActivity : AppCompatActivity() {
         val btnViewBranchMap =
             findViewById<MaterialButton>(R.id.btnViewBranchMap)
 
+        // =========================
+        // OVERVIEW CARD CLICKS
+        // =========================
+
+        // Branches Card
+        cardBranches.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                ManageBranchesActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+
+        // Services Card
+        cardServices.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                ManageServicesActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+
+        // Technicians Card
+        cardTechnicians.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                ManageTechniciansActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+
+        // Spare Parts Card
+        cardSpareParts.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                ManageSparePartsActivity::class.java
+            )
+
+            startActivity(intent)
+        }
+
+        // =========================
+        // MANAGEMENT BUTTON CLICKS
+        // =========================
 
         // View Branch Map
         btnViewBranchMap.setOnClickListener {
@@ -83,7 +161,6 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         // Manage Services
         btnManageServices.setOnClickListener {
 
@@ -94,7 +171,6 @@ class AdminDashboardActivity : AppCompatActivity() {
 
             startActivity(intent)
         }
-
 
         // Manage Technicians
         btnManageTechnicians.setOnClickListener {
@@ -107,7 +183,6 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         // Manage Spare Parts
         btnManageSpareParts.setOnClickListener {
 
@@ -119,19 +194,22 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Load Firestore counts
         loadDashboardCounts(
             tvBranchCount,
             tvServiceCount,
             tvTechnicianCount,
             tvSparePartCount
         )
-
-
     }
+
     override fun onResume() {
         super.onResume()
 
+        // Refresh dashboard counts when returning
+        // from management screens
         if (::tvBranchCount.isInitialized) {
+
             loadDashboardCounts(
                 tvBranchCount,
                 tvServiceCount,
@@ -140,6 +218,7 @@ class AdminDashboardActivity : AppCompatActivity() {
             )
         }
     }
+
     private fun loadDashboardCounts(
         tvBranchCount: TextView,
         tvServiceCount: TextView,
