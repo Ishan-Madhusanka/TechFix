@@ -6,49 +6,111 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:background="#F5F9FF"
+    android:paddingStart="28dp"
+    android:paddingEnd="28dp"
     tools:context=".MainActivity">
 
+    <!-- TechFix Logo -->
+    <TextView
+        android:id="@+id/tvLogo"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="85dp"
+        android:background="@drawable/bg_icon_circle"
+        android:gravity="center"
+        android:text="TF"
+        android:textColor="#FFFFFF"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- App Name -->
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to TechFix"
-        android:textSize="26sp"
+        android:layout_marginTop="16dp"
+        android:text="TechFix"
+        android:textColor="#1565C0"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="100dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLogo" />
 
-    <Button
+    <!-- Login Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="25dp"
         android:text="Login"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#1565C0"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
-    <Button
+    <!-- Create Account Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="25dp"
         android:text="Create Account"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#1565C0"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:strokeColor="#1565C0"
+        app:strokeWidth="2dp" />
 
-    <Button
+    <!-- My Profile Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnProfile"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="25dp"
         android:text="My Profile"
-        app:layout_constraintTop_toBottomOf="@id/btnRegister"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#1565C0"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#E3F2FD"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnRegister" />
+
+    <!-- Footer -->
+    <TextView
+        android:id="@+id/tvFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="TechFix Repair Services"
+        android:textColor="#90A4AE"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

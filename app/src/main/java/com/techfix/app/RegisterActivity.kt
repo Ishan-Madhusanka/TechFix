@@ -1,5 +1,6 @@
 package com.techfix.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -38,8 +39,22 @@ class RegisterActivity : AppCompatActivity() {
         btnRegister = findViewById(R.id.btnRegister)
         tvLogin = findViewById(R.id.tvLogin)
 
+        // Register button
         btnRegister.setOnClickListener {
             registerUser()
+        }
+
+        // Already have an account? Login
+        tvLogin.setOnClickListener {
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
+
+            startActivity(intent)
+
+            // Close Register page
+            finish()
         }
     }
 
@@ -67,94 +82,99 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         if (password.length < 6) {
-            etPassword.error = "Password must be at least 6 characters"
+            etPassword.error =
+                "Password must be at least 6 characters"
             return
         }
 
         if (password != confirmPassword) {
-            etConfirmPassword.error = "Passwords do not match"
+            etConfirmPassword.error =
+                "Passwords do not match"
             return
         }
 
         btnRegister.isEnabled = false
 
         // Create Firebase Authentication account
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
+        auth.createUserWithEmailAndPassword(
+            email,
+            password
+        ).addOnCompleteListener(this) { task ->
 
-                if (task.isSuccessful) {
+            if (task.isSuccessful) {
 
-                    val user = auth.currentUser
+                val user = auth.currentUser
 
-                    if (user != null) {
+                if (user != null) {
 
-                        val userId = user.uid
+                    val userId = user.uid
 
-                        // User data for Firestore
-                        val userData = hashMapOf(
-                            "name" to name,
-                            "email" to email,
-                            "role" to "CUSTOMER",
-                            "createdAt" to com.google.firebase.Timestamp.now()
-                        )
-
-                        // Save user data in Firestore
-                        firestore.collection("users")
-                            .document(userId)
-                            .set(userData)
-                            .addOnSuccessListener {
-
-                                btnRegister.isEnabled = true
-
-                                Toast.makeText(
-                                    this,
-                                    "Registration successful!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                                Log.d(
-                                    "TECHFIX_FIRESTORE",
-                                    "User saved successfully: $userId"
-                                )
-                            }
-                            .addOnFailureListener { exception ->
-
-                                btnRegister.isEnabled = true
-
-                                Toast.makeText(
-                                    this,
-                                    "Account created, but profile save failed.",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-                                Log.e(
-                                    "TECHFIX_FIRESTORE",
-                                    "Failed to save user: ${exception.message}",
-                                    exception
-                                )
-                            }
-
-                    }
-
-                } else {
-
-                    btnRegister.isEnabled = true
-
-                    val errorMessage =
-                        task.exception?.message ?: "Unknown error"
-
-                    Toast.makeText(
-                        this,
-                        "Registration failed: $errorMessage",
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    Log.e(
-                        "TECHFIX_AUTH",
-                        "FAILED - $errorMessage",
-                        task.exception
+                    // User data for Firestore
+                    val userData = hashMapOf(
+                        "name" to name,
+                        "email" to email,
+                        "role" to "CUSTOMER",
+                        "createdAt" to
+                                com.google.firebase.Timestamp.now()
                     )
+
+                    // Save user data in Firestore
+                    firestore.collection("users")
+                        .document(userId)
+                        .set(userData)
+                        .addOnSuccessListener {
+
+                            btnRegister.isEnabled = true
+
+                            Toast.makeText(
+                                this,
+                                "Registration successful!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            Log.d(
+                                "TECHFIX_FIRESTORE",
+                                "User saved successfully: $userId"
+                            )
+                        }
+                        .addOnFailureListener { exception ->
+
+                            btnRegister.isEnabled = true
+
+                            Toast.makeText(
+                                this,
+                                "Account created, but profile save failed.",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            Log.e(
+                                "TECHFIX_FIRESTORE",
+                                "Failed to save user: ${exception.message}",
+                                exception
+                            )
+                        }
                 }
+
+            } else {
+
+                btnRegister.isEnabled = true
+
+                val errorMessage =
+                    task.exception?.message
+                        ?: "Unknown error"
+
+                Toast.makeText(
+                    this,
+                    "Registration failed: $errorMessage",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                Log.e(
+                    "TECHFIX_AUTH",
+                    "FAILED - $errorMessage",
+                    task.exception
+                )
             }
+        }
     }
 }
