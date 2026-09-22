@@ -1,0 +1,11 @@
+warning: in the working copy of 'app/src/main/AndroidManifest.xml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/src/main/java/com/techfix/app/RegisterActivity.kt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/src/main/res/values/strings.xml', LF will be replaced by CRLF the next time Git touches it
+ .idea/gradle.xml                                   |  1 [32m+[m
+ .idea/misc.xml                                     |  2 [32m+[m[31m-[m
+ app/build.gradle.kts                               |  1 [32m+[m
+ app/src/main/AndroidManifest.xml                   | 41 [32m+++[m[31m-------[m
+ .../main/java/com/techfix/app/RegisterActivity.kt  | 90 [32m+++++++++++++++++++++[m[31m-[m
+ app/src/main/res/layout/activity_main.xml          | 23 [32m+++++[m[31m-[m
+ app/src/main/res/layout/activity_register.xml      | 88 [32m++++++++++++++++++++[m[31m-[m
+ 7 files changed, 205 insertions(+), 41 deletions(-)

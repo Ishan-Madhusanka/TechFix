@@ -1,9 +1,13 @@
 package com.techfix.app
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -11,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,13 +30,16 @@ class BookRepairActivity : AppCompatActivity() {
     private lateinit var etAppointmentDate: EditText
     private lateinit var ivDamageImage: ImageView
     private lateinit var btnUploadImage: Button
+    private lateinit var btnTakePhoto: Button
     private lateinit var btnSubmitBooking: Button
 
     private var selectedImageUri: Uri? = null
+    private var cameraImageUri: Uri? = null
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
+    // Gallery image picker
     private val imagePicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
@@ -51,6 +59,45 @@ class BookRepairActivity : AppCompatActivity() {
             }
         }
 
+    // Camera
+    private val cameraLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.TakePicture()
+        ) { success ->
+
+            val uri = cameraImageUri
+
+            if (success && uri != null) {
+                selectedImageUri = uri
+
+                ivDamageImage.setImageURI(uri)
+                ivDamageImage.visibility = ImageView.VISIBLE
+
+                Toast.makeText(
+                    this,
+                    "Photo captured successfully!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    // Camera permission
+    private val cameraPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+
+            if (isGranted) {
+                openCamera()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Camera permission is required.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,7 +109,9 @@ class BookRepairActivity : AppCompatActivity() {
         etDescription = findViewById(R.id.etDescription)
         etAppointmentDate = findViewById(R.id.etAppointmentDate)
         ivDamageImage = findViewById(R.id.ivDamageImage)
+
         btnUploadImage = findViewById(R.id.btnUploadImage)
+        btnTakePhoto = findViewById(R.id.btnTakePhoto)
         btnSubmitBooking = findViewById(R.id.btnSubmitBooking)
 
         // Selected service information
@@ -113,9 +162,26 @@ class BookRepairActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        // Upload damage image
+        // Upload image from Gallery
         btnUploadImage.setOnClickListener {
             imagePicker.launch("image/*")
+        }
+
+        // Take photo using Camera
+        btnTakePhoto.setOnClickListener {
+
+            if (
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                openCamera()
+            } else {
+                cameraPermissionLauncher.launch(
+                    Manifest.permission.CAMERA
+                )
+            }
         }
 
         // Submit booking
@@ -172,11 +238,13 @@ class BookRepairActivity : AppCompatActivity() {
             }
 
             // Validate image
-            if (selectedImageUri == null) {
+            val imageUri = selectedImageUri
+
+            if (imageUri == null) {
 
                 Toast.makeText(
                     this,
-                    "Please upload a damage image",
+                    "Please upload a damage image or take a photo",
                     Toast.LENGTH_SHORT
                 ).show()
 
@@ -193,10 +261,12 @@ class BookRepairActivity : AppCompatActivity() {
                     "Laptop" -> "laptop"
                     "Desktop" -> "desktop"
                     "Gaming Console" -> "gaming_console"
-                    else -> categoryName
-                        ?.lowercase()
-                        ?.replace(" ", "_")
-                        ?: ""
+
+                    else ->
+                        categoryName
+                            ?.lowercase()
+                            ?.replace(" ", "_")
+                            ?: ""
                 }
 
             if (selectedServiceId.isEmpty()) {
@@ -230,11 +300,7 @@ class BookRepairActivity : AppCompatActivity() {
             val selectedCategory =
                 categoryName ?: "Unknown Category"
 
-            /*
-             * Create Firestore document reference first.
-             * This allows us to save the same ID inside
-             * the document as the shared repairRequests schema.
-             */
+            // Create Firestore document
             val bookingReference =
                 db.collection("repairRequests").document()
 
@@ -255,7 +321,7 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "description" to description,
 
-                "imageUrl" to selectedImageUri.toString(),
+                "imageUrl" to imageUri.toString(),
 
                 "appointmentDate" to appointmentDate,
 
@@ -329,6 +395,49 @@ class BookRepairActivity : AppCompatActivity() {
                     btnSubmitBooking.isEnabled = true
                     btnSubmitBooking.text = "Submit Booking"
                 }
+        }
+    }
+
+    // Create image URI for camera
+    private fun createImageUri(): Uri? {
+
+        val contentValues = ContentValues().apply {
+
+            put(
+                MediaStore.Images.Media.DISPLAY_NAME,
+                "techfix_${System.currentTimeMillis()}.jpg"
+            )
+
+            put(
+                MediaStore.Images.Media.MIME_TYPE,
+                "image/jpeg"
+            )
+        }
+
+        return contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        )
+    }
+
+    // Open camera
+    private fun openCamera() {
+
+        val uri = createImageUri()
+
+        cameraImageUri = uri
+
+        if (uri != null) {
+
+            cameraLauncher.launch(uri)
+
+        } else {
+
+            Toast.makeText(
+                this,
+                "Unable to open camera.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

@@ -3,17 +3,18 @@ package com.techfix.app
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RepairServicesActivity : AppCompatActivity() {
 
     private lateinit var tvCategoryName: TextView
+    private lateinit var servicesContainer: LinearLayout
 
-    private lateinit var btnScreenRepair: Button
-    private lateinit var btnBatteryRepair: Button
-    private lateinit var btnChargingRepair: Button
-    private lateinit var btnSoftwareRepair: Button
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,60 +22,163 @@ class RepairServicesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_repair_services)
 
         tvCategoryName = findViewById(R.id.tvCategoryName)
-
-        btnScreenRepair = findViewById(R.id.btnScreenRepair)
-        btnBatteryRepair = findViewById(R.id.btnBatteryRepair)
-        btnChargingRepair = findViewById(R.id.btnChargingRepair)
-        btnSoftwareRepair = findViewById(R.id.btnSoftwareRepair)
+        servicesContainer = findViewById(R.id.servicesContainer)
 
         // Get selected device category
         val categoryName = intent.getStringExtra("categoryName")
 
-        if (categoryName != null) {
-            tvCategoryName.text = "Services for: $categoryName"
+        if (categoryName == null) {
+            Toast.makeText(
+                this,
+                "Device category not selected",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            finish()
+            return
         }
 
-        // Screen Repair
-        btnScreenRepair.setOnClickListener {
-            openServiceDetails("Screen Repair", categoryName)
-        }
+        tvCategoryName.text = "Services for: $categoryName"
 
-        // Battery Replacement
-        btnBatteryRepair.setOnClickListener {
-            openServiceDetails("Battery Replacement", categoryName)
-        }
-
-        // Charging Port Repair
-        btnChargingRepair.setOnClickListener {
-            openServiceDetails("Charging Port Repair", categoryName)
-        }
-
-        // Software Repair
-        btnSoftwareRepair.setOnClickListener {
-            openServiceDetails("Software Repair", categoryName)
-        }
+        loadServices(categoryName)
     }
 
-    private fun openServiceDetails(
+    private fun loadServices(categoryName: String) {
+
+        // Convert category name to Firebase categoryId
+        val categoryId = when (categoryName) {
+
+            "Mobile" -> "mobile"
+
+            "Laptop" -> "laptop"
+
+            "Desktop" -> "desktop"
+
+            "Gaming Console" -> "gaming_console"
+
+            else -> categoryName.lowercase().replace(" ", "_")
+        }
+
+        db.collection("services")
+            .whereEqualTo("categoryId", categoryId)
+            .get()
+            .addOnSuccessListener { documents ->
+
+                servicesContainer.removeAllViews()
+
+                if (documents.isEmpty) {
+
+                    val noServicesText = TextView(this)
+
+                    noServicesText.text =
+                        "No repair services available for $categoryName"
+
+                    noServicesText.textSize = 18f
+
+                    servicesContainer.addView(noServicesText)
+
+                    return@addOnSuccessListener
+                }
+
+                for (document in documents) {
+
+                    val serviceId = document.id
+
+                    val serviceName =
+                        document.getString("name")
+                            ?: "Unknown Service"
+
+                    val price =
+                        document.getLong("price")?.toInt() ?: 0
+
+                    val duration =
+                        document.getString("duration")
+                            ?: "Not specified"
+
+                    addServiceButton(
+                        serviceId = serviceId,
+                        serviceName = serviceName,
+                        price = price,
+                        duration = duration,
+                        categoryName = categoryName
+                    )
+                }
+            }
+            .addOnFailureListener { exception ->
+
+                Toast.makeText(
+                    this,
+                    "Failed to load services: ${exception.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    private fun addServiceButton(
+        serviceId: String,
         serviceName: String,
-        categoryName: String?
+        price: Int,
+        duration: String,
+        categoryName: String
     ) {
 
-        val intent = Intent(
-            this,
-            ServiceDetailsActivity::class.java
+        val button = Button(this)
+
+        button.text =
+            "$serviceName\nRs. $price\nDuration: $duration"
+
+        button.textSize = 16f
+
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        intent.putExtra(
-            "serviceName",
-            serviceName
+        params.setMargins(
+            0,
+            0,
+            0,
+            16
         )
 
-        intent.putExtra(
-            "categoryName",
-            categoryName
+        servicesContainer.addView(
+            button,
+            params
         )
 
-        startActivity(intent)
+        button.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                ServiceDetailsActivity::class.java
+            )
+
+            intent.putExtra(
+                "serviceId",
+                serviceId
+            )
+
+            intent.putExtra(
+                "serviceName",
+                serviceName
+            )
+
+            intent.putExtra(
+                "categoryName",
+                categoryName
+            )
+
+            intent.putExtra(
+                "servicePrice",
+                price
+            )
+
+            intent.putExtra(
+                "duration",
+                duration
+            )
+
+            startActivity(intent)
+        }
     }
 }
