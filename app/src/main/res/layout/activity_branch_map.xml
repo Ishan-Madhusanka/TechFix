@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="#080D18"
     tools:context=".branch.BranchMapActivity">
 
     <!-- Header -->
@@ -15,7 +15,7 @@
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#1565C0"
+        android:background="#111827"
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Find the nearest service branch"
-            android:textColor="#E3F2FD"
+            android:textColor="#94A3B8"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -62,10 +62,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="#111827"
         app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:strokeColor="#1565C0"
+        app:cardElevation="8dp"
+        app:strokeColor="#3B82F6"
         app:strokeWidth="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,50 +77,59 @@
             android:orientation="vertical"
             android:padding="18dp">
 
+            <!-- Label -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NEAREST BRANCH"
-                android:textColor="#1565C0"
+                android:textColor="#60A5FA"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
+            <!-- Branch Name -->
             <TextView
                 android:id="@+id/tvNearestBranchName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="6dp"
                 android:text="Finding nearest branch..."
-                android:textColor="#222222"
+                android:textColor="#FFFFFF"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
+            <!-- City -->
             <TextView
                 android:id="@+id/tvNearestBranchCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="7dp"
                 android:text="City: --"
-                android:textColor="#555555"
+                android:textColor="#94A3B8"
                 android:textSize="14sp" />
 
+            <!-- Distance -->
             <TextView
                 android:id="@+id/tvNearestBranchDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Distance: -- km"
-                android:textColor="#555555"
+                android:textColor="#94A3B8"
                 android:textSize="14sp" />
 
+            <!-- Find Branch Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMyLocation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="14dp"
                 android:text="Find My Nearest Branch"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                app:backgroundTint="#1565C0" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="#3B82F6"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 

@@ -163,6 +163,11 @@ class BookingConfirmationActivity : AppCompatActivity() {
                 R.id.tvSelectedService
             )
 
+        val tvAppointmentDate =
+            findViewById<TextView>(
+                R.id.tvAppointmentDate
+            )
+
         val tvAssignedBranch =
             findViewById<TextView>(
                 R.id.tvAssignedBranch
@@ -189,19 +194,24 @@ class BookingConfirmationActivity : AppCompatActivity() {
 
         tvSelectedService.text =
             if (serviceName.isNotBlank()) {
-
-                "Service: $serviceName"
-
+                serviceName
             } else {
+                serviceId ?: "--"
+            }
 
-                "Service ID: ${serviceId ?: "--"}"
+
+        // Display appointment date
+        tvAppointmentDate.text =
+            if (appointmentDate.isNotBlank()) {
+                appointmentDate
+            } else {
+                "--"
             }
 
         tvAssignedBranch.text =
-            "Branch: ${branchName ?: "--"}"
+            branchName ?: "--"
 
-        tvBranchId.text =
-            "Branch ID: ${branchId ?: "--"}"
+        tvBranchId.visibility = android.view.View.GONE
 
         // ---------------------------------------------------------
         // CONFIRM BOOKING
@@ -350,7 +360,6 @@ class BookingConfirmationActivity : AppCompatActivity() {
         // ---------------------------------------------------------
 
         btnCancelBooking.setOnClickListener {
-
             finish()
         }
     }
