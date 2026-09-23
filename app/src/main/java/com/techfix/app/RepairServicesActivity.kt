@@ -13,6 +13,7 @@ class RepairServicesActivity : AppCompatActivity() {
 
     private lateinit var tvCategoryName: TextView
     private lateinit var servicesContainer: LinearLayout
+    private lateinit var btnDeviceCategories: Button
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -23,29 +24,48 @@ class RepairServicesActivity : AppCompatActivity() {
 
         tvCategoryName = findViewById(R.id.tvCategoryName)
         servicesContainer = findViewById(R.id.servicesContainer)
+        btnDeviceCategories = findViewById(R.id.btnDeviceCategories)
 
-        // Get selected device category
-        val categoryName = intent.getStringExtra("categoryName")
+        // Device Categories button
+        btnDeviceCategories.setOnClickListener {
 
-        if (categoryName == null) {
-            Toast.makeText(
+            val intent = Intent(
                 this,
-                "Device category not selected",
-                Toast.LENGTH_SHORT
-            ).show()
+                DeviceCategoriesActivity::class.java
+            )
 
-            finish()
-            return
+            startActivity(intent)
         }
 
-        tvCategoryName.text = "Services for: $categoryName"
+        // Check if a category was selected from Device Categories
+        val categoryName =
+            intent.getStringExtra("categoryName")
 
-        loadServices(categoryName)
+        if (categoryName != null) {
+
+            tvCategoryName.text =
+                "Services for: $categoryName"
+
+            loadServices(categoryName)
+
+        } else {
+
+            tvCategoryName.text =
+                "Select a device category"
+
+            val message = TextView(this)
+
+            message.text =
+                "Click Device Categories to select your device."
+
+            message.textSize = 17f
+
+            servicesContainer.addView(message)
+        }
     }
 
     private fun loadServices(categoryName: String) {
 
-        // Convert category name to Firebase categoryId
         val categoryId = when (categoryName) {
 
             "Mobile" -> "mobile"
@@ -56,7 +76,9 @@ class RepairServicesActivity : AppCompatActivity() {
 
             "Gaming Console" -> "gaming_console"
 
-            else -> categoryName.lowercase().replace(" ", "_")
+            else -> categoryName
+                .lowercase()
+                .replace(" ", "_")
         }
 
         db.collection("services")
@@ -75,32 +97,37 @@ class RepairServicesActivity : AppCompatActivity() {
 
                     noServicesText.textSize = 18f
 
-                    servicesContainer.addView(noServicesText)
+                    servicesContainer.addView(
+                        noServicesText
+                    )
 
                     return@addOnSuccessListener
                 }
 
                 for (document in documents) {
 
-                    val serviceId = document.id
+                    val serviceId =
+                        document.id
 
                     val serviceName =
                         document.getString("name")
                             ?: "Unknown Service"
 
                     val price =
-                        document.getLong("price")?.toInt() ?: 0
+                        document.getLong("price")
+                            ?.toInt()
+                            ?: 0
 
                     val duration =
                         document.getString("duration")
                             ?: "Not specified"
 
                     addServiceButton(
-                        serviceId = serviceId,
-                        serviceName = serviceName,
-                        price = price,
-                        duration = duration,
-                        categoryName = categoryName
+                        serviceId,
+                        serviceName,
+                        price,
+                        duration,
+                        categoryName
                     )
                 }
             }

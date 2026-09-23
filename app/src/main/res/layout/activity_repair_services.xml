@@ -19,14 +19,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp" />
 
+    <Button
+        android:id="@+id/btnDeviceCategories"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Device Categories"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
     <TextView
         android:id="@+id/tvCategoryName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Services for: Device"
+        android:text="Select a device category"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
+        app:layout_constraintTop_toBottomOf="@id/btnDeviceCategories"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp" />
