@@ -124,17 +124,13 @@
             app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etOperatingSystem"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: Windows 11"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvOperatingSystemLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,17 +150,13 @@
             app:layout_constraintTop_toBottomOf="@id/etOperatingSystem"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etLaptopRam"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: 8GB"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvLaptopRamLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,17 +176,13 @@
             app:layout_constraintTop_toBottomOf="@id/etLaptopRam"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etRam"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: 8GB"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvRamLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -214,17 +202,13 @@
             app:layout_constraintTop_toBottomOf="@id/etRam"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etLaptopStorage"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: 512GB SSD"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvLaptopStorageLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -244,17 +228,13 @@
             app:layout_constraintTop_toBottomOf="@id/etLaptopStorage"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etLaptopWarranty"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: Under Warranty / Expired"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvLaptopWarrantyLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -274,17 +254,13 @@
             app:layout_constraintTop_toBottomOf="@id/etLaptopWarranty"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etProcessor"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: Intel Core i5"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvProcessorLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -304,49 +280,15 @@
             app:layout_constraintTop_toBottomOf="@id/etProcessor"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etDesktopStorage"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: 1TB HDD"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvDesktopStorageLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Desktop Graphics Card -->
-        <TextView
-            android:id="@+id/tvGraphicsCardLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Graphics Card"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etDesktopStorage"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etGraphicsCard"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: NVIDIA GTX 1650"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvGraphicsCardLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -361,20 +303,16 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etGraphicsCard"
+            app:layout_constraintTop_toBottomOf="@id/etDesktopStorage"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etDesktopWarranty"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: Under Warranty / Expired"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvDesktopWarrantyLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -394,17 +332,13 @@
             app:layout_constraintTop_toBottomOf="@id/etDesktopWarranty"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etConsoleStorage"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: 1TB"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvConsoleStorageLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -430,7 +364,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
             android:backgroundTint="#90A4AE"
-            android:hint="Example: 2"
+            android:hint="Enter controller count"
             android:inputType="number"
             android:textColor="#263238"
             android:textColorHint="#78909C"
@@ -454,17 +388,13 @@
             app:layout_constraintTop_toBottomOf="@id/etControllerCount"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/etConsoleWarranty"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Example: Under Warranty / Expired"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
+            android:layout_height="52dp"
+            android:layout_marginTop="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvConsoleWarrantyLabel"
             app:layout_constraintStart_toStartOf="parent"
@@ -532,7 +462,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Appointment Date - ALL DEVICES -->
+        <!-- Appointment Date -->
         <TextView
             android:id="@+id/tvAppointmentLabel"
             android:layout_width="wrap_content"
@@ -562,7 +492,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Damage Image Preview - ALL DEVICES -->
+        <!-- Damage Image Preview -->
         <ImageView
             android:id="@+id/ivDamageImage"
             android:layout_width="0dp"
@@ -575,7 +505,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Upload Damage Image - ALL DEVICES -->
+        <!-- Upload Damage Image -->
         <Button
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
@@ -590,7 +520,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Take Photo - ALL DEVICES -->
+        <!-- Take Photo -->
         <Button
             android:id="@+id/btnTakePhoto"
             android:layout_width="0dp"
@@ -605,7 +535,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Submit Booking - ALL DEVICES -->
+        <!-- Submit Booking -->
         <Button
             android:id="@+id/btnSubmitBooking"
             android:layout_width="0dp"
