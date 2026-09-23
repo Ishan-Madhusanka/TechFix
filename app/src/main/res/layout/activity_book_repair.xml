@@ -110,7 +110,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Laptop / Desktop Operating System -->
+        <!-- Operating System -->
         <TextView
             android:id="@+id/tvOperatingSystemLabel"
             android:layout_width="wrap_content"
@@ -130,13 +130,43 @@
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
             android:backgroundTint="#90A4AE"
-            android:hint="Enter operating system"
+            android:hint="Example: Windows 11"
             android:inputType="text"
             android:textColor="#263238"
             android:textColorHint="#78909C"
             android:textSize="15sp"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/tvOperatingSystemLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Laptop RAM -->
+        <TextView
+            android:id="@+id/tvLaptopRamLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="RAM"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etOperatingSystem"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etLaptopRam"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 8GB"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvLaptopRamLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -151,7 +181,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etOperatingSystem"
+            app:layout_constraintTop_toBottomOf="@id/etLaptopRam"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
@@ -170,6 +200,276 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Laptop Storage -->
+        <TextView
+            android:id="@+id/tvLaptopStorageLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Storage"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etRam"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etLaptopStorage"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 512GB SSD"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvLaptopStorageLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Laptop Warranty -->
+        <TextView
+            android:id="@+id/tvLaptopWarrantyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Warranty Status"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etLaptopStorage"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etLaptopWarranty"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: Under Warranty / Expired"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvLaptopWarrantyLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Desktop Processor -->
+        <TextView
+            android:id="@+id/tvProcessorLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Processor"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etLaptopWarranty"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etProcessor"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: Intel Core i5"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvProcessorLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Desktop Storage -->
+        <TextView
+            android:id="@+id/tvDesktopStorageLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Storage"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etProcessor"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etDesktopStorage"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 1TB HDD"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvDesktopStorageLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Desktop Graphics Card -->
+        <TextView
+            android:id="@+id/tvGraphicsCardLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Graphics Card"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etDesktopStorage"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etGraphicsCard"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: NVIDIA GTX 1650"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvGraphicsCardLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Desktop Warranty -->
+        <TextView
+            android:id="@+id/tvDesktopWarrantyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Warranty Status"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etGraphicsCard"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etDesktopWarranty"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: Under Warranty / Expired"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvDesktopWarrantyLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Gaming Console Storage -->
+        <TextView
+            android:id="@+id/tvConsoleStorageLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Storage"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etDesktopWarranty"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etConsoleStorage"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 1TB"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvConsoleStorageLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Controller Count -->
+        <TextView
+            android:id="@+id/tvControllerCountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Controller Count"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etConsoleStorage"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etControllerCount"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 2"
+            android:inputType="number"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvControllerCountLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Console Warranty -->
+        <TextView
+            android:id="@+id/tvConsoleWarrantyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Warranty Status"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etControllerCount"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etConsoleWarranty"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: Under Warranty / Expired"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvConsoleWarrantyLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <!-- Gaming Console Controller Problem -->
         <TextView
             android:id="@+id/tvControllerProblemLabel"
@@ -181,7 +481,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etRam"
+            app:layout_constraintTop_toBottomOf="@id/etConsoleWarranty"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText

@@ -35,9 +35,47 @@ class BookRepairActivity : AppCompatActivity() {
     private lateinit var tvOperatingSystemLabel: TextView
     private lateinit var etOperatingSystem: EditText
 
+    // Desktop RAM
     private lateinit var tvRamLabel: TextView
     private lateinit var etRam: EditText
 
+    // Laptop RAM
+    private lateinit var tvLaptopRamLabel: TextView
+    private lateinit var etLaptopRam: EditText
+
+    // Laptop Storage
+    private lateinit var tvLaptopStorageLabel: TextView
+    private lateinit var etLaptopStorage: EditText
+
+    // Laptop Warranty
+    private lateinit var tvLaptopWarrantyLabel: TextView
+    private lateinit var etLaptopWarranty: EditText
+
+    // Desktop Processor
+    private lateinit var tvProcessorLabel: TextView
+    private lateinit var etProcessor: EditText
+
+    // Desktop Storage
+    private lateinit var tvDesktopStorageLabel: TextView
+    private lateinit var etDesktopStorage: EditText
+
+    // Desktop Warranty
+    private lateinit var tvDesktopWarrantyLabel: TextView
+    private lateinit var etDesktopWarranty: EditText
+
+    // Gaming Console Storage
+    private lateinit var tvConsoleStorageLabel: TextView
+    private lateinit var etConsoleStorage: EditText
+
+    // Gaming Console Controller Count
+    private lateinit var tvControllerCountLabel: TextView
+    private lateinit var etControllerCount: EditText
+
+    // Gaming Console Warranty
+    private lateinit var tvConsoleWarrantyLabel: TextView
+    private lateinit var etConsoleWarranty: EditText
+
+    // Gaming Console Controller Problem
     private lateinit var tvControllerProblemLabel: TextView
     private lateinit var etControllerProblem: EditText
 
@@ -124,14 +162,24 @@ class BookRepairActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_book_repair)
 
-        // Find views
-        tvSelectedService = findViewById(R.id.tvSelectedService)
+        // ---------------------------------------------------------
+        // FIND VIEWS
+        // ---------------------------------------------------------
 
-        tvDeviceBrandLabel = findViewById(R.id.tvDeviceBrandLabel)
-        etDeviceBrand = findViewById(R.id.etDeviceBrand)
+        tvSelectedService =
+            findViewById(R.id.tvSelectedService)
 
-        tvDeviceModelLabel = findViewById(R.id.tvDeviceModelLabel)
-        etDeviceModel = findViewById(R.id.etDeviceModel)
+        tvDeviceBrandLabel =
+            findViewById(R.id.tvDeviceBrandLabel)
+
+        etDeviceBrand =
+            findViewById(R.id.etDeviceBrand)
+
+        tvDeviceModelLabel =
+            findViewById(R.id.tvDeviceModelLabel)
+
+        etDeviceModel =
+            findViewById(R.id.etDeviceModel)
 
         tvOperatingSystemLabel =
             findViewById(R.id.tvOperatingSystemLabel)
@@ -139,12 +187,77 @@ class BookRepairActivity : AppCompatActivity() {
         etOperatingSystem =
             findViewById(R.id.etOperatingSystem)
 
+        // Desktop RAM
         tvRamLabel =
             findViewById(R.id.tvRamLabel)
 
         etRam =
             findViewById(R.id.etRam)
 
+        // Laptop RAM
+        tvLaptopRamLabel =
+            findViewById(R.id.tvLaptopRamLabel)
+
+        etLaptopRam =
+            findViewById(R.id.etLaptopRam)
+
+        // Laptop Storage
+        tvLaptopStorageLabel =
+            findViewById(R.id.tvLaptopStorageLabel)
+
+        etLaptopStorage =
+            findViewById(R.id.etLaptopStorage)
+
+        // Laptop Warranty
+        tvLaptopWarrantyLabel =
+            findViewById(R.id.tvLaptopWarrantyLabel)
+
+        etLaptopWarranty =
+            findViewById(R.id.etLaptopWarranty)
+
+        // Desktop Processor
+        tvProcessorLabel =
+            findViewById(R.id.tvProcessorLabel)
+
+        etProcessor =
+            findViewById(R.id.etProcessor)
+
+        // Desktop Storage
+        tvDesktopStorageLabel =
+            findViewById(R.id.tvDesktopStorageLabel)
+
+        etDesktopStorage =
+            findViewById(R.id.etDesktopStorage)
+
+        // Desktop Warranty
+        tvDesktopWarrantyLabel =
+            findViewById(R.id.tvDesktopWarrantyLabel)
+
+        etDesktopWarranty =
+            findViewById(R.id.etDesktopWarranty)
+
+        // Console Storage
+        tvConsoleStorageLabel =
+            findViewById(R.id.tvConsoleStorageLabel)
+
+        etConsoleStorage =
+            findViewById(R.id.etConsoleStorage)
+
+        // Controller Count
+        tvControllerCountLabel =
+            findViewById(R.id.tvControllerCountLabel)
+
+        etControllerCount =
+            findViewById(R.id.etControllerCount)
+
+        // Console Warranty
+        tvConsoleWarrantyLabel =
+            findViewById(R.id.tvConsoleWarrantyLabel)
+
+        etConsoleWarranty =
+            findViewById(R.id.etConsoleWarranty)
+
+        // Controller Problem
         tvControllerProblemLabel =
             findViewById(R.id.tvControllerProblemLabel)
 
@@ -169,7 +282,10 @@ class BookRepairActivity : AppCompatActivity() {
         btnSubmitBooking =
             findViewById(R.id.btnSubmitBooking)
 
-        // Get selected service information
+        // ---------------------------------------------------------
+        // GET SELECTED SERVICE INFORMATION
+        // ---------------------------------------------------------
+
         val serviceId =
             intent.getStringExtra("serviceId")
 
@@ -182,20 +298,30 @@ class BookRepairActivity : AppCompatActivity() {
         val servicePrice =
             intent.getIntExtra("servicePrice", 0)
 
-        // Change fields according to device category
+        // ---------------------------------------------------------
+        // SETUP CATEGORY FIELDS
+        // ---------------------------------------------------------
+
         setupCategoryFields(categoryName)
 
-        // Show selected service
+        // ---------------------------------------------------------
+        // SHOW SELECTED SERVICE
+        // ---------------------------------------------------------
+
         if (serviceName != null) {
 
             tvSelectedService.text =
                 "Selected Service: $serviceName\nEstimated Price: Rs. $servicePrice"
         }
 
-        // Appointment Date
+        // ---------------------------------------------------------
+        // APPOINTMENT DATE
+        // ---------------------------------------------------------
+
         etAppointmentDate.setOnClickListener {
 
-            val calendar = Calendar.getInstance()
+            val calendar =
+                Calendar.getInstance()
 
             val year =
                 calendar.get(Calendar.YEAR)
@@ -231,13 +357,19 @@ class BookRepairActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
-        // Upload Damage Image
+        // ---------------------------------------------------------
+        // UPLOAD IMAGE
+        // ---------------------------------------------------------
+
         btnUploadImage.setOnClickListener {
 
             imagePicker.launch("image/*")
         }
 
-        // Take Photo
+        // ---------------------------------------------------------
+        // TAKE PHOTO
+        // ---------------------------------------------------------
+
         btnTakePhoto.setOnClickListener {
 
             if (
@@ -257,7 +389,10 @@ class BookRepairActivity : AppCompatActivity() {
             }
         }
 
-        // Submit Booking
+        // ---------------------------------------------------------
+        // SUBMIT BOOKING
+        // ---------------------------------------------------------
+
         btnSubmitBooking.setOnClickListener {
 
             submitBooking(
@@ -269,61 +404,206 @@ class BookRepairActivity : AppCompatActivity() {
         }
     }
 
-    // ---------------------------------------------------------
+    // =========================================================
     // CATEGORY-SPECIFIC FIELDS
-    // ---------------------------------------------------------
+    // =========================================================
 
-    private fun setupCategoryFields(categoryName: String?) {
+    private fun setupCategoryFields(
+        categoryName: String?
+    ) {
 
-        // Hide optional fields first
-        tvOperatingSystemLabel.visibility = View.GONE
-        etOperatingSystem.visibility = View.GONE
+        // ---------------------------------------------------------
+        // HIDE ALL OPTIONAL FIELDS FIRST
+        // ---------------------------------------------------------
 
-        tvRamLabel.visibility = View.GONE
-        etRam.visibility = View.GONE
+        tvOperatingSystemLabel.visibility =
+            View.GONE
 
-        tvControllerProblemLabel.visibility = View.GONE
-        etControllerProblem.visibility = View.GONE
+        etOperatingSystem.visibility =
+            View.GONE
+
+        tvRamLabel.visibility =
+            View.GONE
+
+        etRam.visibility =
+            View.GONE
+
+        tvLaptopRamLabel.visibility =
+            View.GONE
+
+        etLaptopRam.visibility =
+            View.GONE
+
+        tvLaptopStorageLabel.visibility =
+            View.GONE
+
+        etLaptopStorage.visibility =
+            View.GONE
+
+        tvLaptopWarrantyLabel.visibility =
+            View.GONE
+
+        etLaptopWarranty.visibility =
+            View.GONE
+
+        tvProcessorLabel.visibility =
+            View.GONE
+
+        etProcessor.visibility =
+            View.GONE
+
+        tvDesktopStorageLabel.visibility =
+            View.GONE
+
+        etDesktopStorage.visibility =
+            View.GONE
+
+        tvDesktopWarrantyLabel.visibility =
+            View.GONE
+
+        etDesktopWarranty.visibility =
+            View.GONE
+
+        tvConsoleStorageLabel.visibility =
+            View.GONE
+
+        etConsoleStorage.visibility =
+            View.GONE
+
+        tvControllerCountLabel.visibility =
+            View.GONE
+
+        etControllerCount.visibility =
+            View.GONE
+
+        tvConsoleWarrantyLabel.visibility =
+            View.GONE
+
+        etConsoleWarranty.visibility =
+            View.GONE
+
+        tvControllerProblemLabel.visibility =
+            View.GONE
+
+        etControllerProblem.visibility =
+            View.GONE
+
+        // ---------------------------------------------------------
+        // MOBILE
+        // ---------------------------------------------------------
 
         when (categoryName) {
 
             "Mobile" -> {
 
-                tvDeviceBrandLabel.text = "Mobile Brand"
-                etDeviceBrand.hint = "Enter mobile brand"
+                tvDeviceBrandLabel.text =
+                    "Mobile Brand"
 
-                tvDeviceModelLabel.text = "Mobile Model"
-                etDeviceModel.hint = "Enter mobile model"
+                etDeviceBrand.hint =
+                    "Enter mobile brand"
+
+                tvDeviceModelLabel.text =
+                    "Mobile Model"
+
+                etDeviceModel.hint =
+                    "Enter mobile model"
             }
+
+            // -----------------------------------------------------
+            // LAPTOP
+            // -----------------------------------------------------
 
             "Laptop" -> {
 
-                tvDeviceBrandLabel.text = "Laptop Brand"
-                etDeviceBrand.hint = "Enter laptop brand"
+                tvDeviceBrandLabel.text =
+                    "Laptop Brand"
 
-                tvDeviceModelLabel.text = "Laptop Model"
-                etDeviceModel.hint = "Enter laptop model"
+                etDeviceBrand.hint =
+                    "Enter laptop brand"
 
-                tvOperatingSystemLabel.visibility = View.VISIBLE
-                etOperatingSystem.visibility = View.VISIBLE
+                tvDeviceModelLabel.text =
+                    "Laptop Model"
+
+                etDeviceModel.hint =
+                    "Enter laptop model"
+
+                // Operating System
+                tvOperatingSystemLabel.visibility =
+                    View.VISIBLE
+
+                etOperatingSystem.visibility =
+                    View.VISIBLE
 
                 tvOperatingSystemLabel.text =
                     "Operating System"
 
                 etOperatingSystem.hint =
                     "Example: Windows 11"
+
+                // RAM
+                tvLaptopRamLabel.visibility =
+                    View.VISIBLE
+
+                etLaptopRam.visibility =
+                    View.VISIBLE
+
+                tvLaptopRamLabel.text =
+                    "RAM"
+
+                etLaptopRam.hint =
+                    "Example: 8GB"
+
+                // Storage
+                tvLaptopStorageLabel.visibility =
+                    View.VISIBLE
+
+                etLaptopStorage.visibility =
+                    View.VISIBLE
+
+                tvLaptopStorageLabel.text =
+                    "Storage"
+
+                etLaptopStorage.hint =
+                    "Example: 512GB SSD"
+
+                // Warranty - OPTIONAL
+                tvLaptopWarrantyLabel.visibility =
+                    View.VISIBLE
+
+                etLaptopWarranty.visibility =
+                    View.VISIBLE
+
+                tvLaptopWarrantyLabel.text =
+                    "Warranty Status (Optional)"
+
+                etLaptopWarranty.hint =
+                    "Example: Under Warranty / Expired"
             }
+
+            // -----------------------------------------------------
+            // DESKTOP
+            // -----------------------------------------------------
 
             "Desktop" -> {
 
-                tvDeviceBrandLabel.text = "Desktop Brand"
-                etDeviceBrand.hint = "Enter desktop brand"
+                tvDeviceBrandLabel.text =
+                    "Desktop Brand"
 
-                tvDeviceModelLabel.text = "Desktop Model"
-                etDeviceModel.hint = "Enter desktop model"
+                etDeviceBrand.hint =
+                    "Enter desktop brand"
 
-                tvOperatingSystemLabel.visibility = View.VISIBLE
-                etOperatingSystem.visibility = View.VISIBLE
+                tvDeviceModelLabel.text =
+                    "Desktop Model"
+
+                etDeviceModel.hint =
+                    "Enter desktop model"
+
+                // Operating System
+                tvOperatingSystemLabel.visibility =
+                    View.VISIBLE
+
+                etOperatingSystem.visibility =
+                    View.VISIBLE
 
                 tvOperatingSystemLabel.text =
                     "Operating System"
@@ -331,23 +611,117 @@ class BookRepairActivity : AppCompatActivity() {
                 etOperatingSystem.hint =
                     "Example: Windows 11"
 
-                tvRamLabel.visibility = View.VISIBLE
-                etRam.visibility = View.VISIBLE
+                // RAM - OPTIONAL
+                tvRamLabel.visibility =
+                    View.VISIBLE
 
-                tvRamLabel.text = "RAM"
+                etRam.visibility =
+                    View.VISIBLE
+
+                tvRamLabel.text =
+                    "RAM (Optional)"
 
                 etRam.hint =
                     "Example: 8GB"
+
+                // Processor - OPTIONAL
+                tvProcessorLabel.visibility =
+                    View.VISIBLE
+
+                etProcessor.visibility =
+                    View.VISIBLE
+
+                tvProcessorLabel.text =
+                    "Processor (Optional)"
+
+                etProcessor.hint =
+                    "Example: Intel Core i5"
+
+                // Storage - OPTIONAL
+                tvDesktopStorageLabel.visibility =
+                    View.VISIBLE
+
+                etDesktopStorage.visibility =
+                    View.VISIBLE
+
+                tvDesktopStorageLabel.text =
+                    "Storage (Optional)"
+
+                etDesktopStorage.hint =
+                    "Example: 1TB HDD / 512GB SSD"
+
+                // Warranty - OPTIONAL
+                tvDesktopWarrantyLabel.visibility =
+                    View.VISIBLE
+
+                etDesktopWarranty.visibility =
+                    View.VISIBLE
+
+                tvDesktopWarrantyLabel.text =
+                    "Warranty Status (Optional)"
+
+                etDesktopWarranty.hint =
+                    "Example: Under Warranty / Expired"
             }
+
+            // -----------------------------------------------------
+            // GAMING CONSOLE
+            // -----------------------------------------------------
 
             "Gaming Console" -> {
 
-                tvDeviceBrandLabel.text = "Console Brand"
-                etDeviceBrand.hint = "Enter console brand"
+                tvDeviceBrandLabel.text =
+                    "Console Brand"
 
-                tvDeviceModelLabel.text = "Console Model"
-                etDeviceModel.hint = "Enter console model"
+                etDeviceBrand.hint =
+                    "Enter console brand"
 
+                tvDeviceModelLabel.text =
+                    "Console Model"
+
+                etDeviceModel.hint =
+                    "Enter console model"
+
+                // Storage - OPTIONAL
+                tvConsoleStorageLabel.visibility =
+                    View.VISIBLE
+
+                etConsoleStorage.visibility =
+                    View.VISIBLE
+
+                tvConsoleStorageLabel.text =
+                    "Storage (Optional)"
+
+                etConsoleStorage.hint =
+                    "Example: 1TB"
+
+                // Controller Count - OPTIONAL
+                tvControllerCountLabel.visibility =
+                    View.VISIBLE
+
+                etControllerCount.visibility =
+                    View.VISIBLE
+
+                tvControllerCountLabel.text =
+                    "Controller Count (Optional)"
+
+                etControllerCount.hint =
+                    "Example: 2"
+
+                // Warranty - OPTIONAL
+                tvConsoleWarrantyLabel.visibility =
+                    View.VISIBLE
+
+                etConsoleWarranty.visibility =
+                    View.VISIBLE
+
+                tvConsoleWarrantyLabel.text =
+                    "Warranty Status (Optional)"
+
+                etConsoleWarranty.hint =
+                    "Example: Under Warranty / Expired"
+
+                // Controller Problem - OPTIONAL
                 tvControllerProblemLabel.visibility =
                     View.VISIBLE
 
@@ -355,7 +729,7 @@ class BookRepairActivity : AppCompatActivity() {
                     View.VISIBLE
 
                 tvControllerProblemLabel.text =
-                    "Controller Problem"
+                    "Controller Problem (Optional)"
 
                 etControllerProblem.hint =
                     "Describe controller problem if any"
@@ -363,9 +737,9 @@ class BookRepairActivity : AppCompatActivity() {
         }
     }
 
-    // ---------------------------------------------------------
+    // =========================================================
     // SUBMIT BOOKING
-    // ---------------------------------------------------------
+    // =========================================================
 
     private fun submitBooking(
         serviceId: String?,
@@ -373,6 +747,10 @@ class BookRepairActivity : AppCompatActivity() {
         categoryName: String?,
         servicePrice: Int
     ) {
+
+        // ---------------------------------------------------------
+        // GET COMMON VALUES
+        // ---------------------------------------------------------
 
         val brand =
             etDeviceBrand.text.toString().trim()
@@ -395,10 +773,52 @@ class BookRepairActivity : AppCompatActivity() {
         val appointmentDate =
             etAppointmentDate.text.toString().trim()
 
+        // ---------------------------------------------------------
+        // GET LAPTOP VALUES
+        // ---------------------------------------------------------
+
+        val laptopRam =
+            etLaptopRam.text.toString().trim()
+
+        val laptopStorage =
+            etLaptopStorage.text.toString().trim()
+
+        val laptopWarranty =
+            etLaptopWarranty.text.toString().trim()
+
+        // ---------------------------------------------------------
+        // GET DESKTOP VALUES
+        // ---------------------------------------------------------
+
+        val processor =
+            etProcessor.text.toString().trim()
+
+        val desktopStorage =
+            etDesktopStorage.text.toString().trim()
+
+        val desktopWarranty =
+            etDesktopWarranty.text.toString().trim()
+
+        // ---------------------------------------------------------
+        // GET GAMING CONSOLE VALUES
+        // ---------------------------------------------------------
+
+        val consoleStorage =
+            etConsoleStorage.text.toString().trim()
+
+        val controllerCount =
+            etControllerCount.text.toString().trim()
+
+        val consoleWarranty =
+            etConsoleWarranty.text.toString().trim()
+
         val currentUser =
             auth.currentUser
 
-        // Check login
+        // ---------------------------------------------------------
+        // CHECK LOGIN
+        // ---------------------------------------------------------
+
         if (currentUser == null) {
 
             Toast.makeText(
@@ -410,7 +830,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Validate brand
+        // ---------------------------------------------------------
+        // VALIDATE BRAND
+        // ---------------------------------------------------------
+
         if (brand.isEmpty()) {
 
             etDeviceBrand.error =
@@ -419,7 +842,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Validate model
+        // ---------------------------------------------------------
+        // VALIDATE MODEL
+        // ---------------------------------------------------------
+
         if (model.isEmpty()) {
 
             etDeviceModel.error =
@@ -428,7 +854,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Laptop / Desktop OS validation
+        // ---------------------------------------------------------
+        // LAPTOP / DESKTOP OS VALIDATION
+        // ---------------------------------------------------------
+
         if (
             categoryName == "Laptop" ||
             categoryName == "Desktop"
@@ -443,22 +872,28 @@ class BookRepairActivity : AppCompatActivity() {
             }
         }
 
-        // Desktop RAM validation
-        if (categoryName == "Desktop") {
+        // ---------------------------------------------------------
+        // NOTE:
+        // New device-specific fields are OPTIONAL.
+        // No validation is required for:
+        //
+        // Laptop RAM
+        // Laptop Storage
+        // Laptop Warranty
+        // Desktop RAM
+        // Desktop Processor
+        // Desktop Storage
+        // Desktop Warranty
+        // Console Storage
+        // Controller Count
+        // Console Warranty
+        // Controller Problem
+        // ---------------------------------------------------------
 
-            if (ram.isEmpty()) {
+        // ---------------------------------------------------------
+        // DESCRIPTION VALIDATION
+        // ---------------------------------------------------------
 
-                etRam.error =
-                    "Enter RAM"
-
-                return
-            }
-        }
-
-        // Controller problem is optional
-        // for Gaming Console
-
-        // Validate description
         if (description.isEmpty()) {
 
             etDescription.error =
@@ -467,7 +902,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Validate appointment date
+        // ---------------------------------------------------------
+        // APPOINTMENT DATE VALIDATION
+        // ---------------------------------------------------------
+
         if (appointmentDate.isEmpty()) {
 
             etAppointmentDate.error =
@@ -476,7 +914,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Validate image
+        // ---------------------------------------------------------
+        // IMAGE VALIDATION
+        // ---------------------------------------------------------
+
         val imageUri =
             selectedImageUri
 
@@ -491,7 +932,10 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Category ID
+        // ---------------------------------------------------------
+        // CATEGORY ID
+        // ---------------------------------------------------------
+
         val selectedCategoryId =
             when (categoryName) {
 
@@ -514,7 +958,10 @@ class BookRepairActivity : AppCompatActivity() {
                         ?: ""
             }
 
-        // Service ID
+        // ---------------------------------------------------------
+        // SERVICE ID
+        // ---------------------------------------------------------
+
         val selectedServiceId =
             serviceId ?: ""
 
@@ -540,9 +987,15 @@ class BookRepairActivity : AppCompatActivity() {
             return
         }
 
-        // Disable submit button
-        btnSubmitBooking.isEnabled = false
-        btnSubmitBooking.text = "Saving..."
+        // ---------------------------------------------------------
+        // DISABLE SUBMIT BUTTON
+        // ---------------------------------------------------------
+
+        btnSubmitBooking.isEnabled =
+            false
+
+        btnSubmitBooking.text =
+            "Saving..."
 
         val selectedService =
             serviceName ?: "Unknown Service"
@@ -550,13 +1003,17 @@ class BookRepairActivity : AppCompatActivity() {
         val selectedCategory =
             categoryName ?: "Unknown Category"
 
-        // Create Firestore document
+        // ---------------------------------------------------------
+        // CREATE FIRESTORE DOCUMENT
+        // ---------------------------------------------------------
+
         val bookingReference =
             db.collection("repairRequests").document()
 
         val booking =
             hashMapOf(
 
+                // Basic information
                 "id" to bookingReference.id,
 
                 "customerId" to currentUser.uid,
@@ -567,12 +1024,35 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "deviceModel" to model,
 
+                // Existing fields
                 "operatingSystem" to operatingSystem,
 
                 "ram" to ram,
 
                 "controllerProblem" to controllerProblem,
 
+                // Laptop fields
+                "laptopRam" to laptopRam,
+
+                "laptopStorage" to laptopStorage,
+
+                "laptopWarranty" to laptopWarranty,
+
+                // Desktop fields
+                "processor" to processor,
+
+                "desktopStorage" to desktopStorage,
+
+                "desktopWarranty" to desktopWarranty,
+
+                // Gaming Console fields
+                "consoleStorage" to consoleStorage,
+
+                "controllerCount" to controllerCount,
+
+                "consoleWarranty" to consoleWarranty,
+
+                // Service information
                 "serviceId" to selectedServiceId,
 
                 "description" to description,
@@ -588,7 +1068,10 @@ class BookRepairActivity : AppCompatActivity() {
                 "createdAt" to FieldValue.serverTimestamp()
             )
 
-        // Save to Firestore
+        // ---------------------------------------------------------
+        // SAVE TO FIRESTORE
+        // ---------------------------------------------------------
+
         bookingReference
             .set(booking)
             .addOnSuccessListener {
@@ -599,7 +1082,10 @@ class BookRepairActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                // Open confirmation
+                // -------------------------------------------------
+                // OPEN BOOKING CONFIRMATION
+                // -------------------------------------------------
+
                 val confirmationIntent =
                     Intent(
                         this,
@@ -640,7 +1126,9 @@ class BookRepairActivity : AppCompatActivity() {
                     confirmationIntent
                 )
 
-                btnSubmitBooking.isEnabled = true
+                btnSubmitBooking.isEnabled =
+                    true
+
                 btnSubmitBooking.text =
                     "Submit Booking"
             }
@@ -652,15 +1140,17 @@ class BookRepairActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
 
-                btnSubmitBooking.isEnabled = true
+                btnSubmitBooking.isEnabled =
+                    true
+
                 btnSubmitBooking.text =
                     "Submit Booking"
             }
     }
 
-    // ---------------------------------------------------------
+    // =========================================================
     // CREATE CAMERA IMAGE URI
-    // ---------------------------------------------------------
+    // =========================================================
 
     private fun createImageUri(): Uri? {
 
@@ -684,9 +1174,9 @@ class BookRepairActivity : AppCompatActivity() {
         )
     }
 
-    // ---------------------------------------------------------
+    // =========================================================
     // OPEN CAMERA
-    // ---------------------------------------------------------
+    // =========================================================
 
     private fun openCamera() {
 
