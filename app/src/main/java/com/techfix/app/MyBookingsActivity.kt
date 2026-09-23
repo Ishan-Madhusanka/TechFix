@@ -1,5 +1,6 @@
 package com.techfix.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -127,8 +128,6 @@ class MyBookingsActivity : AppCompatActivity() {
                         }
                         .addOnFailureListener {
 
-                            // If service cannot be loaded,
-                            // show the service ID instead.
                             addBookingCard(
                                 categoryName = categoryName,
                                 serviceName = serviceId,
@@ -283,5 +282,56 @@ class MyBookingsActivity : AppCompatActivity() {
             bookingLayout,
             params
         )
+
+        // Open booking details when the booking card is clicked
+        bookingLayout.setOnClickListener {
+
+            val intent = Intent(
+                this,
+                BookingDetailsActivity::class.java
+            )
+
+            intent.putExtra(
+                "categoryName",
+                categoryName
+            )
+
+            intent.putExtra(
+                "serviceName",
+                serviceName
+            )
+
+            intent.putExtra(
+                "price",
+                price
+            )
+
+            intent.putExtra(
+                "deviceBrand",
+                deviceBrand
+            )
+
+            intent.putExtra(
+                "deviceModel",
+                deviceModel
+            )
+
+            intent.putExtra(
+                "description",
+                description
+            )
+
+            intent.putExtra(
+                "appointmentDate",
+                appointmentDate
+            )
+
+            intent.putExtra(
+                "status",
+                status
+            )
+
+            startActivity(intent)
+        }
     }
 }
