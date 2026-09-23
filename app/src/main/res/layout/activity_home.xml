@@ -88,7 +88,7 @@
                     android:layout_height="46dp"
                     android:background="@drawable/bg_icon_light"
                     android:gravity="center"
-                    android:text="Γûú"
+                    android:text="▣"
                     android:textColor="@color/white"
                     android:textSize="23sp" />
 
@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ΓÇ║"
+                    android:text="›"
                     android:textColor="@color/white"
                     android:textSize="34sp" />
 
@@ -155,7 +155,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:gravity="center"
-                    android:text="ΓÜÖ"
+                    android:text="⚙"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="23sp" />
 
@@ -187,7 +187,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ΓÇ║"
+                    android:text="›"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
@@ -222,7 +222,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:gravity="center"
-                    android:text="Γûñ"
+                    android:text="▤"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="23sp" />
 
@@ -254,7 +254,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ΓÇ║"
+                    android:text="›"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
@@ -289,7 +289,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:gravity="center"
-                    android:text="ΓùÅ"
+                    android:text="●"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="19sp" />
 
@@ -321,7 +321,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ΓÇ║"
+                    android:text="›"
                     android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
@@ -356,7 +356,7 @@
                     android:layout_width="46dp"
                     android:layout_height="46dp"
                     android:gravity="center"
-                    android:text="Γå¬"
+                    android:text="↪"
                     android:textColor="@color/techfix_error"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -389,7 +389,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ΓÇ║"
+                    android:text="›"
                     android:textColor="@color/techfix_error"
                     android:textSize="34sp" />
 
@@ -412,7 +412,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="FAST  ΓÇó  RELIABLE  ΓÇó  TRUSTED"
+            android:text="FAST  •  RELIABLE  •  TRUSTED"
             android:textColor="@color/techfix_text_secondary"
             android:textSize="9sp"
             android:textStyle="bold" />
