@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +16,7 @@
         android:paddingEnd="24dp"
         android:paddingBottom="35dp">
 
-        <!-- Header Title -->
+        <!-- Header -->
         <TextView
             android:id="@+id/tvBookRepairTitle"
             android:layout_width="wrap_content"
@@ -28,7 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Header Blue Line -->
         <View
             android:id="@+id/viewDivider"
             android:layout_width="65dp"
@@ -39,13 +39,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Selected Service Info -->
+        <!-- Selected Service -->
         <TextView
             android:id="@+id/tvSelectedService"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Selected Service: Mobile Camera Repair\nEstimated Price: Rs. 9000"
+            android:text="Selected Service"
             android:textColor="#1565C0"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -54,7 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Device Brand Label -->
+        <!-- Device Brand -->
         <TextView
             android:id="@+id/tvDeviceBrandLabel"
             android:layout_width="wrap_content"
@@ -67,7 +67,6 @@
             app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Device Brand EditText -->
         <EditText
             android:id="@+id/etDeviceBrand"
             android:layout_width="0dp"
@@ -83,7 +82,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Device Model Label -->
+        <!-- Device Model -->
         <TextView
             android:id="@+id/tvDeviceModelLabel"
             android:layout_width="wrap_content"
@@ -96,7 +95,6 @@
             app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Device Model EditText -->
         <EditText
             android:id="@+id/etDeviceModel"
             android:layout_width="0dp"
@@ -112,7 +110,99 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Problem Description Label -->
+        <!-- Laptop / Desktop Operating System -->
+        <TextView
+            android:id="@+id/tvOperatingSystemLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Operating System"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etOperatingSystem"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Enter operating system"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvOperatingSystemLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Desktop RAM -->
+        <TextView
+            android:id="@+id/tvRamLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="RAM"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etOperatingSystem"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etRam"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Example: 8GB"
+            android:inputType="text"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvRamLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Gaming Console Controller Problem -->
+        <TextView
+            android:id="@+id/tvControllerProblemLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Controller Problem"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etRam"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etControllerProblem"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:gravity="top|start"
+            android:hint="Describe controller problem if any"
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingTop="8dp"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tvControllerProblemLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Problem Description -->
         <TextView
             android:id="@+id/tvProblemLabel"
             android:layout_width="wrap_content"
@@ -122,10 +212,9 @@
             android:textColor="#37474F"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
+            app:layout_constraintTop_toBottomOf="@id/etControllerProblem"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Problem Description EditText -->
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="0dp"
@@ -143,7 +232,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Appointment Date Label -->
+        <!-- Appointment Date - ALL DEVICES -->
         <TextView
             android:id="@+id/tvAppointmentLabel"
             android:layout_width="wrap_content"
@@ -156,7 +245,6 @@
             app:layout_constraintTop_toBottomOf="@id/etDescription"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- Appointment Date EditText -->
         <EditText
             android:id="@+id/etAppointmentDate"
             android:layout_width="0dp"
@@ -174,7 +262,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Image Preview -->
+        <!-- Damage Image Preview - ALL DEVICES -->
         <ImageView
             android:id="@+id/ivDamageImage"
             android:layout_width="0dp"
@@ -187,7 +275,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Upload Image Button -->
+        <!-- Upload Damage Image - ALL DEVICES -->
         <Button
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
@@ -202,7 +290,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Take Photo Button -->
+        <!-- Take Photo - ALL DEVICES -->
         <Button
             android:id="@+id/btnTakePhoto"
             android:layout_width="0dp"
@@ -217,7 +305,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Submit Booking Button -->
+        <!-- Submit Booking - ALL DEVICES -->
         <Button
             android:id="@+id/btnSubmitBooking"
             android:layout_width="0dp"
