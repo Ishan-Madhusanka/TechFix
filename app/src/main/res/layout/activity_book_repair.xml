@@ -1,129 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F1F4F8"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:paddingStart="24dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="35dp">
 
+        <!-- Header Title -->
         <TextView
             android:id="@+id/tvBookRepairTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Book Repair"
-            android:textSize="26sp"
+            android:textColor="#263238"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Header Blue Line -->
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="65dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="10dp"
+            android:background="#1565C0"
+            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Selected Service Info -->
         <TextView
             android:id="@+id/tvSelectedService"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Selected Service: Screen Repair"
-            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:text="Selected Service: Mobile Camera Repair\nEstimated Price: Rs. 9000"
+            android:textColor="#1565C0"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/viewDivider"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Device Brand Label -->
+        <TextView
+            android:id="@+id/tvDeviceBrandLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Device Brand"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Device Brand EditText -->
         <EditText
             android:id="@+id/etDeviceBrand"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Device Brand"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Enter device brand"
             android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceBrandLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Device Model Label -->
+        <TextView
+            android:id="@+id/tvDeviceModelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Device Model"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Device Model EditText -->
         <EditText
             android:id="@+id/etDeviceModel"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Device Model"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:hint="Enter device model"
             android:inputType="text"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceModelLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Problem Description Label -->
+        <TextView
+            android:id="@+id/tvProblemLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Problem Description"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Problem Description EditText -->
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:hint="Describe the problem"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
+            android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
+            android:gravity="top|start"
+            android:hint="Describe the problem here..."
+            android:inputType="textMultiLine|textCapSentences"
+            android:paddingTop="8dp"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tvProblemLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Appointment Date Label -->
+        <TextView
+            android:id="@+id/tvAppointmentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Appointment Date"
+            android:textColor="#37474F"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/etDescription"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- Appointment Date EditText -->
         <EditText
             android:id="@+id/etAppointmentDate"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Appointment Date"
-            android:focusable="false"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#90A4AE"
             android:clickable="true"
+            android:focusable="false"
+            android:hint="Select appointment date"
             android:inputType="none"
-            app:layout_constraintTop_toBottomOf="@id/etDescription"
+            android:textColor="#263238"
+            android:textColorHint="#78909C"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/tvAppointmentLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Image Preview -->
         <ImageView
             android:id="@+id/ivDamageImage"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
             android:contentDescription="Selected damage image"
+            android:scaleType="centerCrop"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Upload Image Button -->
         <Button
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#607D8B"
             android:text="Upload Damage Image"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@id/ivDamageImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Take Photo Button -->
         <Button
             android:id="@+id/btnTakePhoto"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#607D8B"
             android:text="Take Photo"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@id/btnUploadImage"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- Submit Booking Button -->
         <Button
             android:id="@+id/btnSubmitBooking"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#1565C0"
             android:text="Submit Booking"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="30dp" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

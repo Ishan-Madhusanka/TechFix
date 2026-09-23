@@ -1,78 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:background="#F5F9FF"
+    android:fillViewport="true"
+    tools:context=".ServiceDetailsActivity">
 
-    <TextView
-        android:id="@+id/tvServiceDetailsTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Service Details"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp" />
+        android:orientation="vertical"
+        android:paddingStart="24dp"
+        android:paddingTop="45dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="30dp">
 
-    <TextView
-        android:id="@+id/tvServiceName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Service Name"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvServiceDetailsTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp" />
+        <!-- TechFix Logo -->
+        <TextView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_icon_circle"
+            android:gravity="center"
+            android:text="TF"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvServiceDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Professional repair service for your device."
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tvServiceName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvServiceDetailsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="Service Details"
+            android:textColor="#1565C0"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvServiceDuration"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Duration: Not specified"
-        android:textSize="17sp"
-        app:layout_constraintTop_toBottomOf="@id/tvServiceDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="View repair service information"
+            android:textColor="#64748B"
+            android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/tvServicePrice"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Estimated Price: Rs. 0"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvServiceDuration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        <!-- Blue Line -->
+        <View
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_small_line" />
 
-    <Button
-        android:id="@+id/btnBookRepair"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Book Repair"
-        app:layout_constraintTop_toBottomOf="@id/tvServicePrice"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+        <!-- Service Details Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#E8F1F8"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="4dp"
+            app:strokeColor="#B8D2E8"
+            app:strokeWidth="1dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Service Name -->
+                <TextView
+                    android:id="@+id/tvServiceName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Service Name"
+                    android:textColor="#1565C0"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Description -->
+                <TextView
+                    android:id="@+id/tvServiceDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Professional repair service for your device."
+                    android:textColor="#111827"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Duration -->
+                <TextView
+                    android:id="@+id/tvServiceDuration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Duration: Not specified"
+                    android:textColor="#111827"
+                    android:textSize="17sp"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/tvServicePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Estimated Price: Rs. 0"
+                    android:textColor="#111827"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Book Repair Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBookRepair"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="Book Repair"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:backgroundTint="#1565C0"
+            app:cornerRadius="16dp" />
+
+        <!-- Footer -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="TechFix Repair Services"
+            android:textColor="#90A4AE"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center_horizontal"
+            android:text="FAST  •  RELIABLE  •  TRUSTED"
+            android:textColor="#B0BEC5"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</ScrollView>
