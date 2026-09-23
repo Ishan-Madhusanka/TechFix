@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F8FF">
+    android:background="#080D18">
 
     <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="#246BC4"
+        android:layout_height="110dp"
+        android:background="#111827"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingStart="24dp"
         android:paddingEnd="24dp">
 
@@ -22,8 +23,16 @@
             android:layout_height="wrap_content"
             android:text="My Repairs"
             android:textColor="#FFFFFF"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Track and manage your repairs"
+            android:textColor="#94A3B8"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -31,29 +40,37 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRepairHistory"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="54dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
         android:text="View Repair History"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:backgroundTint="#246BC4"
-        app:cornerRadius="10dp" />
+        app:backgroundTint="#3B82F6"
+        app:cornerRadius="12dp" />
 
-    <!-- Active Repairs Title -->
+    <!-- Current Repairs Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
         android:text="Current Repairs"
-        android:textColor="#246BC4"
-        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:textSize="19sp"
         android:textStyle="bold" />
+
+    <!-- Blue Accent -->
+    <View
+        android:layout_width="45dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="#3B82F6" />
 
     <!-- Content -->
     <FrameLayout
@@ -61,37 +78,51 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <!-- Repairs List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerRepairs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
-            android:clipToPadding="false" />
+            android:paddingBottom="20dp" />
 
+        <!-- Loading -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:indeterminateTint="#3B82F6"
             android:visibility="gone" />
 
+        <!-- Empty State -->
         <LinearLayout
             android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="32dp"
             android:visibility="gone">
+
+            <!-- Empty Icon -->
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@drawable/bg_icon_circle"
+                android:gravity="center"
+                android:text="≡ƒöº"
+                android:textSize="28sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:text="No Repairs Found"
-                android:textColor="#246BC4"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -101,7 +132,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="Your repair requests will appear here."
-                android:textColor="#6B7280"
+                android:textColor="#94A3B8"
                 android:textSize="14sp" />
 
         </LinearLayout>

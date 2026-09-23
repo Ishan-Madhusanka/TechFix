@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/techfix_card"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Spare Part"
+        android:textColor="@color/techfix_text_primary"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Enter the quantity used for this repair"
+        android:textColor="@color/techfix_text_secondary"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        android:background="@color/techfix_border" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="SPARE PART"
+        android:textColor="@color/techfix_text_secondary"
+        android:textSize="9sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtDialogPartName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Mobile Phone Screen"
+        android:textColor="@color/techfix_text_primary"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AVAILABLE STOCK"
+                android:textColor="@color/techfix_text_secondary"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDialogAvailableQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="6"
+                android:textColor="@color/techfix_primary_light"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutDialogRepairId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REPAIR ID"
+                android:textColor="@color/techfix_text_secondary"
+                android:textSize="9sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDialogRepairId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Repair ID"
+                android:textColor="@color/techfix_text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutQuantity"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:hint="Quantity"
+        app:boxBackgroundColor="@color/techfix_background"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/techfix_primary"
+        app:hintTextColor="@color/techfix_text_secondary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDialogQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="@color/techfix_text_primary"
+            android:textColorHint="@color/techfix_text_secondary"
+            android:textSize="15sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogCancel"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/techfix_primary_light"
+            android:textStyle="bold"
+            app:backgroundTint="@color/techfix_card"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/techfix_primary"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogUse"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:text="Use Part"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@color/techfix_primary"
+            app:cornerRadius="12dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

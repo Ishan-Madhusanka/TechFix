@@ -1,188 +1,342 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F8FF"
-    android:fillViewport="true">
+    android:background="@color/techfix_background"
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="30dp">
 
-        <!-- Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="#246BC4"
-            android:gravity="center_vertical"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Record Payment"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TechFix"
+            android:textColor="@color/techfix_text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Record Payment"
+            android:textColor="@color/techfix_primary_light"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-        <!-- Main content -->
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Complete payment details for this repair"
+            android:textColor="@color/techfix_text_secondary"
+            android:textSize="13sp" />
+
+        <!-- ================================================= -->
+        <!-- REPAIR INFORMATION -->
+        <!-- ================================================= -->
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="26dp"
+            app:cardBackgroundColor="@color/techfix_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
+            app:strokeWidth="1dp">
 
-            <!-- Repair Information Card -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#C9DCF5"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Card heading -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_icon_circle"
+                        android:gravity="center"
+                        android:text="Γûñ"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Repair Information"
-                        android:textColor="#246BC4"
-                        android:textSize="18sp"
+                        android:layout_marginStart="13dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Repair Information"
+                            android:textColor="@color/techfix_text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:text="Current repair and pricing details"
+                            android:textColor="@color/techfix_text_secondary"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Repair ID -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="REPAIR ID"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPaymentRepairId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Repair ID: -"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <!-- Divider -->
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/techfix_border" />
+
+                <!-- Device -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="DEVICE"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPaymentDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Device: -"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Repair Price -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@color/techfix_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Repair Price"
+                        android:textColor="@color/techfix_text_secondary"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txtPaymentRepairId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="Repair ID: -"
-                        android:textColor="#1F2937"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txtPaymentDevice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Device: -"
-                        android:textColor="#1F2937"
-                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/txtRepairPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Repair Price: LKR 0.00"
-                        android:textColor="#1F2937"
-                        android:textSize="15sp"
+                        android:text="Repair Price: LKR 0"
+                        android:textColor="@color/techfix_primary_light"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-            <!-- Payment Card -->
-            <com.google.android.material.card.MaterialCardView
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ================================================= -->
+        <!-- PAYMENT DETAILS -->
+        <!-- ================================================= -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:cardBackgroundColor="@color/techfix_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#C9DCF5"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Details"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="19sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Enter the payment information below"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="11sp" />
+
+                <!-- Amount -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="PAYMENT AMOUNT"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:layout_marginTop="8dp"
+                    android:hint="Amount"
+                    app:boxBackgroundColor="@color/techfix_background"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/techfix_primary"
+                    app:hintTextColor="@color/techfix_text_secondary">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Payment Details"
-                        android:textColor="#246BC4"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Amount"
-                        android:textColor="#374151"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                    <com.google.android.material.textfield.TextInputLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editPaymentAmount"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        app:boxBackgroundMode="outline"
-                        app:boxStrokeColor="#246BC4"
-                        app:hintEnabled="false">
+                        android:layout_height="54dp"
+                        android:hint="Enter payment amount"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/techfix_text_primary"
+                        android:textColorHint="@color/techfix_text_secondary"
+                        android:textSize="15sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editPaymentAmount"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Enter payment amount"
-                            android:inputType="numberDecimal"
-                            android:padding="14dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                <!-- Payment Method -->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:text="Payment Method"
-                        android:textColor="#374151"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="PAYMENT METHOD"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="@color/techfix_background"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/techfix_border"
+                    app:strokeWidth="1dp">
 
                     <Spinner
                         android:id="@+id/spinnerPaymentMethod"
                         android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="6dp"
-                        android:background="#F4F8FF"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp" />
+                        android:layout_height="match_parent"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:popupBackground="@color/techfix_card"
+                        android:spinnerMode="dropdown" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnRecordPayment"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="24dp"
-                        android:text="Record Payment"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:backgroundTint="#246BC4"
-                        app:cornerRadius="10dp" />
+                </com.google.android.material.card.MaterialCardView>
 
-                </LinearLayout>
+                <!-- Divider -->
 
-            </com.google.android.material.card.MaterialCardView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/techfix_border" />
 
-        </LinearLayout>
+                <!-- Payment Button -->
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRecordPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="18dp"
+                    android:text="Record Payment"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/techfix_primary"
+                    app:cornerRadius="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Payment will be linked to this repair"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

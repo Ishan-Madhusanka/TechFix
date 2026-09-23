@@ -1,4 +1,4 @@
-﻿package com.techfix.app.repair
+﻿package com.techfix.app.technician
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.techfix.app.R
 import com.techfix.app.adapter.RepairAdapter
+import com.techfix.app.model.RepairStatus
 import com.techfix.app.repository.RepairRequestRepository
 
-class RepairHistoryActivity : AppCompatActivity() {
+class TechnicianRepairHistoryActivity : AppCompatActivity() {
 
     private lateinit var recyclerRepairHistory: RecyclerView
     private lateinit var progressRepairHistory: ProgressBar
@@ -22,7 +23,7 @@ class RepairHistoryActivity : AppCompatActivity() {
 
     private val repairRepository = RepairRequestRepository()
 
-    private var customerId: String = ""
+    private var technicianId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +33,14 @@ class RepairHistoryActivity : AppCompatActivity() {
         initializeViews()
         setupRecyclerView()
 
-        customerId = intent.getStringExtra("customerId") ?: ""
+        technicianId = intent.getStringExtra("technicianId") ?: ""
 
-        if (customerId.isEmpty()) {
+        if (technicianId.isEmpty()) {
             showEmptyState()
 
             Toast.makeText(
                 this,
-                "Customer ID not found",
+                "Technician ID not found",
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -66,12 +67,17 @@ class RepairHistoryActivity : AppCompatActivity() {
 
             val detailsIntent = Intent(
                 this,
-                RepairDetailsActivity::class.java
+                TechnicianRepairDetailsActivity::class.java
             )
 
             detailsIntent.putExtra(
                 "repairId",
                 repair.id
+            )
+
+            detailsIntent.putExtra(
+                "technicianId",
+                technicianId
             )
 
             startActivity(detailsIntent)
@@ -88,20 +94,34 @@ class RepairHistoryActivity : AppCompatActivity() {
 
         showLoading()
 
-        repairRepository.getRepairHistory(
-            customerId = customerId,
+        repairRepository.getRepairsByTechnician(
+            technicianId = technicianId,
 
             onSuccess = { repairs ->
 
                 progressRepairHistory.visibility = View.GONE
 
-                if (repairs.isEmpty()) {
+                val completedRepairs = repairs.filter { repair ->
+
+                    val normalizedStatus =
+                        repair.status
+                            .trim()
+                            .uppercase()
+                            .replace(" ", "_")
+
+                    normalizedStatus == RepairStatus.COMPLETED.name
+                }
+
+                if (completedRepairs.isEmpty()) {
+
                     showEmptyState()
+
                 } else {
+
                     layoutRepairHistoryEmpty.visibility = View.GONE
                     recyclerRepairHistory.visibility = View.VISIBLE
 
-                    repairAdapter.updateData(repairs)
+                    repairAdapter.updateData(completedRepairs)
                 }
             },
 
@@ -130,5 +150,13 @@ class RepairHistoryActivity : AppCompatActivity() {
         progressRepairHistory.visibility = View.GONE
         recyclerRepairHistory.visibility = View.GONE
         layoutRepairHistoryEmpty.visibility = View.VISIBLE
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (technicianId.isNotEmpty()) {
+            loadRepairHistory()
+        }
     }
 }

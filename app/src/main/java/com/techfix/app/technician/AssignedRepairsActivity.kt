@@ -1,13 +1,13 @@
-package com.techfix.app.technician
+﻿package com.techfix.app.technician
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.techfix.app.R
 import com.techfix.app.adapter.RepairAdapter
 import com.techfix.app.repository.RepairRequestRepository
@@ -16,7 +16,7 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
     private lateinit var recyclerAssignedRepairs: RecyclerView
     private lateinit var progressAssignedRepairs: ProgressBar
-    private lateinit var layoutAssignedEmpty: LinearLayout
+    private lateinit var layoutAssignedEmpty: MaterialCardView
     private lateinit var repairAdapter: RepairAdapter
 
     private val repairRepository = RepairRequestRepository()
@@ -31,6 +31,7 @@ class AssignedRepairsActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
+
         recyclerAssignedRepairs =
             findViewById(R.id.recyclerAssignedRepairs)
 
@@ -80,6 +81,7 @@ class AssignedRepairsActivity : AppCompatActivity() {
             intent.getStringExtra("technicianId")
 
         if (technicianId.isNullOrEmpty()) {
+
             showEmptyState()
 
             Toast.makeText(
@@ -99,7 +101,8 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
             onSuccess = { repairs ->
 
-                progressAssignedRepairs.visibility = View.GONE
+                progressAssignedRepairs.visibility =
+                    View.GONE
 
                 if (repairs.isEmpty()) {
 
@@ -107,8 +110,11 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
                 } else {
 
-                    layoutAssignedEmpty.visibility = View.GONE
-                    recyclerAssignedRepairs.visibility = View.VISIBLE
+                    layoutAssignedEmpty.visibility =
+                        View.GONE
+
+                    recyclerAssignedRepairs.visibility =
+                        View.VISIBLE
 
                     repairAdapter.updateData(repairs)
                 }
@@ -116,8 +122,11 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
             onFailure = { exception ->
 
-                progressAssignedRepairs.visibility = View.GONE
-                recyclerAssignedRepairs.visibility = View.GONE
+                progressAssignedRepairs.visibility =
+                    View.GONE
+
+                recyclerAssignedRepairs.visibility =
+                    View.GONE
 
                 Toast.makeText(
                     this,
@@ -130,15 +139,25 @@ class AssignedRepairsActivity : AppCompatActivity() {
 
     private fun showLoading() {
 
-        progressAssignedRepairs.visibility = View.VISIBLE
-        recyclerAssignedRepairs.visibility = View.GONE
-        layoutAssignedEmpty.visibility = View.GONE
+        progressAssignedRepairs.visibility =
+            View.VISIBLE
+
+        recyclerAssignedRepairs.visibility =
+            View.GONE
+
+        layoutAssignedEmpty.visibility =
+            View.GONE
     }
 
     private fun showEmptyState() {
 
-        progressAssignedRepairs.visibility = View.GONE
-        recyclerAssignedRepairs.visibility = View.GONE
-        layoutAssignedEmpty.visibility = View.VISIBLE
+        progressAssignedRepairs.visibility =
+            View.GONE
+
+        recyclerAssignedRepairs.visibility =
+            View.GONE
+
+        layoutAssignedEmpty.visibility =
+            View.VISIBLE
     }
 }

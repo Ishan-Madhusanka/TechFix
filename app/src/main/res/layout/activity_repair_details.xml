@@ -1,20 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F8FF">
+    android:background="#080D18">
 
-    <!-- Blue Header -->
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#246BC4"
-        android:paddingStart="18dp"
-        android:paddingEnd="18dp"
+        android:background="#111827"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:paddingTop="26dp"
         android:paddingBottom="22dp">
 
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TechFix"
-            android:textColor="#FFFFFF"
+            android:textColor="#60A5FA"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -32,16 +33,16 @@
             android:layout_marginTop="4dp"
             android:text="Repair Details"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:text="View your repair information"
-            android:textColor="#DCEAFF"
-            android:textSize="11sp" />
+            android:textColor="#94A3B8"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -55,173 +56,188 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Repair Information"
-                android:textColor="#111827"
-                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
             <!-- Repair Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#D6E4F5"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="#111827"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#334155"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
+                    <!-- Repair ID -->
                     <TextView
                         android:id="@+id/txtRepairId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Repair #TF001"
-                        android:textColor="#111827"
-                        android:textSize="17sp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
+                    <!-- Status -->
                     <TextView
                         android:id="@+id/txtStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="#E3F0FF"
-                        android:paddingStart="10dp"
-                        android:paddingTop="6dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="6dp"
+                        android:background="@drawable/bg_icon_circle"
+                        android:paddingStart="12dp"
+                        android:paddingTop="7dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="7dp"
                         android:text="REPAIRING"
-                        android:textColor="#246BC4"
+                        android:textColor="#60A5FA"
                         android:textSize="11sp"
                         android:textStyle="bold" />
 
+                    <!-- Device Label -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="22dp"
                         android:text="Device"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtDevice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="Apple iPhone 15 Pro"
-                        android:textColor="#111827"
-                        android:textSize="14sp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#334155" />
+
+                    <!-- Problem Description -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="16dp"
                         android:text="Problem Description"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="Screen is damaged and requires replacement."
-                        android:textColor="#374151"
-                        android:textSize="13sp" />
+                        android:textColor="#CBD5E1"
+                        android:textSize="14sp" />
 
+                    <!-- Appointment Date -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="18dp"
                         android:text="Appointment Date"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtAppointmentDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="10 Sep 2026"
-                        android:textColor="#374151"
-                        android:textSize="13sp" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
 
+                    <!-- Branch -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="18dp"
                         android:text="Branch"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtBranch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="Colombo Branch"
-                        android:textColor="#374151"
-                        android:textSize="13sp" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
 
+                    <!-- Technician -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="18dp"
                         android:text="Technician"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtTechnician"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="Not Assigned"
-                        android:textColor="#374151"
-                        android:textSize="13sp" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
 
+                    <!-- Repair Notes -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="18dp"
                         android:text="Repair Notes"
-                        android:textColor="#6B7280"
-                        android:textSize="11sp" />
+                        android:textColor="#94A3B8"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/txtRepairNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
+                        android:layout_marginTop="4dp"
                         android:text="No repair notes available."
-                        android:textColor="#374151"
-                        android:textSize="13sp" />
+                        android:textColor="#CBD5E1"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Price -->
+            <!-- Price Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#D6E4F5"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="#111827"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#334155"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -229,15 +245,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="18dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Repair Price"
-                        android:textColor="#374151"
-                        android:textSize="13sp"
+                        android:textColor="#CBD5E1"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -245,8 +261,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LKR 5,000.00"
-                        android:textColor="#246BC4"
-                        android:textSize="16sp"
+                        android:textColor="#60A5FA"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -257,15 +273,16 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTrackRepair"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="20dp"
                 android:text="Track Repair"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                app:backgroundTint="#246BC4"
-                app:cornerRadius="8dp" />
+                app:backgroundTint="#3B82F6"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 
