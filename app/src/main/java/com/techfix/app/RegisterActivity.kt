@@ -53,7 +53,6 @@ class RegisterActivity : AppCompatActivity() {
 
             startActivity(intent)
 
-            // Close Register page
             finish()
         }
     }
@@ -124,11 +123,9 @@ class RegisterActivity : AppCompatActivity() {
                         .set(userData)
                         .addOnSuccessListener {
 
-                            btnRegister.isEnabled = true
-
                             Toast.makeText(
                                 this,
-                                "Registration successful!",
+                                "Account created successfully!",
                                 Toast.LENGTH_SHORT
                             ).show()
 
@@ -136,6 +133,24 @@ class RegisterActivity : AppCompatActivity() {
                                 "TECHFIX_FIRESTORE",
                                 "User saved successfully: $userId"
                             )
+
+                            /*
+                             * Registration successful.
+                             * Go directly to Home screen.
+                             */
+                            val intent = Intent(
+                                this,
+                                HomeActivity::class.java
+                            )
+
+                            // Remove Register screen from back stack
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                            startActivity(intent)
+
+                            finish()
                         }
                         .addOnFailureListener { exception ->
 
