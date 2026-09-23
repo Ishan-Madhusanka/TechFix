@@ -1,6 +1,12 @@
-package com.techfix.app
+﻿package com.techfix.app
 
-import android.app.DatePickerDialog
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -118,50 +124,56 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // APPOINTMENT DATE PICKER
-        // ---------------------------------------------------------
+// APPOINTMENT DATE PICKER
+// ---------------------------------------------------------
 
         etAppointmentDate.setOnClickListener {
 
-            val calendar =
-                Calendar.getInstance()
-
-            val year =
-                calendar.get(Calendar.YEAR)
-
-            val month =
-                calendar.get(Calendar.MONTH)
-
-            val day =
-                calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog =
-                DatePickerDialog(
-                    this,
-                    { _, selectedYear, selectedMonth, selectedDay ->
-
-                        val formattedDate =
-                            String.format(
-                                "%04d-%02d-%02d",
-                                selectedYear,
-                                selectedMonth + 1,
-                                selectedDay
-                            )
-
-                        etAppointmentDate.setText(
-                            formattedDate
-                        )
-                    },
-                    year,
-                    month,
-                    day
-                )
-
             // Prevent selecting past dates
-            datePickerDialog.datePicker.minDate =
-                System.currentTimeMillis() - 1000
+            val constraintsBuilder =
+                CalendarConstraints.Builder()
+                    .setValidator(
+                        DateValidatorPointForward.now()
+                    )
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTheme(R.style.ThemeOverlay_TechFix_MaterialDatePicker)
+                    .setTitleText("Select Appointment Date")
+                    .setSelection(
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
+                    .setCalendarConstraints(
+                        constraintsBuilder.build()
+                    )
+                    .setPositiveButtonText("OK")
+                    .setNegativeButtonText("Cancel")
+                    .build()
 
-            datePickerDialog.show()
+            datePicker.addOnPositiveButtonClickListener { selectedDate ->
+
+                val formatter =
+                    SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    )
+
+                formatter.timeZone =
+                    TimeZone.getTimeZone("UTC")
+
+                val formattedDate =
+                    formatter.format(
+                        Date(selectedDate)
+                    )
+
+                etAppointmentDate.setText(
+                    formattedDate
+                )
+            }
+
+            datePicker.show(
+                supportFragmentManager,
+                "APPOINTMENT_DATE_PICKER"
+            )
         }
 
         // ---------------------------------------------------------

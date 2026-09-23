@@ -166,6 +166,11 @@
             android:name=".technician.PaymentActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".BookingDetailsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

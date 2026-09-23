@@ -10,6 +10,7 @@ class ServiceDetailsActivity : AppCompatActivity() {
 
     private lateinit var tvServiceName: TextView
     private lateinit var tvServicePrice: TextView
+    private lateinit var tvServiceDuration: TextView
     private lateinit var btnBookRepair: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,70 +18,79 @@ class ServiceDetailsActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_service_details)
 
+        // Connect XML views
         tvServiceName = findViewById(R.id.tvServiceName)
         tvServicePrice = findViewById(R.id.tvServicePrice)
+        tvServiceDuration = findViewById(R.id.tvServiceDuration)
         btnBookRepair = findViewById(R.id.btnBookRepair)
 
-        // Get selected service
-        val serviceName = intent.getStringExtra("serviceName")
+        // Get service data from RepairServicesActivity
+        val serviceId =
+            intent.getStringExtra("serviceId")
 
-        // Get selected device category
-        val categoryName = intent.getStringExtra("categoryName")
+        val serviceName =
+            intent.getStringExtra("serviceName")
 
-        val serviceId = intent.getStringExtra("SERVICE_ID")
+        val categoryName =
+            intent.getStringExtra("categoryName")
 
-        if (serviceName != null) {
-            tvServiceName.text = serviceName
-        }
+        val servicePrice =
+            intent.getIntExtra("servicePrice", 0)
 
-        // Set price according to service
-        val servicePrice = when (serviceName) {
+        val duration =
+            intent.getStringExtra("duration")
 
-            "Screen Repair" -> 8000
+        // Display service name
+        tvServiceName.text =
+            serviceName ?: "Unknown Service"
 
-            "Battery Replacement" -> 6000
+        // Display Firebase price
+        tvServicePrice.text =
+            "Estimated Price: Rs. $servicePrice"
 
-            "Charging Port Repair" -> 2500
-
-            "Software Repair" -> 5500
-
-            else -> 5500
-        }
-
-        tvServicePrice.text = "Estimated Price: Rs. $servicePrice"
+        // Display service duration
+        tvServiceDuration.text =
+            "Duration: ${duration ?: "Not specified"}"
 
         // Book Repair button
         btnBookRepair.setOnClickListener {
 
-            val intent = Intent(
+            val bookingIntent = Intent(
                 this,
                 BookRepairActivity::class.java
             )
 
-            // Send service name
-            intent.putExtra(
-                "SERVICE_ID",
+            // Send service ID
+            bookingIntent.putExtra(
+                "serviceId",
                 serviceId
             )
 
-            intent.putExtra(
+            // Send service name
+            bookingIntent.putExtra(
                 "serviceName",
                 serviceName
             )
 
             // Send device category
-            intent.putExtra(
+            bookingIntent.putExtra(
                 "categoryName",
                 categoryName
             )
 
-            // Send service price
-            intent.putExtra(
+            // Send Firebase price
+            bookingIntent.putExtra(
                 "servicePrice",
                 servicePrice
             )
 
-            startActivity(intent)
+            // Send duration
+            bookingIntent.putExtra(
+                "duration",
+                duration
+            )
+
+            startActivity(bookingIntent)
         }
     }
 }

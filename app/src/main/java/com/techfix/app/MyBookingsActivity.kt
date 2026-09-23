@@ -1,5 +1,7 @@
-package com.techfix.app
+﻿package com.techfix.app
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -53,18 +55,17 @@ class MyBookingsActivity : AppCompatActivity() {
                 bookingsContainer.removeAllViews()
 
                 if (documents.isEmpty) {
-
                     tvNoBookings.visibility = TextView.VISIBLE
-
                     return@addOnSuccessListener
                 }
 
                 tvNoBookings.visibility = TextView.GONE
 
                 // Newest bookings first
-                val bookings = documents.documents.sortedByDescending {
-                    it.getTimestamp("createdAt")
-                }
+                val bookings =
+                    documents.documents.sortedByDescending {
+                        it.getTimestamp("createdAt")
+                    }
 
                 for (document in bookings) {
 
@@ -127,8 +128,6 @@ class MyBookingsActivity : AppCompatActivity() {
                         }
                         .addOnFailureListener {
 
-                            // If service cannot be loaded,
-                            // show the service ID instead.
                             addBookingCard(
                                 categoryName = categoryName,
                                 serviceName = serviceId,
@@ -179,21 +178,33 @@ class MyBookingsActivity : AppCompatActivity() {
         status: String
     ) {
 
+        // =========================================
+        // BOOKING CARD
+        // =========================================
+
         val bookingLayout = LinearLayout(this)
 
         bookingLayout.orientation =
             LinearLayout.VERTICAL
 
         bookingLayout.setPadding(
-            20,
-            20,
-            20,
-            20
+            40,
+            32,
+            40,
+            32
         )
 
         bookingLayout.setBackgroundResource(
-            android.R.drawable.dialog_holo_light_frame
+            R.drawable.bg_booking_card
         )
+
+        // Same gray color as Device
+        val detailColor =
+            Color.parseColor("#94A3B8")
+
+        // =========================================
+        // CATEGORY
+        // =========================================
 
         val categoryText = TextView(this)
 
@@ -202,10 +213,13 @@ class MyBookingsActivity : AppCompatActivity() {
 
         categoryText.textSize = 18f
 
-        categoryText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        categoryText.setTextColor(
+            detailColor
         )
+
+        // =========================================
+        // SERVICE
+        // =========================================
 
         val serviceText = TextView(this)
 
@@ -214,6 +228,14 @@ class MyBookingsActivity : AppCompatActivity() {
 
         serviceText.textSize = 17f
 
+        serviceText.setTextColor(
+            detailColor
+        )
+
+        // =========================================
+        // ESTIMATED PRICE
+        // =========================================
+
         val priceText = TextView(this)
 
         priceText.text =
@@ -221,10 +243,13 @@ class MyBookingsActivity : AppCompatActivity() {
 
         priceText.textSize = 17f
 
-        priceText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        priceText.setTextColor(
+            detailColor
         )
+
+        // =========================================
+        // DEVICE
+        // =========================================
 
         val deviceText = TextView(this)
 
@@ -233,6 +258,14 @@ class MyBookingsActivity : AppCompatActivity() {
 
         deviceText.textSize = 16f
 
+        deviceText.setTextColor(
+            detailColor
+        )
+
+        // =========================================
+        // PROBLEM
+        // =========================================
+
         val descriptionText = TextView(this)
 
         descriptionText.text =
@@ -240,12 +273,28 @@ class MyBookingsActivity : AppCompatActivity() {
 
         descriptionText.textSize = 16f
 
+        descriptionText.setTextColor(
+            detailColor
+        )
+
+        // =========================================
+        // APPOINTMENT DATE
+        // =========================================
+
         val dateText = TextView(this)
 
         dateText.text =
             "Appointment Date: $appointmentDate"
 
         dateText.textSize = 16f
+
+        dateText.setTextColor(
+            detailColor
+        )
+
+        // =========================================
+        // STATUS
+        // =========================================
 
         val statusText = TextView(this)
 
@@ -256,8 +305,50 @@ class MyBookingsActivity : AppCompatActivity() {
 
         statusText.setTypeface(
             null,
-            android.graphics.Typeface.BOLD
+            Typeface.BOLD
         )
+
+        // Keep status colors
+        when (status.uppercase()) {
+
+            "PENDING" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#F59E0B")
+                )
+            }
+
+            "CONFIRMED" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#3B82F6")
+                )
+            }
+
+            "DEVICE_RECEIVED",
+            "DIAGNOSING",
+            "REPAIRING",
+            "QUALITY_CHECK",
+            "READY_FOR_COLLECTION" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#60A5FA")
+                )
+            }
+
+            "COMPLETED" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#22C55E")
+                )
+            }
+
+            else -> {
+                statusText.setTextColor(
+                    Color.WHITE
+                )
+            }
+        }
+
+        // =========================================
+        // ADD DETAILS TO CARD
+        // =========================================
 
         bookingLayout.addView(categoryText)
         bookingLayout.addView(serviceText)
@@ -266,6 +357,10 @@ class MyBookingsActivity : AppCompatActivity() {
         bookingLayout.addView(descriptionText)
         bookingLayout.addView(dateText)
         bookingLayout.addView(statusText)
+
+        // =========================================
+        // CARD MARGIN
+        // =========================================
 
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -276,7 +371,7 @@ class MyBookingsActivity : AppCompatActivity() {
             0,
             0,
             0,
-            20
+            24
         )
 
         bookingsContainer.addView(

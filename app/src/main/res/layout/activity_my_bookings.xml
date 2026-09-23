@@ -1,50 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#080D18"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:paddingStart="24dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="40dp">
 
+        <!-- Title -->
         <TextView
             android:id="@+id/tvMyBookingsTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
             android:text="My Bookings"
+            android:textColor="#FFFFFF"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Subtitle / Empty Message -->
         <TextView
             android:id="@+id/tvNoBookings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Your repair bookings will appear here."
-            android:textSize="17sp"
+            android:layout_marginTop="12dp"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tvMyBookingsTitle"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="Your repair bookings will appear here."
+            android:textColor="#94A3B8"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMyBookingsTitle" />
 
+        <!-- Blue Accent Line -->
+        <View
+            android:id="@+id/bookingsLine"
+            android:layout_width="54dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="16dp"
+            android:background="#3B82F6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNoBookings" />
+
+        <!-- Dynamic Booking Cards -->
         <LinearLayout
             android:id="@+id/bookingsContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/tvNoBookings"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bookingsLine" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

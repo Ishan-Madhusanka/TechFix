@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="#080D18"
     android:paddingStart="28dp"
     android:paddingEnd="28dp">
 
     <!-- TechFix Logo -->
     <TextView
         android:id="@+id/tvProfileLogo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/bg_icon_circle"
         android:gravity="center"
@@ -32,32 +32,46 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="My Profile"
-        android:textColor="#1565C0"
-        android:textSize="26sp"
+        android:textColor="#FFFFFF"
+        android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvProfileLogo" />
 
-    <!-- Name -->
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/tvProfileSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="Manage your account information"
+        android:textColor="#94A3B8"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProfileTitle" />
+
+    <!-- Full Name -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nameInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="20dp"
         android:hint="Full Name"
-        app:boxBackgroundColor="#FFFFFF"
+        app:boxBackgroundColor="#111827"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#1565C0"
+        app:boxStrokeColor="#3B82F6"
+        app:hintTextColor="#94A3B8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProfileTitle">
+        app:layout_constraintTop_toBottomOf="@id/tvProfileSubtitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
@@ -65,7 +79,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:maxLines="1"
-            android:textColor="#1F2937"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#94A3B8"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -80,12 +95,13 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="20dp"
         android:hint="Email"
-        app:boxBackgroundColor="#F1F5F9"
+        app:boxBackgroundColor="#111827"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#90A4AE"
+        app:boxStrokeColor="#334155"
+        app:hintTextColor="#64748B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
@@ -97,7 +113,8 @@
             android:enabled="false"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:textColor="#607D8B"
+            android:textColor="#94A3B8"
+            android:textColorHint="#64748B"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -106,16 +123,16 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSave"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="54dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:text="Save Profile"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        app:backgroundTint="#1565C0"
+        app:backgroundTint="#3B82F6"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:text="TechFix Repair Services"
-        android:textColor="#90A4AE"
+        android:textColor="#64748B"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

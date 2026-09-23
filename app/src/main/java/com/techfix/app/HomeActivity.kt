@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeActivity : AppCompatActivity() {
 
     // These are clickable card layouts in activity_home.xml
-    private lateinit var btnCategories: View
     private lateinit var btnServices: View
     private lateinit var btnMyBookings: View
     private lateinit var btnProfile: View
@@ -22,22 +21,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         // Connect UI elements
-        btnCategories = findViewById(R.id.btnCategories)
         btnServices = findViewById(R.id.btnServices)
         btnMyBookings = findViewById(R.id.btnMyBookings)
         btnProfile = findViewById(R.id.btnProfile)
         btnLogout = findViewById(R.id.btnLogout)
-
-        // Device Categories
-        btnCategories.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                DeviceCategoriesActivity::class.java
-            )
-
-            startActivity(intent)
-        }
 
         // Repair Services
         btnServices.setOnClickListener {

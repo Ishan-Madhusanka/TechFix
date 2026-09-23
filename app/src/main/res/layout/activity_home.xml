@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="@color/techfix_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:paddingStart="24dp"
         android:paddingTop="45dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="28dp">
+        android:paddingBottom="30dp">
 
         <!-- Logo -->
         <TextView
@@ -25,7 +25,7 @@
             android:background="@drawable/bg_icon_circle"
             android:gravity="center"
             android:text="TF"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="14dp"
             android:text="TechFix"
-            android:textColor="#1565C0"
+            android:textColor="@color/techfix_text_primary"
             android:textSize="29sp"
             android:textStyle="bold" />
 
@@ -49,25 +49,27 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="3dp"
             android:text="Your Device, Our Care"
-            android:textColor="#64748B"
+            android:textColor="@color/techfix_text_secondary"
             android:textSize="14sp" />
 
-        <!-- Small Decoration -->
+        <!-- Decoration -->
         <View
             android:layout_width="50dp"
             android:layout_height="4dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="14dp"
-            android:layout_marginBottom="26dp"
+            android:layout_marginBottom="28dp"
             android:background="@drawable/bg_small_line" />
 
         <!-- DEVICE CATEGORIES -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="76dp"
-            app:cardBackgroundColor="#1565C0"
+            android:layout_height="80dp"
+            app:cardBackgroundColor="@color/techfix_primary"
             app:cardCornerRadius="18dp"
-            app:cardElevation="3dp">
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_primary_light"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:id="@+id/btnCategories"
@@ -86,8 +88,8 @@
                     android:layout_height="46dp"
                     android:background="@drawable/bg_icon_light"
                     android:gravity="center"
-                    android:text="▣"
-                    android:textColor="#FFFFFF"
+                    android:text="Γûú"
+                    android:textColor="@color/white"
                     android:textSize="23sp" />
 
                 <LinearLayout
@@ -101,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Device Categories"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -110,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="Browse devices we repair"
-                        android:textColor="#DCEEFF"
+                        android:textColor="#E5E7EB"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -118,24 +120,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#FFFFFF"
+                    android:text="ΓÇ║"
+                    android:textColor="@color/white"
                     android:textSize="34sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- REPAIR SERVICES -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="76dp"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_height="80dp"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/techfix_card"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D6E9FA"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -153,11 +154,10 @@
                 <TextView
                     android:layout_width="46dp"
                     android:layout_height="46dp"
-                    android:background="@drawable/bg_icon_light"
                     android:gravity="center"
-                    android:text="⚙"
-                    android:textColor="#1565C0"
-                    android:textSize="21sp" />
+                    android:text="ΓÜÖ"
+                    android:textColor="@color/techfix_primary_light"
+                    android:textSize="23sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Repair Services"
-                        android:textColor="#1565C0"
+                        android:textColor="@color/techfix_text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="View available services"
-                        android:textColor="#78909C"
+                        android:textColor="@color/techfix_text_secondary"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -187,24 +187,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#1565C0"
+                    android:text="ΓÇ║"
+                    android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- MY BOOKINGS -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="76dp"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_height="80dp"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/techfix_card"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D6E9FA"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -222,11 +221,10 @@
                 <TextView
                     android:layout_width="46dp"
                     android:layout_height="46dp"
-                    android:background="@drawable/bg_icon_light"
                     android:gravity="center"
-                    android:text="▤"
-                    android:textColor="#1565C0"
-                    android:textSize="21sp" />
+                    android:text="Γûñ"
+                    android:textColor="@color/techfix_primary_light"
+                    android:textSize="23sp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -239,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="My Bookings"
-                        android:textColor="#1565C0"
+                        android:textColor="@color/techfix_text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -248,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="Check and manage bookings"
-                        android:textColor="#78909C"
+                        android:textColor="@color/techfix_text_secondary"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -256,24 +254,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#1565C0"
+                    android:text="ΓÇ║"
+                    android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- MY PROFILE -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="76dp"
-            android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_height="80dp"
+            android:layout_marginTop="14dp"
+            app:cardBackgroundColor="@color/techfix_card"
             app:cardCornerRadius="18dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D6E9FA"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -291,10 +288,9 @@
                 <TextView
                     android:layout_width="46dp"
                     android:layout_height="46dp"
-                    android:background="@drawable/bg_icon_light"
                     android:gravity="center"
-                    android:text="●"
-                    android:textColor="#1565C0"
+                    android:text="ΓùÅ"
+                    android:textColor="@color/techfix_primary_light"
                     android:textSize="19sp" />
 
                 <LinearLayout
@@ -308,7 +304,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="My Profile"
-                        android:textColor="#1565C0"
+                        android:textColor="@color/techfix_text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -317,7 +313,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="View and update your profile"
-                        android:textColor="#78909C"
+                        android:textColor="@color/techfix_text_secondary"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -325,24 +321,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#1565C0"
+                    android:text="ΓÇ║"
+                    android:textColor="@color/techfix_primary_light"
                     android:textSize="34sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- LOGOUT -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="74dp"
             android:layout_marginTop="18dp"
-            app:cardBackgroundColor="#FFF7F7"
+            app:cardBackgroundColor="@color/techfix_card"
             app:cardCornerRadius="18dp"
             app:cardElevation="0dp"
-            app:strokeColor="#EF4444"
+            app:strokeColor="@color/techfix_error"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -360,10 +355,9 @@
                 <TextView
                     android:layout_width="46dp"
                     android:layout_height="46dp"
-                    android:background="@drawable/bg_icon_red"
                     android:gravity="center"
-                    android:text="↪"
-                    android:textColor="#D32F2F"
+                    android:text="Γå¬"
+                    android:textColor="@color/techfix_error"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -378,7 +372,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Logout"
-                        android:textColor="#D32F2F"
+                        android:textColor="@color/techfix_error"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -387,7 +381,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="Sign out from your account"
-                        android:textColor="#8D6E6E"
+                        android:textColor="@color/techfix_text_secondary"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -395,14 +389,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#D32F2F"
+                    android:text="ΓÇ║"
+                    android:textColor="@color/techfix_error"
                     android:textSize="34sp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
 
         <!-- Footer -->
         <TextView
@@ -411,7 +404,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:text="TechFix Repair Services"
-            android:textColor="#90A4AE"
+            android:textColor="@color/techfix_text_secondary"
             android:textSize="11sp" />
 
         <TextView
@@ -419,8 +412,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="4dp"
-            android:text="FAST  •  RELIABLE  •  TRUSTED"
-            android:textColor="#B0BEC5"
+            android:text="FAST  ΓÇó  RELIABLE  ΓÇó  TRUSTED"
+            android:textColor="@color/techfix_text_secondary"
             android:textSize="9sp"
             android:textStyle="bold" />
 

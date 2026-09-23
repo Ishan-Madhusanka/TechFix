@@ -1,109 +1,172 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#080D18"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="24dp">
 
+        <!-- Success Icon -->
         <TextView
-            android:id="@+id/tvConfirmationTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:id="@+id/tvSuccessIcon"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="42dp"
+            android:background="@drawable/bg_success_circle"
             android:gravity="center"
-            android:text="Booking Confirmed!"
-            android:textSize="28sp"
+            android:text="Γ£ô"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvConfirmationTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="Booking Confirmed!"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuccessIcon" />
+
+        <!-- Message -->
         <TextView
             android:id="@+id/tvConfirmationMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
+            android:lineSpacingExtra="3dp"
             android:text="Your repair booking has been submitted successfully."
-            android:textSize="17sp"
+            android:textColor="#94A3B8"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationTitle" />
 
-        <TextView
-            android:id="@+id/tvConfirmationService"
+        <!-- Booking Details Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/confirmationDetailsCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Service: Screen Repair"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_marginTop="28dp"
+            app:cardBackgroundColor="#111827"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#334155"
+            app:strokeWidth="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationMessage" />
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationMessage">
 
-        <TextView
-            android:id="@+id/tvConfirmationPrice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Estimated Price: Rs. 8000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationService" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvConfirmationDevice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Device: Samsung A15"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationPrice" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BOOKING DETAILS"
+                    android:textColor="#60A5FA"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvConfirmationDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Appointment Date: 2026-09-15"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationDevice" />
+                <!-- Service -->
+                <TextView
+                    android:id="@+id/tvConfirmationService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Service: Screen Repair"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvConfirmationStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Status: PENDING"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationDate" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="#334155" />
 
+                <!-- Price -->
+                <TextView
+                    android:id="@+id/tvConfirmationPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Estimated Price: Rs. 8000"
+                    android:textColor="#60A5FA"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <!-- Device -->
+                <TextView
+                    android:id="@+id/tvConfirmationDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Device: Samsung A15"
+                    android:textColor="#CBD5E1"
+                    android:textSize="16sp" />
+
+                <!-- Appointment Date -->
+                <TextView
+                    android:id="@+id/tvConfirmationDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Appointment Date: 2026-09-15"
+                    android:textColor="#CBD5E1"
+                    android:textSize="16sp" />
+
+                <!-- Status -->
+                <TextView
+                    android:id="@+id/tvConfirmationStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="Status: PENDING"
+                    android:textColor="#F59E0B"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Back To Home -->
         <Button
             android:id="@+id/btnBackToHome"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="40dp"
+            android:backgroundTint="#3B82F6"
             android:text="Back to Home"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvConfirmationStatus" />
+            app:layout_constraintTop_toBottomOf="@id/confirmationDetailsCard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
