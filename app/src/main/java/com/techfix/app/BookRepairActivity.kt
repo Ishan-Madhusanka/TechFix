@@ -93,7 +93,10 @@ class BookRepairActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
-    // Gallery image picker
+    // =========================================================
+    // GALLERY IMAGE PICKER
+    // =========================================================
+
     private val imagePicker =
         registerForActivityResult(
             ActivityResultContracts.GetContent()
@@ -114,7 +117,10 @@ class BookRepairActivity : AppCompatActivity() {
             }
         }
 
-    // Camera
+    // =========================================================
+    // CAMERA
+    // =========================================================
+
     private val cameraLauncher =
         registerForActivityResult(
             ActivityResultContracts.TakePicture()
@@ -137,7 +143,10 @@ class BookRepairActivity : AppCompatActivity() {
             }
         }
 
-    // Camera permission
+    // =========================================================
+    // CAMERA PERMISSION
+    // =========================================================
+
     private val cameraPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -358,7 +367,7 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // UPLOAD IMAGE
+        // UPLOAD IMAGE - OPTIONAL
         // ---------------------------------------------------------
 
         btnUploadImage.setOnClickListener {
@@ -367,7 +376,7 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // TAKE PHOTO
+        // TAKE PHOTO - OPTIONAL
         // ---------------------------------------------------------
 
         btnTakePhoto.setOnClickListener {
@@ -873,10 +882,9 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // NOTE:
-        // New device-specific fields are OPTIONAL.
-        // No validation is required for:
-        //
+        // NEW DEVICE-SPECIFIC FIELDS ARE OPTIONAL
+        // ---------------------------------------------------------
+
         // Laptop RAM
         // Laptop Storage
         // Laptop Warranty
@@ -888,7 +896,8 @@ class BookRepairActivity : AppCompatActivity() {
         // Controller Count
         // Console Warranty
         // Controller Problem
-        // ---------------------------------------------------------
+
+        // No validation is required for the above fields.
 
         // ---------------------------------------------------------
         // DESCRIPTION VALIDATION
@@ -915,22 +924,20 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // IMAGE VALIDATION
+        // DAMAGE IMAGE - OPTIONAL
         // ---------------------------------------------------------
 
         val imageUri =
             selectedImageUri
 
-        if (imageUri == null) {
-
-            Toast.makeText(
-                this,
-                "Please upload a damage image or take a photo",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
+        // IMPORTANT:
+        // No validation here.
+        //
+        // If the user uploads/takes a photo,
+        // imageUri contains the image URI.
+        //
+        // If the user does not upload/take a photo,
+        // imageUri is null and booking can still continue.
 
         // ---------------------------------------------------------
         // CATEGORY ID
@@ -1057,7 +1064,8 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "description" to description,
 
-                "imageUrl" to imageUri.toString(),
+                // Damage image is OPTIONAL
+                "imageUrl" to (imageUri?.toString() ?: ""),
 
                 "appointmentDate" to appointmentDate,
 
