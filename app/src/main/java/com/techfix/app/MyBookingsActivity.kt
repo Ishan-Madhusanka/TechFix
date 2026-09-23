@@ -85,12 +85,16 @@ class MyBookingsActivity : AppCompatActivity() {
                             ?: document.getLong("price")?.toInt()
                             ?: 0
 
+                    // Get device information from the new nested structure
+                    val deviceInfo =
+                        document.get("deviceInfo") as? Map<*, *>
+
                     val deviceBrand =
-                        document.getString("deviceBrand")
+                        deviceInfo?.get("brand")?.toString()
                             ?: ""
 
                     val deviceModel =
-                        document.getString("deviceModel")
+                        deviceInfo?.get("model")?.toString()
                             ?: ""
 
                     val description =

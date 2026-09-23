@@ -63,8 +63,6 @@ class BookRepairActivity : AppCompatActivity() {
     private lateinit var etConsoleStorage: Spinner
 
     private lateinit var tvControllerCountLabel: TextView
-
-    // Controller Count is manually typed
     private lateinit var etControllerCount: EditText
 
     private lateinit var tvConsoleWarrantyLabel: TextView
@@ -289,7 +287,6 @@ class BookRepairActivity : AppCompatActivity() {
         tvControllerCountLabel =
             findViewById(R.id.tvControllerCountLabel)
 
-        // Controller Count is an EditText
         etControllerCount =
             findViewById(R.id.etControllerCount)
 
@@ -1087,6 +1084,138 @@ class BookRepairActivity : AppCompatActivity() {
         val bookingReference =
             db.collection("repairRequests").document()
 
+        // =========================================================
+        // DEVICE INFO
+        // =========================================================
+
+        val deviceInfo =
+            hashMapOf<String, Any>(
+                "brand" to brand,
+                "model" to model
+            )
+
+        // =========================================================
+        // CATEGORY-SPECIFIC SPECIFICATIONS
+        // =========================================================
+
+        val specifications =
+            hashMapOf<String, Any>()
+
+        when (categoryName) {
+
+            // -----------------------------------------------------
+            // LAPTOP
+            // -----------------------------------------------------
+
+            "Laptop" -> {
+
+                if (operatingSystem.isNotEmpty()) {
+
+                    specifications["operatingSystem"] =
+                        operatingSystem
+                }
+
+                if (laptopRam.isNotEmpty()) {
+
+                    specifications["ram"] =
+                        laptopRam
+                }
+
+                if (laptopStorage.isNotEmpty()) {
+
+                    specifications["storage"] =
+                        laptopStorage
+                }
+
+                if (laptopWarranty.isNotEmpty()) {
+
+                    specifications["warranty"] =
+                        laptopWarranty
+                }
+            }
+
+            // -----------------------------------------------------
+            // DESKTOP
+            // -----------------------------------------------------
+
+            "Desktop" -> {
+
+                if (operatingSystem.isNotEmpty()) {
+
+                    specifications["operatingSystem"] =
+                        operatingSystem
+                }
+
+                if (ram.isNotEmpty()) {
+
+                    specifications["ram"] =
+                        ram
+                }
+
+                if (processor.isNotEmpty()) {
+
+                    specifications["processor"] =
+                        processor
+                }
+
+                if (desktopStorage.isNotEmpty()) {
+
+                    specifications["storage"] =
+                        desktopStorage
+                }
+
+                if (desktopWarranty.isNotEmpty()) {
+
+                    specifications["warranty"] =
+                        desktopWarranty
+                }
+            }
+
+            // -----------------------------------------------------
+            // GAMING CONSOLE
+            // -----------------------------------------------------
+
+            "Gaming Console" -> {
+
+                if (consoleStorage.isNotEmpty()) {
+
+                    specifications["storage"] =
+                        consoleStorage
+                }
+
+                if (controllerCount.isNotEmpty()) {
+
+                    specifications["controllerCount"] =
+                        controllerCount
+                }
+
+                if (consoleWarranty.isNotEmpty()) {
+
+                    specifications["warranty"] =
+                        consoleWarranty
+                }
+
+                if (controllerProblem.isNotEmpty()) {
+
+                    specifications["controllerProblem"] =
+                        controllerProblem
+                }
+            }
+
+            // -----------------------------------------------------
+            // MOBILE
+            // -----------------------------------------------------
+
+            "Mobile" -> {
+
+                // No category-specific specifications.
+            }
+        }
+
+        // =========================================================
+        // FINAL FIRESTORE BOOKING
+        // =========================================================
+
         val booking =
             hashMapOf(
 
@@ -1096,39 +1225,11 @@ class BookRepairActivity : AppCompatActivity() {
 
                 "categoryId" to selectedCategoryId,
 
-                "deviceBrand" to brand,
+                // Device information
+                "deviceInfo" to deviceInfo,
 
-                "deviceModel" to model,
-
-                // Operating System
-                "operatingSystem" to operatingSystem,
-
-                // Desktop RAM
-                "ram" to ram,
-
-                // Console controller problem
-                "controllerProblem" to controllerProblem,
-
-                // Laptop
-                "laptopRam" to laptopRam,
-
-                "laptopStorage" to laptopStorage,
-
-                "laptopWarranty" to laptopWarranty,
-
-                // Desktop
-                "processor" to processor,
-
-                "desktopStorage" to desktopStorage,
-
-                "desktopWarranty" to desktopWarranty,
-
-                // Gaming Console
-                "consoleStorage" to consoleStorage,
-
-                "controllerCount" to controllerCount,
-
-                "consoleWarranty" to consoleWarranty,
+                // Category-specific information
+                "specifications" to specifications,
 
                 // Service
                 "serviceId" to selectedServiceId,
