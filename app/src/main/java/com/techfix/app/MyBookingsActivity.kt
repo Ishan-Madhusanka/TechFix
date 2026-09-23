@@ -1,6 +1,9 @@
 package com.techfix.app
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -178,6 +181,7 @@ class MyBookingsActivity : AppCompatActivity() {
         status: String
     ) {
 
+        // Booking card
         val bookingLayout = LinearLayout(this)
 
         bookingLayout.orientation =
@@ -190,10 +194,23 @@ class MyBookingsActivity : AppCompatActivity() {
             20
         )
 
-        bookingLayout.setBackgroundResource(
-            android.R.drawable.dialog_holo_light_frame
+        // Rounded darker card background
+        val cardBackground = GradientDrawable()
+
+        cardBackground.setColor(
+            Color.parseColor("#E3EDF7")
         )
 
+        cardBackground.cornerRadius = 22f
+
+        cardBackground.setStroke(
+            1,
+            Color.parseColor("#C5D8EA")
+        )
+
+        bookingLayout.background = cardBackground
+
+        // Category
         val categoryText = TextView(this)
 
         categoryText.text =
@@ -201,11 +218,16 @@ class MyBookingsActivity : AppCompatActivity() {
 
         categoryText.textSize = 18f
 
-        categoryText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        categoryText.setTextColor(
+            Color.BLACK
         )
 
+        categoryText.setTypeface(
+            null,
+            Typeface.BOLD
+        )
+
+        // Service
         val serviceText = TextView(this)
 
         serviceText.text =
@@ -213,6 +235,11 @@ class MyBookingsActivity : AppCompatActivity() {
 
         serviceText.textSize = 17f
 
+        serviceText.setTextColor(
+            Color.BLACK
+        )
+
+        // Price
         val priceText = TextView(this)
 
         priceText.text =
@@ -220,11 +247,16 @@ class MyBookingsActivity : AppCompatActivity() {
 
         priceText.textSize = 17f
 
-        priceText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        priceText.setTextColor(
+            Color.BLACK
         )
 
+        priceText.setTypeface(
+            null,
+            Typeface.BOLD
+        )
+
+        // Device
         val deviceText = TextView(this)
 
         deviceText.text =
@@ -232,6 +264,11 @@ class MyBookingsActivity : AppCompatActivity() {
 
         deviceText.textSize = 16f
 
+        deviceText.setTextColor(
+            Color.BLACK
+        )
+
+        // Problem
         val descriptionText = TextView(this)
 
         descriptionText.text =
@@ -239,6 +276,11 @@ class MyBookingsActivity : AppCompatActivity() {
 
         descriptionText.textSize = 16f
 
+        descriptionText.setTextColor(
+            Color.BLACK
+        )
+
+        // Appointment
         val dateText = TextView(this)
 
         dateText.text =
@@ -246,6 +288,11 @@ class MyBookingsActivity : AppCompatActivity() {
 
         dateText.textSize = 16f
 
+        dateText.setTextColor(
+            Color.BLACK
+        )
+
+        // Status
         val statusText = TextView(this)
 
         statusText.text =
@@ -253,11 +300,16 @@ class MyBookingsActivity : AppCompatActivity() {
 
         statusText.textSize = 17f
 
-        statusText.setTypeface(
-            null,
-            android.graphics.Typeface.BOLD
+        statusText.setTextColor(
+            Color.BLACK
         )
 
+        statusText.setTypeface(
+            null,
+            Typeface.BOLD
+        )
+
+        // Add text to card
         bookingLayout.addView(categoryText)
         bookingLayout.addView(serviceText)
         bookingLayout.addView(priceText)
@@ -266,6 +318,7 @@ class MyBookingsActivity : AppCompatActivity() {
         bookingLayout.addView(dateText)
         bookingLayout.addView(statusText)
 
+        // Card spacing
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -275,7 +328,7 @@ class MyBookingsActivity : AppCompatActivity() {
             0,
             0,
             0,
-            20
+            18
         )
 
         bookingsContainer.addView(
@@ -283,7 +336,7 @@ class MyBookingsActivity : AppCompatActivity() {
             params
         )
 
-        // Open booking details when the booking card is clicked
+        // Open booking details
         bookingLayout.setOnClickListener {
 
             val intent = Intent(
