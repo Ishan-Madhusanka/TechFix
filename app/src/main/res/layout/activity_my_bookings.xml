@@ -1,125 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="#080D18"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="24dp"
+        android:paddingTop="24dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="30dp">
+        android:paddingBottom="40dp">
 
-        <!-- TechFix Logo -->
-        <TextView
-            android:id="@+id/tvBookingLogo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/bg_icon_circle"
-            android:gravity="center"
-            android:text="TF"
-            android:textColor="#FFFFFF"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Page Title -->
+        <!-- Title -->
         <TextView
             android:id="@+id/tvMyBookingsTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
             android:text="My Bookings"
-            android:textColor="#1565C0"
+            android:textColor="#FFFFFF"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tvBookingLogo"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Subtitle -->
-        <TextView
-            android:id="@+id/tvBookingsSubtitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="View and manage your repair bookings"
-            android:textColor="#64748B"
-            android:textSize="13sp"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/tvMyBookingsTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Small Blue Line -->
-        <View
-            android:id="@+id/bookingsLine"
-            android:layout_width="50dp"
-            android:layout_height="4dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/bg_small_line"
-            app:layout_constraintTop_toBottomOf="@id/tvBookingsSubtitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- No Bookings Message -->
+        <!-- Subtitle / Empty Message -->
         <TextView
             android:id="@+id/tvNoBookings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="Your repair bookings will appear here."
-            android:textColor="#64748B"
-            android:textSize="17sp"
+            android:layout_marginTop="12dp"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/bookingsLine"
+            android:text="Your repair bookings will appear here."
+            android:textColor="#94A3B8"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvMyBookingsTitle" />
 
-        <!-- Bookings -->
+        <!-- Blue Accent Line -->
+        <View
+            android:id="@+id/bookingsLine"
+            android:layout_width="54dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="16dp"
+            android:background="#3B82F6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNoBookings" />
+
+        <!-- Dynamic Booking Cards -->
         <LinearLayout
             android:id="@+id/bookingsContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/tvNoBookings"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Footer -->
-        <TextView
-            android:id="@+id/tvBookingFooter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="TechFix Repair Services"
-            android:textColor="#90A4AE"
-            android:textSize="11sp"
-            app:layout_constraintTop_toBottomOf="@id/bookingsContainer"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="FAST  •  RELIABLE  •  TRUSTED"
-            android:textColor="#B0BEC5"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvBookingFooter"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/bookingsLine" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

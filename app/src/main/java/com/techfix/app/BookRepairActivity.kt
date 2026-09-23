@@ -1,141 +1,44 @@
-package com.techfix.app
+﻿package com.techfix.app
 
-import android.Manifest
-import android.app.DatePickerDialog
-import android.content.ContentValues
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class BookRepairActivity : AppCompatActivity() {
 
     private lateinit var tvSelectedService: TextView
-
-    private lateinit var tvDeviceBrandLabel: TextView
     private lateinit var etDeviceBrand: EditText
-
-    private lateinit var tvDeviceModelLabel: TextView
     private lateinit var etDeviceModel: EditText
-
-    private lateinit var tvOperatingSystemLabel: TextView
-    private lateinit var etOperatingSystem: Spinner
-
-    private lateinit var tvRamLabel: TextView
-    private lateinit var etRam: Spinner
-
-    private lateinit var tvLaptopRamLabel: TextView
-    private lateinit var etLaptopRam: Spinner
-
-    private lateinit var tvLaptopStorageLabel: TextView
-    private lateinit var etLaptopStorage: Spinner
-
-    private lateinit var tvLaptopWarrantyLabel: TextView
-    private lateinit var etLaptopWarranty: Spinner
-
-    private lateinit var tvProcessorLabel: TextView
-    private lateinit var etProcessor: Spinner
-
-    private lateinit var tvDesktopStorageLabel: TextView
-    private lateinit var etDesktopStorage: Spinner
-
-    private lateinit var tvDesktopWarrantyLabel: TextView
-    private lateinit var etDesktopWarranty: Spinner
-
-    private lateinit var tvConsoleStorageLabel: TextView
-    private lateinit var etConsoleStorage: Spinner
-
-    private lateinit var tvControllerCountLabel: TextView
-    private lateinit var etControllerCount: EditText
-
-    private lateinit var tvConsoleWarrantyLabel: TextView
-    private lateinit var etConsoleWarranty: Spinner
-
-    private lateinit var tvControllerProblemLabel: TextView
-    private lateinit var etControllerProblem: EditText
-
     private lateinit var etDescription: EditText
     private lateinit var etAppointmentDate: EditText
-
     private lateinit var ivDamageImage: ImageView
     private lateinit var btnUploadImage: Button
-    private lateinit var btnTakePhoto: Button
     private lateinit var btnSubmitBooking: Button
 
     private var selectedImageUri: Uri? = null
-    private var cameraImageUri: Uri? = null
 
+    // Firebase Authentication
     private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
 
-    // =========================================================
-    // DROPDOWN OPTIONS
-    // =========================================================
-
-    private val operatingSystemOptions = arrayOf(
-        "Select Operating System",
-        "Windows 10",
-        "Windows 11",
-        "macOS",
-        "Linux"
-    )
-
-    private val ramOptions = arrayOf(
-        "Select RAM",
-        "4 GB",
-        "8 GB",
-        "16 GB",
-        "32 GB",
-        "64 GB"
-    )
-
-    private val storageOptions = arrayOf(
-        "Select Storage",
-        "128 GB",
-        "256 GB",
-        "512 GB",
-        "1 TB",
-        "2 TB"
-    )
-
-    private val processorOptions = arrayOf(
-        "Select Processor",
-        "Intel Core i3",
-        "Intel Core i5",
-        "Intel Core i7",
-        "Intel Core i9",
-        "AMD Ryzen 3",
-        "AMD Ryzen 5",
-        "AMD Ryzen 7",
-        "AMD Ryzen 9"
-    )
-
-    private val warrantyOptions = arrayOf(
-        "Select Warranty Status",
-        "Under Warranty",
-        "Expired"
-    )
-
-    // =========================================================
-    // GALLERY IMAGE PICKER
-    // =========================================================
+    // ---------------------------------------------------------
+    // IMAGE PICKER
+    // ---------------------------------------------------------
 
     private val imagePicker =
         registerForActivityResult(
@@ -147,60 +50,11 @@ class BookRepairActivity : AppCompatActivity() {
                 selectedImageUri = uri
 
                 ivDamageImage.setImageURI(uri)
-                ivDamageImage.visibility = View.VISIBLE
+                ivDamageImage.visibility = ImageView.VISIBLE
 
                 Toast.makeText(
                     this,
                     "Image selected successfully!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-    // =========================================================
-    // CAMERA
-    // =========================================================
-
-    private val cameraLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.TakePicture()
-        ) { success ->
-
-            val uri = cameraImageUri
-
-            if (success && uri != null) {
-
-                selectedImageUri = uri
-
-                ivDamageImage.setImageURI(uri)
-                ivDamageImage.visibility = View.VISIBLE
-
-                Toast.makeText(
-                    this,
-                    "Photo captured successfully!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-    // =========================================================
-    // CAMERA PERMISSION
-    // =========================================================
-
-    private val cameraPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-
-            if (isGranted) {
-
-                openCamera()
-
-            } else {
-
-                Toast.makeText(
-                    this,
-                    "Camera permission is required.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -212,95 +66,17 @@ class BookRepairActivity : AppCompatActivity() {
         setContentView(R.layout.activity_book_repair)
 
         // ---------------------------------------------------------
-        // FIND VIEWS
+        // CONNECT XML VIEWS
         // ---------------------------------------------------------
 
         tvSelectedService =
             findViewById(R.id.tvSelectedService)
 
-        tvDeviceBrandLabel =
-            findViewById(R.id.tvDeviceBrandLabel)
-
         etDeviceBrand =
             findViewById(R.id.etDeviceBrand)
 
-        tvDeviceModelLabel =
-            findViewById(R.id.tvDeviceModelLabel)
-
         etDeviceModel =
             findViewById(R.id.etDeviceModel)
-
-        tvOperatingSystemLabel =
-            findViewById(R.id.tvOperatingSystemLabel)
-
-        etOperatingSystem =
-            findViewById(R.id.etOperatingSystem)
-
-        tvRamLabel =
-            findViewById(R.id.tvRamLabel)
-
-        etRam =
-            findViewById(R.id.etRam)
-
-        tvLaptopRamLabel =
-            findViewById(R.id.tvLaptopRamLabel)
-
-        etLaptopRam =
-            findViewById(R.id.etLaptopRam)
-
-        tvLaptopStorageLabel =
-            findViewById(R.id.tvLaptopStorageLabel)
-
-        etLaptopStorage =
-            findViewById(R.id.etLaptopStorage)
-
-        tvLaptopWarrantyLabel =
-            findViewById(R.id.tvLaptopWarrantyLabel)
-
-        etLaptopWarranty =
-            findViewById(R.id.etLaptopWarranty)
-
-        tvProcessorLabel =
-            findViewById(R.id.tvProcessorLabel)
-
-        etProcessor =
-            findViewById(R.id.etProcessor)
-
-        tvDesktopStorageLabel =
-            findViewById(R.id.tvDesktopStorageLabel)
-
-        etDesktopStorage =
-            findViewById(R.id.etDesktopStorage)
-
-        tvDesktopWarrantyLabel =
-            findViewById(R.id.tvDesktopWarrantyLabel)
-
-        etDesktopWarranty =
-            findViewById(R.id.etDesktopWarranty)
-
-        tvConsoleStorageLabel =
-            findViewById(R.id.tvConsoleStorageLabel)
-
-        etConsoleStorage =
-            findViewById(R.id.etConsoleStorage)
-
-        tvControllerCountLabel =
-            findViewById(R.id.tvControllerCountLabel)
-
-        etControllerCount =
-            findViewById(R.id.etControllerCount)
-
-        tvConsoleWarrantyLabel =
-            findViewById(R.id.tvConsoleWarrantyLabel)
-
-        etConsoleWarranty =
-            findViewById(R.id.etConsoleWarranty)
-
-        tvControllerProblemLabel =
-            findViewById(R.id.tvControllerProblemLabel)
-
-        etControllerProblem =
-            findViewById(R.id.etControllerProblem)
 
         etDescription =
             findViewById(R.id.etDescription)
@@ -314,72 +90,15 @@ class BookRepairActivity : AppCompatActivity() {
         btnUploadImage =
             findViewById(R.id.btnUploadImage)
 
-        btnTakePhoto =
-            findViewById(R.id.btnTakePhoto)
-
         btnSubmitBooking =
             findViewById(R.id.btnSubmitBooking)
 
         // ---------------------------------------------------------
-        // SETUP DROPDOWNS
-        // ---------------------------------------------------------
-
-        setupSpinner(
-            etOperatingSystem,
-            operatingSystemOptions
-        )
-
-        setupSpinner(
-            etRam,
-            ramOptions
-        )
-
-        setupSpinner(
-            etLaptopRam,
-            ramOptions
-        )
-
-        setupSpinner(
-            etLaptopStorage,
-            storageOptions
-        )
-
-        setupSpinner(
-            etLaptopWarranty,
-            warrantyOptions
-        )
-
-        setupSpinner(
-            etProcessor,
-            processorOptions
-        )
-
-        setupSpinner(
-            etDesktopStorage,
-            storageOptions
-        )
-
-        setupSpinner(
-            etDesktopWarranty,
-            warrantyOptions
-        )
-
-        setupSpinner(
-            etConsoleStorage,
-            storageOptions
-        )
-
-        setupSpinner(
-            etConsoleWarranty,
-            warrantyOptions
-        )
-
-        // ---------------------------------------------------------
-        // GET SELECTED SERVICE INFORMATION
+        // RECEIVE MEMBER 2 SERVICE DATA
         // ---------------------------------------------------------
 
         val serviceId =
-            intent.getStringExtra("serviceId")
+            intent.getStringExtra("SERVICE_ID")
 
         val serviceName =
             intent.getStringExtra("serviceName")
@@ -388,69 +107,77 @@ class BookRepairActivity : AppCompatActivity() {
             intent.getStringExtra("categoryName")
 
         val servicePrice =
-            intent.getIntExtra("servicePrice", 0)
+            intent.getIntExtra(
+                "servicePrice",
+                0
+            )
 
         // ---------------------------------------------------------
-        // SETUP CATEGORY FIELDS
-        // ---------------------------------------------------------
-
-        setupCategoryFields(categoryName)
-
-        // ---------------------------------------------------------
-        // SHOW SELECTED SERVICE
+        // DISPLAY SELECTED SERVICE
         // ---------------------------------------------------------
 
         if (serviceName != null) {
 
             tvSelectedService.text =
-                "Selected Service: $serviceName\nEstimated Price: Rs. $servicePrice"
+                "Selected Service: $serviceName\n" +
+                        "Estimated Price: Rs. $servicePrice"
         }
 
         // ---------------------------------------------------------
-        // APPOINTMENT DATE
-        // ---------------------------------------------------------
+// APPOINTMENT DATE PICKER
+// ---------------------------------------------------------
 
         etAppointmentDate.setOnClickListener {
 
-            val calendar =
-                Calendar.getInstance()
+            // Prevent selecting past dates
+            val constraintsBuilder =
+                CalendarConstraints.Builder()
+                    .setValidator(
+                        DateValidatorPointForward.now()
+                    )
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTheme(R.style.ThemeOverlay_TechFix_MaterialDatePicker)
+                    .setTitleText("Select Appointment Date")
+                    .setSelection(
+                        MaterialDatePicker.todayInUtcMilliseconds()
+                    )
+                    .setCalendarConstraints(
+                        constraintsBuilder.build()
+                    )
+                    .setPositiveButtonText("OK")
+                    .setNegativeButtonText("Cancel")
+                    .build()
 
-            val year =
-                calendar.get(Calendar.YEAR)
+            datePicker.addOnPositiveButtonClickListener { selectedDate ->
 
-            val month =
-                calendar.get(Calendar.MONTH)
+                val formatter =
+                    SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    )
 
-            val day =
-                calendar.get(Calendar.DAY_OF_MONTH)
+                formatter.timeZone =
+                    TimeZone.getTimeZone("UTC")
 
-            val datePickerDialog =
-                DatePickerDialog(
-                    this,
-                    { _, selectedYear, selectedMonth, selectedDay ->
+                val formattedDate =
+                    formatter.format(
+                        Date(selectedDate)
+                    )
 
-                        val formattedDate =
-                            String.format(
-                                "%04d-%02d-%02d",
-                                selectedYear,
-                                selectedMonth + 1,
-                                selectedDay
-                            )
-
-                        etAppointmentDate.setText(
-                            formattedDate
-                        )
-                    },
-                    year,
-                    month,
-                    day
+                etAppointmentDate.setText(
+                    formattedDate
                 )
+            }
 
-            datePickerDialog.show()
+            datePicker.show(
+                supportFragmentManager,
+                "APPOINTMENT_DATE_PICKER"
+            )
         }
 
         // ---------------------------------------------------------
-        // UPLOAD IMAGE - OPTIONAL
+        // SELECT DAMAGE IMAGE - OPTIONAL
         // ---------------------------------------------------------
 
         btnUploadImage.setOnClickListener {
@@ -459,932 +186,161 @@ class BookRepairActivity : AppCompatActivity() {
         }
 
         // ---------------------------------------------------------
-        // TAKE PHOTO - OPTIONAL
-        // ---------------------------------------------------------
-
-        btnTakePhoto.setOnClickListener {
-
-            if (
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.CAMERA
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                openCamera()
-
-            } else {
-
-                cameraPermissionLauncher.launch(
-                    Manifest.permission.CAMERA
-                )
-            }
-        }
-
-        // ---------------------------------------------------------
         // SUBMIT BOOKING
         // ---------------------------------------------------------
 
         btnSubmitBooking.setOnClickListener {
 
-            submitBooking(
-                serviceId = serviceId,
-                serviceName = serviceName,
-                categoryName = categoryName,
-                servicePrice = servicePrice
-            )
-        }
-    }
+            val brand =
+                etDeviceBrand.text.toString().trim()
 
-    // =========================================================
-    // SETUP SPINNER
-    // =========================================================
+            val model =
+                etDeviceModel.text.toString().trim()
 
-    private fun setupSpinner(
-        spinner: Spinner,
-        options: Array<String>
-    ) {
+            val description =
+                etDescription.text.toString().trim()
 
-        val adapter =
-            object : ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                options
-            ) {
+            val appointmentDate =
+                etAppointmentDate.text.toString().trim()
 
-                override fun getView(
-                    position: Int,
-                    convertView: View?,
-                    parent: android.view.ViewGroup
-                ): View {
-
-                    val view =
-                        super.getView(
-                            position,
-                            convertView,
-                            parent
-                        )
-
-                    val textView =
-                        view.findViewById<TextView>(
-                            android.R.id.text1
-                        )
-
-                    textView.setTextColor(
-                        Color.parseColor("#455A64")
-                    )
-
-                    textView.textSize = 15f
-
-                    return view
-                }
-
-                override fun getDropDownView(
-                    position: Int,
-                    convertView: View?,
-                    parent: android.view.ViewGroup
-                ): View {
-
-                    val view =
-                        super.getDropDownView(
-                            position,
-                            convertView,
-                            parent
-                        )
-
-                    val textView =
-                        view.findViewById<TextView>(
-                            android.R.id.text1
-                        )
-
-                    textView.setTextColor(
-                        Color.parseColor("#263238")
-                    )
-
-                    textView.textSize = 15f
-
-                    return view
-                }
-            }
-
-        adapter.setDropDownViewResource(
-            android.R.layout.simple_spinner_dropdown_item
-        )
-
-        spinner.adapter =
-            adapter
-    }
-
-    // =========================================================
-    // GET SPINNER VALUE
-    // =========================================================
-
-    private fun getSpinnerValue(
-        spinner: Spinner
-    ): String {
-
-        val value =
-            spinner.selectedItem?.toString() ?: ""
-
-        return if (
-            value.startsWith("Select ")
-        ) {
-            ""
-        } else {
-            value.trim()
-        }
-    }
-
-    // =========================================================
-    // CATEGORY-SPECIFIC FIELDS
-    // =========================================================
-
-    private fun setupCategoryFields(
-        categoryName: String?
-    ) {
-
-        // ---------------------------------------------------------
-        // HIDE ALL OPTIONAL FIELDS FIRST
-        // ---------------------------------------------------------
-
-        tvOperatingSystemLabel.visibility = View.GONE
-        etOperatingSystem.visibility = View.GONE
-
-        tvRamLabel.visibility = View.GONE
-        etRam.visibility = View.GONE
-
-        tvLaptopRamLabel.visibility = View.GONE
-        etLaptopRam.visibility = View.GONE
-
-        tvLaptopStorageLabel.visibility = View.GONE
-        etLaptopStorage.visibility = View.GONE
-
-        tvLaptopWarrantyLabel.visibility = View.GONE
-        etLaptopWarranty.visibility = View.GONE
-
-        tvProcessorLabel.visibility = View.GONE
-        etProcessor.visibility = View.GONE
-
-        tvDesktopStorageLabel.visibility = View.GONE
-        etDesktopStorage.visibility = View.GONE
-
-        tvDesktopWarrantyLabel.visibility = View.GONE
-        etDesktopWarranty.visibility = View.GONE
-
-        tvConsoleStorageLabel.visibility = View.GONE
-        etConsoleStorage.visibility = View.GONE
-
-        tvControllerCountLabel.visibility = View.GONE
-        etControllerCount.visibility = View.GONE
-
-        tvConsoleWarrantyLabel.visibility = View.GONE
-        etConsoleWarranty.visibility = View.GONE
-
-        tvControllerProblemLabel.visibility = View.GONE
-        etControllerProblem.visibility = View.GONE
-
-        // ---------------------------------------------------------
-        // MOBILE
-        // ---------------------------------------------------------
-
-        when (categoryName) {
-
-            "Mobile" -> {
-
-                tvDeviceBrandLabel.text =
-                    "Mobile Brand"
-
-                etDeviceBrand.hint =
-                    "Enter mobile brand"
-
-                tvDeviceModelLabel.text =
-                    "Mobile Model"
-
-                etDeviceModel.hint =
-                    "Enter mobile model"
-            }
+            val currentUser =
+                auth.currentUser
 
             // -----------------------------------------------------
-            // LAPTOP
+            // VALIDATION
             // -----------------------------------------------------
 
-            "Laptop" -> {
-
-                tvDeviceBrandLabel.text =
-                    "Laptop Brand"
-
-                etDeviceBrand.hint =
-                    "Enter laptop brand"
-
-                tvDeviceModelLabel.text =
-                    "Laptop Model"
-
-                etDeviceModel.hint =
-                    "Enter laptop model"
-
-                tvOperatingSystemLabel.visibility =
-                    View.VISIBLE
-
-                etOperatingSystem.visibility =
-                    View.VISIBLE
-
-                tvOperatingSystemLabel.text =
-                    "Operating System"
-
-                tvLaptopRamLabel.visibility =
-                    View.VISIBLE
-
-                etLaptopRam.visibility =
-                    View.VISIBLE
-
-                tvLaptopRamLabel.text =
-                    "RAM"
-
-                tvLaptopStorageLabel.visibility =
-                    View.VISIBLE
-
-                etLaptopStorage.visibility =
-                    View.VISIBLE
-
-                tvLaptopStorageLabel.text =
-                    "Storage"
-
-                tvLaptopWarrantyLabel.visibility =
-                    View.VISIBLE
-
-                etLaptopWarranty.visibility =
-                    View.VISIBLE
-
-                tvLaptopWarrantyLabel.text =
-                    "Warranty Status (Optional)"
-            }
-
-            // -----------------------------------------------------
-            // DESKTOP
-            // -----------------------------------------------------
-
-            "Desktop" -> {
-
-                tvDeviceBrandLabel.text =
-                    "Desktop Brand"
-
-                etDeviceBrand.hint =
-                    "Enter desktop brand"
-
-                tvDeviceModelLabel.text =
-                    "Desktop Model"
-
-                etDeviceModel.hint =
-                    "Enter desktop model"
-
-                tvOperatingSystemLabel.visibility =
-                    View.VISIBLE
-
-                etOperatingSystem.visibility =
-                    View.VISIBLE
-
-                tvOperatingSystemLabel.text =
-                    "Operating System"
-
-                tvRamLabel.visibility =
-                    View.VISIBLE
-
-                etRam.visibility =
-                    View.VISIBLE
-
-                tvRamLabel.text =
-                    "RAM (Optional)"
-
-                tvProcessorLabel.visibility =
-                    View.VISIBLE
-
-                etProcessor.visibility =
-                    View.VISIBLE
-
-                tvProcessorLabel.text =
-                    "Processor (Optional)"
-
-                tvDesktopStorageLabel.visibility =
-                    View.VISIBLE
-
-                etDesktopStorage.visibility =
-                    View.VISIBLE
-
-                tvDesktopStorageLabel.text =
-                    "Storage (Optional)"
-
-                tvDesktopWarrantyLabel.visibility =
-                    View.VISIBLE
-
-                etDesktopWarranty.visibility =
-                    View.VISIBLE
-
-                tvDesktopWarrantyLabel.text =
-                    "Warranty Status (Optional)"
-            }
-
-            // -----------------------------------------------------
-            // GAMING CONSOLE
-            // -----------------------------------------------------
-
-            "Gaming Console" -> {
-
-                tvDeviceBrandLabel.text =
-                    "Console Brand"
-
-                etDeviceBrand.hint =
-                    "Enter console brand"
-
-                tvDeviceModelLabel.text =
-                    "Console Model"
-
-                etDeviceModel.hint =
-                    "Enter console model"
-
-                tvConsoleStorageLabel.visibility =
-                    View.VISIBLE
-
-                etConsoleStorage.visibility =
-                    View.VISIBLE
-
-                tvConsoleStorageLabel.text =
-                    "Storage (Optional)"
-
-                tvControllerCountLabel.visibility =
-                    View.VISIBLE
-
-                etControllerCount.visibility =
-                    View.VISIBLE
-
-                tvControllerCountLabel.text =
-                    "Controller Count (Optional)"
-
-                tvConsoleWarrantyLabel.visibility =
-                    View.VISIBLE
-
-                etConsoleWarranty.visibility =
-                    View.VISIBLE
-
-                tvConsoleWarrantyLabel.text =
-                    "Warranty Status (Optional)"
-
-                tvControllerProblemLabel.visibility =
-                    View.VISIBLE
-
-                etControllerProblem.visibility =
-                    View.VISIBLE
-
-                tvControllerProblemLabel.text =
-                    "Controller Problem (Optional)"
-            }
-        }
-    }
-
-    // =========================================================
-    // SUBMIT BOOKING
-    // =========================================================
-
-    private fun submitBooking(
-        serviceId: String?,
-        serviceName: String?,
-        categoryName: String?,
-        servicePrice: Int
-    ) {
-
-        // ---------------------------------------------------------
-        // COMMON VALUES
-        // ---------------------------------------------------------
-
-        val brand =
-            etDeviceBrand.text.toString().trim()
-
-        val model =
-            etDeviceModel.text.toString().trim()
-
-        // ---------------------------------------------------------
-        // SPINNER VALUES
-        // ---------------------------------------------------------
-
-        val operatingSystem =
-            getSpinnerValue(etOperatingSystem)
-
-        val ram =
-            getSpinnerValue(etRam)
-
-        val laptopRam =
-            getSpinnerValue(etLaptopRam)
-
-        val laptopStorage =
-            getSpinnerValue(etLaptopStorage)
-
-        val laptopWarranty =
-            getSpinnerValue(etLaptopWarranty)
-
-        val processor =
-            getSpinnerValue(etProcessor)
-
-        val desktopStorage =
-            getSpinnerValue(etDesktopStorage)
-
-        val desktopWarranty =
-            getSpinnerValue(etDesktopWarranty)
-
-        val consoleStorage =
-            getSpinnerValue(etConsoleStorage)
-
-        // Controller Count is manually typed
-        val controllerCount =
-            etControllerCount.text.toString().trim()
-
-        val consoleWarranty =
-            getSpinnerValue(etConsoleWarranty)
-
-        // ---------------------------------------------------------
-        // EDITTEXT VALUES
-        // ---------------------------------------------------------
-
-        val controllerProblem =
-            etControllerProblem.text.toString().trim()
-
-        val description =
-            etDescription.text.toString().trim()
-
-        val appointmentDate =
-            etAppointmentDate.text.toString().trim()
-
-        val currentUser =
-            auth.currentUser
-
-        // ---------------------------------------------------------
-        // CHECK LOGIN
-        // ---------------------------------------------------------
-
-        if (currentUser == null) {
-
-            Toast.makeText(
-                this,
-                "Please login before booking.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // VALIDATE BRAND
-        // ---------------------------------------------------------
-
-        if (brand.isEmpty()) {
-
-            etDeviceBrand.error =
-                "Enter device brand"
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // VALIDATE MODEL
-        // ---------------------------------------------------------
-
-        if (model.isEmpty()) {
-
-            etDeviceModel.error =
-                "Enter device model"
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // LAPTOP / DESKTOP OS VALIDATION
-        // ---------------------------------------------------------
-
-        if (
-            categoryName == "Laptop" ||
-            categoryName == "Desktop"
-        ) {
-
-            if (operatingSystem.isEmpty()) {
+            if (currentUser == null) {
 
                 Toast.makeText(
                     this,
-                    "Please select an operating system.",
+                    "Please login before booking.",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                return
-            }
-        }
-
-        // ---------------------------------------------------------
-        // DESCRIPTION VALIDATION
-        // ---------------------------------------------------------
-
-        if (description.isEmpty()) {
-
-            etDescription.error =
-                "Describe the problem"
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // APPOINTMENT DATE VALIDATION
-        // ---------------------------------------------------------
-
-        if (appointmentDate.isEmpty()) {
-
-            etAppointmentDate.error =
-                "Select appointment date"
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // DAMAGE IMAGE - OPTIONAL
-        // ---------------------------------------------------------
-
-        val imageUri =
-            selectedImageUri
-
-        // ---------------------------------------------------------
-        // CATEGORY ID
-        // ---------------------------------------------------------
-
-        val selectedCategoryId =
-            when (categoryName) {
-
-                "Mobile" ->
-                    "mobile"
-
-                "Laptop" ->
-                    "laptop"
-
-                "Desktop" ->
-                    "desktop"
-
-                "Gaming Console" ->
-                    "gaming_console"
-
-                else ->
-                    categoryName
-                        ?.lowercase()
-                        ?.replace(" ", "_")
-                        ?: ""
+                return@setOnClickListener
             }
 
-        // ---------------------------------------------------------
-        // SERVICE ID
-        // ---------------------------------------------------------
+            if (brand.isEmpty()) {
 
-        val selectedServiceId =
-            serviceId ?: ""
+                etDeviceBrand.error =
+                    "Enter device brand"
 
-        if (selectedServiceId.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "Service information missing.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
-        if (selectedCategoryId.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "Category information missing.",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
-        // ---------------------------------------------------------
-        // DISABLE SUBMIT BUTTON
-        // ---------------------------------------------------------
-
-        btnSubmitBooking.isEnabled =
-            false
-
-        btnSubmitBooking.text =
-            "Saving..."
-
-        val selectedService =
-            serviceName ?: "Unknown Service"
-
-        val selectedCategory =
-            categoryName ?: "Unknown Category"
-
-        // ---------------------------------------------------------
-        // CREATE FIRESTORE DOCUMENT
-        // ---------------------------------------------------------
-
-        // NEW: readable booking number
-        val bookingNumber =
-            "TF-" + System.currentTimeMillis()
-
-        val bookingReference =
-            db.collection("repairRequests")
-                .document(bookingNumber)
-
-        // =========================================================
-        // DEVICE INFO
-        // =========================================================
-
-        val deviceInfo =
-            hashMapOf<String, Any>(
-                "brand" to brand,
-                "model" to model
-            )
-
-        // =========================================================
-        // CATEGORY-SPECIFIC SPECIFICATIONS
-        // =========================================================
-
-        val specifications =
-            hashMapOf<String, Any>()
-
-        when (categoryName) {
-
-            // -----------------------------------------------------
-            // LAPTOP
-            // -----------------------------------------------------
-
-            "Laptop" -> {
-
-                if (operatingSystem.isNotEmpty()) {
-
-                    specifications["operatingSystem"] =
-                        operatingSystem
-                }
-
-                if (laptopRam.isNotEmpty()) {
-
-                    specifications["ram"] =
-                        laptopRam
-                }
-
-                if (laptopStorage.isNotEmpty()) {
-
-                    specifications["storage"] =
-                        laptopStorage
-                }
-
-                if (laptopWarranty.isNotEmpty()) {
-
-                    specifications["warranty"] =
-                        laptopWarranty
-                }
+                return@setOnClickListener
             }
 
-            // -----------------------------------------------------
-            // DESKTOP
-            // -----------------------------------------------------
+            if (model.isEmpty()) {
 
-            "Desktop" -> {
+                etDeviceModel.error =
+                    "Enter device model"
 
-                if (operatingSystem.isNotEmpty()) {
-
-                    specifications["operatingSystem"] =
-                        operatingSystem
-                }
-
-                if (ram.isNotEmpty()) {
-
-                    specifications["ram"] =
-                        ram
-                }
-
-                if (processor.isNotEmpty()) {
-
-                    specifications["processor"] =
-                        processor
-                }
-
-                if (desktopStorage.isNotEmpty()) {
-
-                    specifications["storage"] =
-                        desktopStorage
-                }
-
-                if (desktopWarranty.isNotEmpty()) {
-
-                    specifications["warranty"] =
-                        desktopWarranty
-                }
+                return@setOnClickListener
             }
 
-            // -----------------------------------------------------
-            // GAMING CONSOLE
-            // -----------------------------------------------------
+            if (description.isEmpty()) {
 
-            "Gaming Console" -> {
+                etDescription.error =
+                    "Describe the problem"
 
-                if (consoleStorage.isNotEmpty()) {
-
-                    specifications["storage"] =
-                        consoleStorage
-                }
-
-                if (controllerCount.isNotEmpty()) {
-
-                    specifications["controllerCount"] =
-                        controllerCount
-                }
-
-                if (consoleWarranty.isNotEmpty()) {
-
-                    specifications["warranty"] =
-                        consoleWarranty
-                }
-
-                if (controllerProblem.isNotEmpty()) {
-
-                    specifications["controllerProblem"] =
-                        controllerProblem
-                }
+                return@setOnClickListener
             }
 
-            // -----------------------------------------------------
-            // MOBILE
-            // -----------------------------------------------------
+            if (appointmentDate.isEmpty()) {
 
-            "Mobile" -> {
+                etAppointmentDate.error =
+                    "Select appointment date"
 
-                // No category-specific specifications.
+                return@setOnClickListener
             }
-        }
 
-        // =========================================================
-        // FINAL FIRESTORE BOOKING
-        // =========================================================
+            // Damage image is OPTIONAL
+            // No validation required for selectedImageUri
 
-        val booking =
-            hashMapOf(
-
-                "id" to bookingReference.id,
-
-                // NEW: readable booking number
-                "bookingNumber" to bookingNumber,
-
-                "customerId" to currentUser.uid,
-
-                "categoryId" to selectedCategoryId,
-
-                // Device information
-                "deviceInfo" to deviceInfo,
-
-                // Category-specific information
-                "specifications" to specifications,
-
-                // Service
-                "serviceId" to selectedServiceId,
-
-                "description" to description,
-
-                // Image optional
-                "imageUrl" to (imageUri?.toString() ?: ""),
-
-                "appointmentDate" to appointmentDate,
-
-                "price" to servicePrice.toDouble(),
-
-                "status" to "PENDING",
-
-                "createdAt" to FieldValue.serverTimestamp()
-            )
-
-        // ---------------------------------------------------------
-        // SAVE TO FIRESTORE
-        // ---------------------------------------------------------
-
-        bookingReference
-            .set(booking)
-            .addOnSuccessListener {
+            // Member 1 MainActivity requires SERVICE_ID
+            if (serviceId.isNullOrBlank()) {
 
                 Toast.makeText(
                     this,
-                    "Booking submitted successfully!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                // -------------------------------------------------
-                // OPEN BOOKING CONFIRMATION
-                // -------------------------------------------------
-
-                val confirmationIntent =
-                    Intent(
-                        this,
-                        BookingConfirmationActivity::class.java
-                    )
-
-                confirmationIntent.putExtra(
-                    "serviceName",
-                    selectedService
-                )
-
-                confirmationIntent.putExtra(
-                    "categoryName",
-                    selectedCategory
-                )
-
-                confirmationIntent.putExtra(
-                    "deviceBrand",
-                    brand
-                )
-
-                confirmationIntent.putExtra(
-                    "deviceModel",
-                    model
-                )
-
-                confirmationIntent.putExtra(
-                    "appointmentDate",
-                    appointmentDate
-                )
-
-                confirmationIntent.putExtra(
-                    "servicePrice",
-                    servicePrice
-                )
-
-                startActivity(
-                    confirmationIntent
-                )
-
-                btnSubmitBooking.isEnabled =
-                    true
-
-                btnSubmitBooking.text =
-                    "Submit Booking"
-            }
-            .addOnFailureListener { error ->
-
-                Toast.makeText(
-                    this,
-                    "Booking failed: ${error.message}",
+                    "This service is not available for branch selection",
                     Toast.LENGTH_LONG
                 ).show()
 
-                btnSubmitBooking.isEnabled =
-                    true
-
-                btnSubmitBooking.text =
-                    "Submit Booking"
-            }
-    }
-
-    // =========================================================
-    // CREATE CAMERA IMAGE URI
-    // =========================================================
-
-    private fun createImageUri(): Uri? {
-
-        val contentValues =
-            ContentValues().apply {
-
-                put(
-                    MediaStore.Images.Media.DISPLAY_NAME,
-                    "techfix_${System.currentTimeMillis()}.jpg"
-                )
-
-                put(
-                    MediaStore.Images.Media.MIME_TYPE,
-                    "image/jpeg"
-                )
+                return@setOnClickListener
             }
 
-        return contentResolver.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            contentValues
-        )
-    }
+            // -----------------------------------------------------
+            // SAVE MEMBER 2 BOOKING DETAILS TEMPORARILY
+            // -----------------------------------------------------
 
-    // =========================================================
-    // OPEN CAMERA
-    // =========================================================
+            val bookingPreferences =
+                getSharedPreferences(
+                    "TECHFIX_BOOKING_DATA",
+                    MODE_PRIVATE
+                )
 
-    private fun openCamera() {
+            bookingPreferences
+                .edit()
+                .putString(
+                    "customerId",
+                    currentUser.uid
+                )
+                .putString(
+                    "customerEmail",
+                    currentUser.email ?: ""
+                )
+                .putString(
+                    "categoryName",
+                    categoryName ?: ""
+                )
+                .putString(
+                    "serviceName",
+                    serviceName ?: ""
+                )
+                .putString(
+                    "deviceBrand",
+                    brand
+                )
+                .putString(
+                    "deviceModel",
+                    model
+                )
+                .putString(
+                    "description",
+                    description
+                )
+                .putString(
+                    "appointmentDate",
+                    appointmentDate
+                )
+                .putString(
+                    "imageUri",
+                    selectedImageUri?.toString() ?: ""
+                )
+                .putInt(
+                    "servicePrice",
+                    servicePrice
+                )
+                .apply()
 
-        val uri =
-            createImageUri()
+            // -----------------------------------------------------
+            // OPEN MEMBER 1 SUITABLE BRANCH LOGIC
+            // -----------------------------------------------------
 
-        cameraImageUri =
-            uri
+            val suitableBranchIntent =
+                Intent(
+                    this,
+                    MainActivity::class.java
+                )
 
-        if (uri != null) {
+            // Member 1 expects this exact key
+            suitableBranchIntent.putExtra(
+                "SERVICE_ID",
+                serviceId
+            )
 
-            cameraLauncher.launch(uri)
-
-        } else {
-
-            Toast.makeText(
-                this,
-                "Unable to open camera.",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(
+                suitableBranchIntent
+            )
         }
     }
 }

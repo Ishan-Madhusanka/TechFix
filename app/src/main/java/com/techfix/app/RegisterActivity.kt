@@ -1,4 +1,4 @@
-package com.techfix.app
+﻿package com.techfix.app
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-
+import android.util.Patterns
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -53,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
 
             startActivity(intent)
 
+            // Close Register page
             finish()
         }
     }
@@ -74,7 +75,10 @@ class RegisterActivity : AppCompatActivity() {
             etEmail.error = "Enter your email"
             return
         }
-
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.error = "Enter a valid email address"
+            return
+        }
         if (password.isEmpty()) {
             etPassword.error = "Enter a password"
             return
@@ -123,9 +127,11 @@ class RegisterActivity : AppCompatActivity() {
                         .set(userData)
                         .addOnSuccessListener {
 
+                            btnRegister.isEnabled = true
+
                             Toast.makeText(
                                 this,
-                                "Account created successfully!",
+                                "Registration successful! Please login.",
                                 Toast.LENGTH_SHORT
                             ).show()
 
@@ -134,13 +140,13 @@ class RegisterActivity : AppCompatActivity() {
                                 "User saved successfully: $userId"
                             )
 
-                            /*
-                             * Registration successful.
-                             * Go directly to Home screen.
-                             */
+                            // Sign out newly registered user
+                            auth.signOut()
+
+                            // Go to Login page
                             val intent = Intent(
                                 this,
-                                HomeActivity::class.java
+                                LoginActivity::class.java
                             )
 
                             // Remove Register screen from back stack
@@ -149,7 +155,6 @@ class RegisterActivity : AppCompatActivity() {
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK
 
                             startActivity(intent)
-
                             finish()
                         }
                         .addOnFailureListener { exception ->

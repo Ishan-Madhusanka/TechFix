@@ -1,557 +1,282 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F4F8"
+    android:background="#080D18"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="24dp"
-        android:paddingTop="36dp"
-        android:paddingEnd="24dp"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
         android:paddingBottom="35dp">
 
-        <!-- Header -->
+        <!-- TechFix Logo -->
+        <TextView
+            android:id="@+id/tvBookLogo"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="38dp"
+            android:background="@drawable/bg_icon_circle"
+            android:gravity="center"
+            android:text="TF"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Title -->
         <TextView
             android:id="@+id/tvBookRepairTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
             android:text="Book Repair"
-            android:textColor="#263238"
-            android:textSize="28sp"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvBookLogo" />
 
+        <!-- Small Blue Line -->
         <View
-            android:id="@+id/viewDivider"
-            android:layout_width="65dp"
+            android:id="@+id/bookRepairLine"
+            android:layout_width="45dp"
             android:layout_height="4dp"
-            android:layout_marginTop="10dp"
-            android:background="#1565C0"
-            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle"
+            android:layout_marginTop="9dp"
+            android:background="@drawable/bg_small_line"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tvBookRepairTitle" />
 
-        <!-- Selected Service -->
-        <TextView
-            android:id="@+id/tvSelectedService"
+        <!-- Selected Service Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/selectedServiceCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Selected Service"
-            android:textColor="#1565C0"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/viewDivider"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="10dp"
+            app:cardBackgroundColor="#111827"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/bookRepairLine"
+            app:strokeColor="#3B82F6"
+            app:strokeWidth="1dp">
+
+            <TextView
+                android:id="@+id/tvSelectedService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Selected Service: Screen Repair"
+                android:textColor="#60A5FA"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Device Brand -->
-        <TextView
-            android:id="@+id/tvDeviceBrandLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Device Brand"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvSelectedService"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etDeviceBrand"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDeviceBrand"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Enter device brand"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/tvDeviceBrandLabel"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Device Brand"
+            app:boxBackgroundColor="#111827"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/selectedServiceCard">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDeviceBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Device Model -->
-        <TextView
-            android:id="@+id/tvDeviceModelLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Device Model"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceBrand"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etDeviceModel"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDeviceModel"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Enter device model"
-            android:inputType="text"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/tvDeviceModelLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Operating System -->
-        <TextView
-            android:id="@+id/tvOperatingSystemLabel"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Operating System"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etDeviceModel"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etOperatingSystem"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvOperatingSystemLabel"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Device Model"
+            app:boxBackgroundColor="#111827"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutDeviceBrand">
 
-        <!-- Laptop RAM -->
-        <TextView
-            android:id="@+id/tvLaptopRamLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="RAM"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etOperatingSystem"
-            app:layout_constraintStart_toStartOf="parent" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDeviceModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8"
+                android:textSize="14sp" />
 
-        <Spinner
-            android:id="@+id/etLaptopRam"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvLaptopRamLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Desktop RAM -->
-        <TextView
-            android:id="@+id/tvRamLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="RAM"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etLaptopRam"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etRam"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvRamLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Laptop Storage -->
-        <TextView
-            android:id="@+id/tvLaptopStorageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Storage"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etRam"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etLaptopStorage"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvLaptopStorageLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Laptop Warranty -->
-        <TextView
-            android:id="@+id/tvLaptopWarrantyLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Warranty Status"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etLaptopStorage"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etLaptopWarranty"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvLaptopWarrantyLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Desktop Processor -->
-        <TextView
-            android:id="@+id/tvProcessorLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Processor"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etLaptopWarranty"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etProcessor"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvProcessorLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Desktop Storage -->
-        <TextView
-            android:id="@+id/tvDesktopStorageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Storage"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etProcessor"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etDesktopStorage"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvDesktopStorageLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Desktop Warranty -->
-        <TextView
-            android:id="@+id/tvDesktopWarrantyLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Warranty Status"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etDesktopStorage"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etDesktopWarranty"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvDesktopWarrantyLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Gaming Console Storage -->
-        <TextView
-            android:id="@+id/tvConsoleStorageLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Storage"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etDesktopWarranty"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etConsoleStorage"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvConsoleStorageLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Controller Count -->
-        <TextView
-            android:id="@+id/tvControllerCountLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Controller Count"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etConsoleStorage"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etControllerCount"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:hint="Enter controller count"
-            android:inputType="number"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvControllerCountLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Console Warranty -->
-        <TextView
-            android:id="@+id/tvConsoleWarrantyLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Warranty Status"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etControllerCount"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Spinner
-            android:id="@+id/etConsoleWarranty"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="5dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvConsoleWarrantyLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Gaming Console Controller Problem -->
-        <TextView
-            android:id="@+id/tvControllerProblemLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Controller Problem"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etConsoleWarranty"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etControllerProblem"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:gravity="top|start"
-            android:hint="Describe controller problem if any"
-            android:inputType="textMultiLine|textCapSentences"
-            android:paddingTop="8dp"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/tvControllerProblemLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Problem Description -->
-        <TextView
-            android:id="@+id/tvProblemLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Problem Description"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/etControllerProblem"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etDescription"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutDescription"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:gravity="top|start"
-            android:hint="Describe the problem here..."
-            android:inputType="textMultiLine|textCapSentences"
-            android:paddingTop="8dp"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/tvProblemLabel"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Describe the problem"
+            app:boxBackgroundColor="#111827"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutDeviceModel">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:paddingTop="12dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Appointment Date -->
-        <TextView
-            android:id="@+id/tvAppointmentLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Appointment Date"
-            android:textColor="#37474F"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/etDescription"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/etAppointmentDate"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAppointmentDate"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="#90A4AE"
-            android:clickable="true"
-            android:focusable="false"
-            android:hint="Select appointment date"
-            android:inputType="none"
-            android:textColor="#263238"
-            android:textColorHint="#78909C"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/tvAppointmentLabel"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Appointment Date"
+            app:boxBackgroundColor="#111827"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutDescription">
 
-        <!-- Damage Image Preview -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAppointmentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:inputType="none"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Damage Image -->
         <ImageView
             android:id="@+id/ivDamageImage"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="170dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            android:background="#111827"
             android:contentDescription="Selected damage image"
             android:scaleType="centerCrop"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etAppointmentDate"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/layoutAppointmentDate" />
 
-        <!-- Upload Damage Image -->
-        <Button
+        <!-- Upload Image -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUploadImage"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#607D8B"
+            android:layout_height="52dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
             android:text="Upload Damage Image"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
+            android:textColor="#60A5FA"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:backgroundTint="#111827"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivDamageImage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Take Photo -->
-        <Button
-            android:id="@+id/btnTakePhoto"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#607D8B"
-            android:text="Take Photo"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/btnUploadImage"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:strokeColor="#3B82F6"
+            app:strokeWidth="1dp" />
 
         <!-- Submit Booking -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitBooking"
             android:layout_width="0dp"
             android:layout_height="54dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#1565C0"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="28dp"
             android:text="Submit Booking"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
-            app:layout_constraintStart_toStartOf="parent"
+            app:backgroundTint="#3B82F6"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnUploadImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

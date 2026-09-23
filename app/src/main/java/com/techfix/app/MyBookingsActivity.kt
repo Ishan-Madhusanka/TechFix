@@ -1,11 +1,8 @@
-package com.techfix.app
+﻿package com.techfix.app
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -58,43 +55,91 @@ class MyBookingsActivity : AppCompatActivity() {
                 bookingsContainer.removeAllViews()
 
                 if (documents.isEmpty) {
-
                     tvNoBookings.visibility = TextView.VISIBLE
-
                     return@addOnSuccessListener
                 }
 
                 tvNoBookings.visibility = TextView.GONE
 
-                /*
-                 * Sort bookings by createdAt.
-                 *
-                 * Latest booking = top
-                 * Oldest booking = bottom
-                 *
-                 * If an old document does not have createdAt,
-                 * it will be placed at the bottom.
-                 */
+                // Newest bookings first
                 val bookings =
-                    documents.documents.sortedByDescending { document ->
-
-                        document.getTimestamp("createdAt")
-                            ?.toDate()
-                            ?.time
-                            ?: 0L
+                    documents.documents.sortedByDescending {
+                        it.getTimestamp("createdAt")
                     }
 
-                /*
-                 * Add bookings one by one in the sorted order.
-                 *
-                 * We load the service information first and then
-                 * add the card. This prevents asynchronous Firebase
-                 * requests from changing the visual order.
-                 */
-                loadBookingCardsInOrder(
-                    bookings = bookings,
-                    index = 0
-                )
+                for (document in bookings) {
+
+                    val categoryId =
+                        document.getString("categoryId")
+                            ?: ""
+
+                    val serviceId =
+                        document.getString("serviceId")
+                            ?: ""
+
+                    val price =
+                        document.getDouble("price")?.toInt()
+                            ?: document.getLong("price")?.toInt()
+                            ?: 0
+
+                    val deviceBrand =
+                        document.getString("deviceBrand")
+                            ?: ""
+
+                    val deviceModel =
+                        document.getString("deviceModel")
+                            ?: ""
+
+                    val description =
+                        document.getString("description")
+                            ?: ""
+
+                    val appointmentDate =
+                        document.getString("appointmentDate")
+                            ?: ""
+
+                    val status =
+                        document.getString("status")
+                            ?: "PENDING"
+
+                    val categoryName =
+                        getCategoryName(categoryId)
+
+                    // Get service name from Firebase
+                    db.collection("services")
+                        .document(serviceId)
+                        .get()
+                        .addOnSuccessListener { serviceDocument ->
+
+                            val serviceName =
+                                serviceDocument.getString("name")
+                                    ?: serviceId
+
+                            addBookingCard(
+                                categoryName = categoryName,
+                                serviceName = serviceName,
+                                price = price,
+                                deviceBrand = deviceBrand,
+                                deviceModel = deviceModel,
+                                description = description,
+                                appointmentDate = appointmentDate,
+                                status = status
+                            )
+                        }
+                        .addOnFailureListener {
+
+                            addBookingCard(
+                                categoryName = categoryName,
+                                serviceName = serviceId,
+                                price = price,
+                                deviceBrand = deviceBrand,
+                                deviceModel = deviceModel,
+                                description = description,
+                                appointmentDate = appointmentDate,
+                                status = status
+                            )
+                        }
+                }
             }
             .addOnFailureListener { error ->
 
@@ -103,108 +148,6 @@ class MyBookingsActivity : AppCompatActivity() {
                     "Failed to load bookings: ${error.message}",
                     Toast.LENGTH_LONG
                 ).show()
-            }
-    }
-
-    private fun loadBookingCardsInOrder(
-        bookings: List<com.google.firebase.firestore.DocumentSnapshot>,
-        index: Int
-    ) {
-
-        // All bookings have been added
-        if (index >= bookings.size) {
-            return
-        }
-
-        val document = bookings[index]
-
-        val categoryId =
-            document.getString("categoryId")
-                ?: ""
-
-        val serviceId =
-            document.getString("serviceId")
-                ?: ""
-
-        val price =
-            document.getDouble("price")?.toInt()
-                ?: document.getLong("price")?.toInt()
-                ?: 0
-
-        // Get device information
-        val deviceInfo =
-            document.get("deviceInfo") as? Map<*, *>
-
-        val deviceBrand =
-            deviceInfo?.get("brand")?.toString()
-                ?: ""
-
-        val deviceModel =
-            deviceInfo?.get("model")?.toString()
-                ?: ""
-
-        val description =
-            document.getString("description")
-                ?: ""
-
-        val appointmentDate =
-            document.getString("appointmentDate")
-                ?: ""
-
-        val status =
-            document.getString("status")
-                ?: "PENDING"
-
-        val categoryName =
-            getCategoryName(categoryId)
-
-        /*
-         * Get service name from Firebase.
-         */
-        db.collection("services")
-            .document(serviceId)
-            .get()
-            .addOnSuccessListener { serviceDocument ->
-
-                val serviceName =
-                    serviceDocument.getString("name")
-                        ?: serviceId
-
-                addBookingCard(
-                    categoryName = categoryName,
-                    serviceName = serviceName,
-                    price = price,
-                    deviceBrand = deviceBrand,
-                    deviceModel = deviceModel,
-                    description = description,
-                    appointmentDate = appointmentDate,
-                    status = status
-                )
-
-                // Load next booking only after this card is added
-                loadBookingCardsInOrder(
-                    bookings = bookings,
-                    index = index + 1
-                )
-            }
-            .addOnFailureListener {
-
-                addBookingCard(
-                    categoryName = categoryName,
-                    serviceName = serviceId,
-                    price = price,
-                    deviceBrand = deviceBrand,
-                    deviceModel = deviceModel,
-                    description = description,
-                    appointmentDate = appointmentDate,
-                    status = status
-                )
-
-                // Continue with next booking
-                loadBookingCardsInOrder(
-                    bookings = bookings,
-                    index = index + 1
-                )
             }
     }
 
@@ -235,36 +178,34 @@ class MyBookingsActivity : AppCompatActivity() {
         status: String
     ) {
 
-        // Booking card
+        // =========================================
+        // BOOKING CARD
+        // =========================================
+
         val bookingLayout = LinearLayout(this)
 
         bookingLayout.orientation =
             LinearLayout.VERTICAL
 
         bookingLayout.setPadding(
-            20,
-            20,
-            20,
-            20
+            40,
+            32,
+            40,
+            32
         )
 
-        // Rounded card background
-        val cardBackground = GradientDrawable()
-
-        cardBackground.setColor(
-            Color.parseColor("#E3EDF7")
+        bookingLayout.setBackgroundResource(
+            R.drawable.bg_booking_card
         )
 
-        cardBackground.cornerRadius = 22f
+        // Same gray color as Device
+        val detailColor =
+            Color.parseColor("#94A3B8")
 
-        cardBackground.setStroke(
-            1,
-            Color.parseColor("#C5D8EA")
-        )
+        // =========================================
+        // CATEGORY
+        // =========================================
 
-        bookingLayout.background = cardBackground
-
-        // Category
         val categoryText = TextView(this)
 
         categoryText.text =
@@ -273,15 +214,13 @@ class MyBookingsActivity : AppCompatActivity() {
         categoryText.textSize = 18f
 
         categoryText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        categoryText.setTypeface(
-            null,
-            Typeface.BOLD
-        )
+        // =========================================
+        // SERVICE
+        // =========================================
 
-        // Service
         val serviceText = TextView(this)
 
         serviceText.text =
@@ -290,10 +229,13 @@ class MyBookingsActivity : AppCompatActivity() {
         serviceText.textSize = 17f
 
         serviceText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        // Price
+        // =========================================
+        // ESTIMATED PRICE
+        // =========================================
+
         val priceText = TextView(this)
 
         priceText.text =
@@ -302,15 +244,13 @@ class MyBookingsActivity : AppCompatActivity() {
         priceText.textSize = 17f
 
         priceText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        priceText.setTypeface(
-            null,
-            Typeface.BOLD
-        )
+        // =========================================
+        // DEVICE
+        // =========================================
 
-        // Device
         val deviceText = TextView(this)
 
         deviceText.text =
@@ -319,10 +259,13 @@ class MyBookingsActivity : AppCompatActivity() {
         deviceText.textSize = 16f
 
         deviceText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        // Problem
+        // =========================================
+        // PROBLEM
+        // =========================================
+
         val descriptionText = TextView(this)
 
         descriptionText.text =
@@ -331,10 +274,13 @@ class MyBookingsActivity : AppCompatActivity() {
         descriptionText.textSize = 16f
 
         descriptionText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        // Appointment
+        // =========================================
+        // APPOINTMENT DATE
+        // =========================================
+
         val dateText = TextView(this)
 
         dateText.text =
@@ -343,10 +289,13 @@ class MyBookingsActivity : AppCompatActivity() {
         dateText.textSize = 16f
 
         dateText.setTextColor(
-            Color.BLACK
+            detailColor
         )
 
-        // Status
+        // =========================================
+        // STATUS
+        // =========================================
+
         val statusText = TextView(this)
 
         statusText.text =
@@ -354,16 +303,53 @@ class MyBookingsActivity : AppCompatActivity() {
 
         statusText.textSize = 17f
 
-        statusText.setTextColor(
-            Color.BLACK
-        )
-
         statusText.setTypeface(
             null,
             Typeface.BOLD
         )
 
-        // Add text to card
+        // Keep status colors
+        when (status.uppercase()) {
+
+            "PENDING" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#F59E0B")
+                )
+            }
+
+            "CONFIRMED" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#3B82F6")
+                )
+            }
+
+            "DEVICE_RECEIVED",
+            "DIAGNOSING",
+            "REPAIRING",
+            "QUALITY_CHECK",
+            "READY_FOR_COLLECTION" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#60A5FA")
+                )
+            }
+
+            "COMPLETED" -> {
+                statusText.setTextColor(
+                    Color.parseColor("#22C55E")
+                )
+            }
+
+            else -> {
+                statusText.setTextColor(
+                    Color.WHITE
+                )
+            }
+        }
+
+        // =========================================
+        // ADD DETAILS TO CARD
+        // =========================================
+
         bookingLayout.addView(categoryText)
         bookingLayout.addView(serviceText)
         bookingLayout.addView(priceText)
@@ -372,7 +358,10 @@ class MyBookingsActivity : AppCompatActivity() {
         bookingLayout.addView(dateText)
         bookingLayout.addView(statusText)
 
-        // Card spacing
+        // =========================================
+        // CARD MARGIN
+        // =========================================
+
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -382,63 +371,12 @@ class MyBookingsActivity : AppCompatActivity() {
             0,
             0,
             0,
-            18
+            24
         )
 
         bookingsContainer.addView(
             bookingLayout,
             params
         )
-
-        // Open booking details
-        bookingLayout.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                BookingDetailsActivity::class.java
-            )
-
-            intent.putExtra(
-                "categoryName",
-                categoryName
-            )
-
-            intent.putExtra(
-                "serviceName",
-                serviceName
-            )
-
-            intent.putExtra(
-                "price",
-                price
-            )
-
-            intent.putExtra(
-                "deviceBrand",
-                deviceBrand
-            )
-
-            intent.putExtra(
-                "deviceModel",
-                deviceModel
-            )
-
-            intent.putExtra(
-                "description",
-                description
-            )
-
-            intent.putExtra(
-                "appointmentDate",
-                appointmentDate
-            )
-
-            intent.putExtra(
-                "status",
-                status
-            )
-
-            startActivity(intent)
-        }
     }
 }

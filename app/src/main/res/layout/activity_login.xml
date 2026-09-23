@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="@color/techfix_background"
     android:paddingStart="28dp"
     android:paddingEnd="28dp">
 
@@ -17,7 +17,7 @@
         android:background="@drawable/bg_icon_circle"
         android:gravity="center"
         android:text="TF"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="Login to TechFix"
-        android:textColor="#1565C0"
+        android:textColor="@color/techfix_text_primary"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +48,14 @@
         android:layout_marginTop="42dp"
         android:layout_marginEnd="20dp"
         android:hint="Email"
-        app:boxBackgroundColor="#FFFFFF"
+        android:textColorHint="@color/techfix_text_secondary"
+        app:boxBackgroundColor="@color/techfix_card"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#1565C0"
+        app:boxStrokeColor="@color/techfix_primary"
+        app:hintTextColor="@color/techfix_text_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLoginTitle">
@@ -64,8 +66,8 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:textColor="#1F2937"
-            android:textColorHint="#78909C"
+            android:textColor="@color/techfix_text_primary"
+            android:textColorHint="@color/techfix_text_secondary"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -80,13 +82,15 @@
         android:layout_marginTop="14dp"
         android:layout_marginEnd="20dp"
         android:hint="Password"
-        app:boxBackgroundColor="#FFFFFF"
+        android:textColorHint="@color/techfix_text_secondary"
+        app:boxBackgroundColor="@color/techfix_card"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="#1565C0"
+        app:boxStrokeColor="@color/techfix_primary"
         app:endIconMode="password_toggle"
+        app:hintTextColor="@color/techfix_text_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailInputLayout">
@@ -97,13 +101,13 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textColor="#1F2937"
-            android:textColorHint="#78909C"
+            android:textColor="@color/techfix_text_primary"
+            android:textColorHint="@color/techfix_text_secondary"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Login Button -->
+    <!-- Customer Login Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
@@ -113,10 +117,10 @@
         android:layout_marginEnd="20dp"
         android:text="Login"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:backgroundTint="#1565C0"
+        app:backgroundTint="@color/techfix_primary"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,19 +131,40 @@
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:text="Don't have an account? Create Account"
-        android:textColor="#1565C0"
+        android:textColor="@color/techfix_primary_light"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+
+    <!-- Technician Login Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTechnicianLogin"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:text="Technician Login"
+        android:textAllCaps="false"
+        android:textColor="@color/techfix_primary_light"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/techfix_card"
+        app:cornerRadius="12dp"
+        app:strokeColor="@color/techfix_primary"
+        app:strokeWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegister" />
 
     <!-- Footer -->
     <TextView
@@ -148,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:text="TechFix Repair Services"
-        android:textColor="#90A4AE"
+        android:textColor="@color/techfix_text_secondary"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
