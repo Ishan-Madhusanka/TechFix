@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -25,36 +26,43 @@
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Admin Dashboard -->
+        <!-- Login Activity - App Launcher -->
         <activity
-            android:name=".admin.AdminDashboardActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <!-- Admin Dashboard -->
+        <activity
+            android:name=".admin.AdminDashboardActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Customer Account -->
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Customer Services -->
         <activity
@@ -81,6 +89,11 @@
 
         <activity
             android:name=".MyBookingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".BookingDetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
@@ -116,7 +129,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Repair -->
+        <!-- Customer Repair -->
         <activity
             android:name=".repair.MyRepairsActivity"
             android:exported="false"
@@ -134,12 +147,13 @@
 
         <activity
             android:name=".repair.RepairHistoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Technician -->
         <activity
             android:name=".technician.TechnicianLoginActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
@@ -158,16 +172,17 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".technician.TechnicianRepairHistoryActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".technician.SparePartsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".technician.PaymentActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".BookingDetailsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
