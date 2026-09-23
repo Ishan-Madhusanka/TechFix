@@ -49,6 +49,7 @@ class MyBookingsActivity : AppCompatActivity() {
 
         val customerId = currentUser.uid
 
+        // Load all bookings for this customer
         db.collection("repairRequests")
             .whereEqualTo("customerId", customerId)
             .get()
@@ -65,10 +66,15 @@ class MyBookingsActivity : AppCompatActivity() {
 
                 tvNoBookings.visibility = TextView.GONE
 
-                // Newest bookings first
-                val bookings = documents.documents.sortedByDescending {
-                    it.getTimestamp("createdAt")
-                }
+                // Sort bookings by createdAt.
+                // Newest bookings will appear first.
+                // Old bookings without createdAt will stay at the bottom.
+                val bookings =
+                    documents.documents.sortedByDescending { document ->
+
+                        document.getTimestamp("createdAt")?.toDate()?.time
+                            ?: 0L
+                    }
 
                 for (document in bookings) {
 
@@ -85,7 +91,7 @@ class MyBookingsActivity : AppCompatActivity() {
                             ?: document.getLong("price")?.toInt()
                             ?: 0
 
-                    // Get device information from the new nested structure
+                    // Get device information from the nested structure
                     val deviceInfo =
                         document.get("deviceInfo") as? Map<*, *>
 
@@ -198,7 +204,7 @@ class MyBookingsActivity : AppCompatActivity() {
             20
         )
 
-        // Rounded darker card background
+        // Rounded card background
         val cardBackground = GradientDrawable()
 
         cardBackground.setColor(

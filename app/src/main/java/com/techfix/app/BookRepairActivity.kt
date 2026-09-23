@@ -1081,8 +1081,13 @@ class BookRepairActivity : AppCompatActivity() {
         // CREATE FIRESTORE DOCUMENT
         // ---------------------------------------------------------
 
+        // NEW: readable booking number
+        val bookingNumber =
+            "TF-" + System.currentTimeMillis()
+
         val bookingReference =
-            db.collection("repairRequests").document()
+            db.collection("repairRequests")
+                .document(bookingNumber)
 
         // =========================================================
         // DEVICE INFO
@@ -1220,6 +1225,9 @@ class BookRepairActivity : AppCompatActivity() {
             hashMapOf(
 
                 "id" to bookingReference.id,
+
+                // NEW: readable booking number
+                "bookingNumber" to bookingNumber,
 
                 "customerId" to currentUser.uid,
 
