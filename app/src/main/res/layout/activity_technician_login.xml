@@ -1,146 +1,194 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F4F8FF">
+    android:background="#080D18"
+    android:fillViewport="true">
 
-    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:background="#246BC4">
+        android:paddingStart="16dp"
+        android:paddingTop="28dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="28dp">
 
+        <!-- App Name -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Technician Login"
+            android:text="TechFix"
             android:textColor="#FFFFFF"
-            android:textSize="26sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
+        <!-- Page Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="TechFix Repair Management"
-            android:textColor="#EAF2FF"
-            android:textSize="14sp" />
+            android:layout_marginTop="4dp"
+            android:text="Technician Login"
+            android:textColor="#60A5FA"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-
-        <LinearLayout
+        <!-- Login Card -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_marginTop="28dp"
+            app:cardBackgroundColor="#111827"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#3B82F6"
+            app:strokeWidth="1dp">
 
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeColor="#D7E7FA"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:padding="24dp">
 
-                <LinearLayout
+                <!-- Icon Circle -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    app:cardBackgroundColor="#1976D2"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Technician Login"
+                        android:src="@android:drawable/ic_menu_manage"
+                        app:tint="#FFFFFF" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Welcome -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="Welcome Back"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Welcome Back"
-                        android:textColor="#246BC4"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Sign in to manage your assigned repair jobs"
+                    android:textColor="#94A3B8"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="24dp"
-                        android:text="Enter your registered phone number to continue."
-                        android:textColor="#6B7280"
-                        android:textSize="14sp" />
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="#334155" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Phone Number"
-                        android:textColor="#374151"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                <!-- Phone Number Label -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PHONE NUMBER"
+                    android:textColor="#94A3B8"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutTechnicianPhone"
+                <!-- Phone Number Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutTechnicianPhone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:boxBackgroundColor="#080D18"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxStrokeColor="#334155">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTechnicianPhone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxBackgroundMode="outline"
-                        app:boxCornerRadiusBottomEnd="10dp"
-                        app:boxCornerRadiusBottomStart="10dp"
-                        app:boxCornerRadiusTopEnd="10dp"
-                        app:boxCornerRadiusTopStart="10dp"
-                        app:boxStrokeColor="#246BC4"
-                        app:hintEnabled="false">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTechnicianPhone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="e.g. 0771234567"
-                            android:inputType="phone"
-                            android:maxLines="1"
-                            android:padding="14dp"
-                            android:textColor="#111827"
-                            android:textColorHint="#9CA3AF" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnTechnicianLogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_marginTop="24dp"
-                        android:text="Login"
-                        android:textAllCaps="false"
+                        android:layout_height="56dp"
+                        android:background="@null"
+                        android:inputType="phone"
+                        android:maxLines="1"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:backgroundTint="#246BC4"
-                        app:cornerRadius="10dp" />
+                        android:textColorHint="#94A3B8"
+                        android:textSize="16sp" />
 
-                    <ProgressBar
-                        android:id="@+id/progressTechnicianLogin"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
-                        android:visibility="gone" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                </LinearLayout>
+                <!-- Login Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTechnicianLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="28dp"
+                    android:text="Login to Dashboard"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#3B82F6"
+                    app:cornerRadius="12dp" />
 
-            </com.google.android.material.card.MaterialCardView>
+                <!-- Loading -->
+                <ProgressBar
+                    android:id="@+id/progressTechnicianLogin"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    android:indeterminateTint="#3B82F6" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom Text -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_marginEnd="8dp"
+                android:background="#22C55E" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TechFix Technician System"
+                android:textColor="#94A3B8"
+                android:textSize="11sp" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

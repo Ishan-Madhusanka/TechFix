@@ -1,4 +1,4 @@
-package com.techfix.app.technician
+﻿package com.techfix.app.technician
 
 import android.content.Intent
 import android.os.Bundle
@@ -29,8 +29,7 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
     private lateinit var btnUseSpareParts: MaterialButton
     private lateinit var btnRecordPayment: MaterialButton
 
-    private val repairRepository =
-        RepairRequestRepository()
+    private val repairRepository = RepairRequestRepository()
 
     private var repairId: String = ""
     private var technicianId: String = ""
@@ -50,18 +49,13 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_technician_repair_details
-        )
+        setContentView(R.layout.activity_technician_repair_details)
 
         initializeViews()
         setupStatusSpinner()
 
-        repairId =
-            intent.getStringExtra("repairId") ?: ""
-
-        technicianId =
-            intent.getStringExtra("technicianId") ?: ""
+        repairId = intent.getStringExtra("repairId") ?: ""
+        technicianId = intent.getStringExtra("technicianId") ?: ""
 
         if (repairId.isEmpty()) {
 
@@ -132,24 +126,70 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
 
     private fun setupStatusSpinner() {
 
-        val statusNames =
-            statusList.map {
-                it.name.replace("_", " ")
+        val statusNames = statusList.map {
+            it.name.replace("_", " ")
+        }
+
+        val adapter = object : ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            statusNames
+        ) {
+
+            override fun getView(
+                position: Int,
+                convertView: android.view.View?,
+                parent: android.view.ViewGroup
+            ): android.view.View {
+
+                val view = super.getView(
+                    position,
+                    convertView,
+                    parent
+                ) as TextView
+
+                view.setTextColor(
+                    getColor(R.color.techfix_text_primary)
+                )
+
+                view.textSize = 14f
+                view.setPadding(16, 0, 16, 0)
+
+                return view
             }
 
-        val adapter =
-            ArrayAdapter(
-                this,
-                android.R.layout.simple_spinner_item,
-                statusNames
-            )
+            override fun getDropDownView(
+                position: Int,
+                convertView: android.view.View?,
+                parent: android.view.ViewGroup
+            ): android.view.View {
+
+                val view = super.getDropDownView(
+                    position,
+                    convertView,
+                    parent
+                ) as TextView
+
+                view.setTextColor(
+                    getColor(R.color.techfix_text_primary)
+                )
+
+                view.setBackgroundColor(
+                    getColor(R.color.techfix_card)
+                )
+
+                view.textSize = 14f
+                view.setPadding(24, 20, 24, 20)
+
+                return view
+            }
+        }
 
         adapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        spinnerRepairStatus.adapter =
-            adapter
+        spinnerRepairStatus.adapter = adapter
     }
 
     private fun loadRepairDetails() {
@@ -170,7 +210,7 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
                     return@getRepairById
                 }
 
-                // Save branch ID for spare parts
+                // Store branch ID for Spare Parts screen
                 branchId = repair.branchId
 
                 txtTechRepairId.text =
@@ -210,9 +250,7 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
         )
     }
 
-    private fun selectCurrentStatus(
-        currentStatus: String
-    ) {
+    private fun selectCurrentStatus(currentStatus: String) {
 
         val normalizedStatus =
             currentStatus
@@ -220,15 +258,12 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
                 .uppercase()
                 .replace(" ", "_")
 
-        val position =
-            statusList.indexOfFirst {
-                it.name == normalizedStatus
-            }
+        val position = statusList.indexOfFirst {
+            it.name == normalizedStatus
+        }
 
         if (position >= 0) {
-            spinnerRepairStatus.setSelection(
-                position
-            )
+            spinnerRepairStatus.setSelection(position)
         }
     }
 
@@ -237,7 +272,16 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
         val selectedPosition =
             spinnerRepairStatus.selectedItemPosition
 
-        if (selectedPosition < 0) {
+        if (selectedPosition < 0 ||
+            selectedPosition >= statusList.size
+        ) {
+
+            Toast.makeText(
+                this,
+                "Please select a status",
+                Toast.LENGTH_SHORT
+            ).show()
+
             return
         }
 
@@ -338,11 +382,10 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
             return
         }
 
-        val sparePartsIntent =
-            Intent(
-                this,
-                SparePartsActivity::class.java
-            )
+        val sparePartsIntent = Intent(
+            this,
+            SparePartsActivity::class.java
+        )
 
         sparePartsIntent.putExtra(
             "repairId",
@@ -359,18 +402,15 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
             technicianId
         )
 
-        startActivity(
-            sparePartsIntent
-        )
+        startActivity(sparePartsIntent)
     }
 
     private fun openPayment() {
 
-        val paymentIntent =
-            Intent(
-                this,
-                PaymentActivity::class.java
-            )
+        val paymentIntent = Intent(
+            this,
+            PaymentActivity::class.java
+        )
 
         paymentIntent.putExtra(
             "repairId",
@@ -382,8 +422,6 @@ class TechnicianRepairDetailsActivity : AppCompatActivity() {
             technicianId
         )
 
-        startActivity(
-            paymentIntent
-        )
+        startActivity(paymentIntent)
     }
 }

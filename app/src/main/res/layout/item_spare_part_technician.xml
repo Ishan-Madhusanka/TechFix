@@ -1,99 +1,219 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="1dp"
-    app:strokeColor="#D6E4F5"
+    android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="@color/techfix_card"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/techfix_border"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="18dp">
 
-        <!-- Part name + availability -->
+        <!-- =============================== -->
+        <!-- PART NAME + AVAILABLE BADGE -->
+        <!-- =============================== -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <!-- Part Icon -->
             <TextView
-                android:id="@+id/txtPartName"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/bg_icon_circle"
+                android:gravity="center"
+                android:text="Γ¼í"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:text="Display"
-                android:textColor="#111827"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SPARE PART"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPartName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:maxLines="2"
+                    android:text="Display"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Availability Badge -->
             <TextView
                 android:id="@+id/txtPartAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#E3F0FF"
-                android:paddingStart="9dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="9dp"
-                android:paddingBottom="5dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_icon_circle"
+                android:gravity="center"
+                android:minWidth="74dp"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="6dp"
                 android:text="AVAILABLE"
-                android:textColor="#246BC4"
-                android:textSize="11sp"
+                android:textColor="@color/white"
+                android:textSize="9sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <!-- Category -->
-        <TextView
-            android:id="@+id/txtPartCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Category: Screen"
-            android:textColor="#6B7280"
-            android:textSize="12sp" />
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/techfix_border" />
 
-        <!-- Quantity -->
-        <TextView
-            android:id="@+id/txtPartQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Quantity: 5"
-            android:textColor="#374151"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+        <!-- =============================== -->
+        <!-- PART INFORMATION -->
+        <!-- =============================== -->
 
-        <!-- Price -->
-        <TextView
-            android:id="@+id/txtPartPrice"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="LKR 25,000.00"
-            android:textColor="#246BC4"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <!-- Category -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CATEGORY"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPartCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Category: Screen"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Quantity -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STOCK"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPartQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Quantity: 5"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- =============================== -->
+        <!-- PRICE -->
+        <!-- =============================== -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="UNIT PRICE"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPartPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="LKR 25,000.00"
+                    android:textColor="@color/techfix_primary_light"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- =============================== -->
+        <!-- USE PART BUTTON -->
+        <!-- =============================== -->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUsePart"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:text="Use Part"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
+            android:textSize="13sp"
             android:textStyle="bold"
-            app:backgroundTint="#246BC4"
-            app:cornerRadius="8dp" />
+            app:backgroundTint="@color/techfix_primary"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 

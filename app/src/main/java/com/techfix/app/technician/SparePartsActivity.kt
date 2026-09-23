@@ -1,17 +1,21 @@
-package com.techfix.app.technician
+﻿package com.techfix.app.technician
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.TextInputEditText
 import com.techfix.app.R
 import com.techfix.app.adapter.SparePartTechnicianAdapter
 import com.techfix.app.model.SparePart
@@ -24,7 +28,7 @@ class SparePartsActivity : AppCompatActivity() {
     private lateinit var txtSparePartsBranch: TextView
     private lateinit var recyclerSpareParts: RecyclerView
     private lateinit var progressSpareParts: ProgressBar
-    private lateinit var layoutSparePartsEmpty: LinearLayout
+    private lateinit var layoutSparePartsEmpty: MaterialCardView
     private lateinit var sparePartAdapter: SparePartTechnicianAdapter
 
     private val sparePartRepository =
@@ -82,6 +86,10 @@ class SparePartsActivity : AppCompatActivity() {
         loadSpareParts()
     }
 
+    // =========================================================
+    // INITIALIZE VIEWS
+    // =========================================================
+
     private fun initializeViews() {
 
         txtSparePartsBranch =
@@ -105,6 +113,10 @@ class SparePartsActivity : AppCompatActivity() {
             )
     }
 
+    // =========================================================
+    // RECYCLER VIEW
+    // =========================================================
+
     private fun setupRecyclerView() {
 
         sparePartAdapter =
@@ -124,12 +136,17 @@ class SparePartsActivity : AppCompatActivity() {
             sparePartAdapter
     }
 
+    // =========================================================
+    // LOAD SPARE PARTS
+    // =========================================================
+
     private fun loadSpareParts() {
 
         showLoading()
 
         sparePartRepository
             .getAvailableSparePartsByBranch(
+
                 branchId = branchId,
 
                 onSuccess = { spareParts ->
@@ -175,111 +192,175 @@ class SparePartsActivity : AppCompatActivity() {
             )
     }
 
+    // =========================================================
+    // CUSTOM DARK USE PART DIALOG
+    // =========================================================
+
     private fun showUsePartDialog(
         sparePart: SparePart
     ) {
 
-        val input =
-            EditText(this)
+        val dialog =
+            Dialog(this)
 
-        input.hint =
-            "Enter quantity"
-
-        input.inputType =
-            InputType.TYPE_CLASS_NUMBER
-
-        input.setPadding(
-            40,
-            20,
-            40,
-            20
+        dialog.requestWindowFeature(
+            Window.FEATURE_NO_TITLE
         )
 
-        val message =
-            if (repairId.isNotEmpty()) {
+        dialog.setContentView(
+            R.layout.dialog_use_spare_part
+        )
 
-                "${sparePart.name}\n" +
-                        "Available quantity: ${sparePart.quantity}\n" +
-                        "Repair ID: $repairId"
+        dialog.window?.setBackgroundDrawable(
+            ColorDrawable(Color.TRANSPARENT)
+        )
 
-            } else {
+        // -----------------------------------------------------
+        // Dialog Views
+        // -----------------------------------------------------
 
-                "${sparePart.name}\n" +
-                        "Available quantity: ${sparePart.quantity}"
+        val txtPartName =
+            dialog.findViewById<TextView>(
+                R.id.txtDialogPartName
+            )
+
+        val txtAvailableQuantity =
+            dialog.findViewById<TextView>(
+                R.id.txtDialogAvailableQuantity
+            )
+
+        val txtRepairId =
+            dialog.findViewById<TextView>(
+                R.id.txtDialogRepairId
+            )
+
+        val layoutRepairId =
+            dialog.findViewById<View>(
+                R.id.layoutDialogRepairId
+            )
+
+        val editQuantity =
+            dialog.findViewById<TextInputEditText>(
+                R.id.editDialogQuantity
+            )
+
+        val btnCancel =
+            dialog.findViewById<MaterialButton>(
+                R.id.btnDialogCancel
+            )
+
+        val btnUse =
+            dialog.findViewById<MaterialButton>(
+                R.id.btnDialogUse
+            )
+
+        // -----------------------------------------------------
+        // Set Spare Part Information
+        // -----------------------------------------------------
+
+        txtPartName.text =
+            sparePart.name
+
+        txtAvailableQuantity.text =
+            sparePart.quantity.toString()
+
+        if (repairId.isNotEmpty()) {
+
+            layoutRepairId.visibility =
+                View.VISIBLE
+
+            txtRepairId.text =
+                repairId
+
+        } else {
+
+            layoutRepairId.visibility =
+                View.GONE
+        }
+
+        // -----------------------------------------------------
+        // Cancel Button
+        // -----------------------------------------------------
+
+        btnCancel.setOnClickListener {
+
+            dialog.dismiss()
+        }
+
+        // -----------------------------------------------------
+        // Use Part Button
+        // -----------------------------------------------------
+
+        btnUse.setOnClickListener {
+
+            val quantityText =
+                editQuantity.text
+                    ?.toString()
+                    ?.trim()
+                    ?: ""
+
+            // Empty quantity
+            if (quantityText.isEmpty()) {
+
+                editQuantity.error =
+                    "Enter quantity"
+
+                return@setOnClickListener
             }
 
-        MaterialAlertDialogBuilder(this)
-            .setTitle(
-                "Use Spare Part"
-            )
-            .setMessage(
-                message
-            )
-            .setView(
-                input
-            )
-            .setNegativeButton(
-                "Cancel",
-                null
-            )
-            .setPositiveButton(
-                "Use"
-            ) { _, _ ->
+            val usedQuantity =
+                quantityText.toLongOrNull()
 
-                val quantityText =
-                    input.text
-                        .toString()
-                        .trim()
+            // Invalid quantity
+            if (
+                usedQuantity == null ||
+                usedQuantity <= 0
+            ) {
 
-                if (quantityText.isEmpty()) {
+                editQuantity.error =
+                    "Enter a valid quantity"
 
-                    Toast.makeText(
-                        this,
-                        "Please enter quantity",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                val usedQuantity =
-                    quantityText.toLongOrNull()
-
-                if (
-                    usedQuantity == null ||
-                    usedQuantity <= 0
-                ) {
-
-                    Toast.makeText(
-                        this,
-                        "Enter a valid quantity",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                if (
-                    usedQuantity >
-                    sparePart.quantity
-                ) {
-
-                    Toast.makeText(
-                        this,
-                        "Not enough quantity available",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                useSparePart(
-                    sparePart = sparePart,
-                    usedQuantity = usedQuantity
-                )
+                return@setOnClickListener
             }
-            .show()
+
+            // Quantity greater than available stock
+            if (
+                usedQuantity >
+                sparePart.quantity
+            ) {
+
+                editQuantity.error =
+                    "Only ${sparePart.quantity} available"
+
+                return@setOnClickListener
+            }
+
+            // Valid quantity
+            dialog.dismiss()
+
+            useSparePart(
+                sparePart = sparePart,
+                usedQuantity = usedQuantity
+            )
+        }
+
+        // -----------------------------------------------------
+        // Show Dialog
+        // -----------------------------------------------------
+
+        dialog.show()
+
+        // Dialog width = 90% of screen
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.90)
+                .toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
     }
+
+    // =========================================================
+    // USE SPARE PART
+    // =========================================================
 
     private fun useSparePart(
         sparePart: SparePart,
@@ -288,11 +369,13 @@ class SparePartsActivity : AppCompatActivity() {
 
         sparePartRepository
             .reduceSparePartQuantity(
+
                 sparePartId = sparePart.id,
                 usedQuantity = usedQuantity,
 
                 onSuccess = {
 
+                    // If this screen was opened without a repair
                     if (repairId.isEmpty()) {
 
                         Toast.makeText(
@@ -306,18 +389,32 @@ class SparePartsActivity : AppCompatActivity() {
                         return@reduceSparePartQuantity
                     }
 
+                    // Create used spare part record
                     val usedSparePart =
                         UsedSparePart(
-                            sparePartId = sparePart.id,
-                            name = sparePart.name,
-                            quantity = usedQuantity,
-                            unitPrice = sparePart.price
+
+                            sparePartId =
+                                sparePart.id,
+
+                            name =
+                                sparePart.name,
+
+                            quantity =
+                                usedQuantity,
+
+                            unitPrice =
+                                sparePart.price
                         )
 
+                    // Save used part inside repair request
                     repairRepository
                         .addUsedSparePart(
-                            repairId = repairId,
-                            usedSparePart = usedSparePart,
+
+                            repairId =
+                                repairId,
+
+                            usedSparePart =
+                                usedSparePart,
 
                             onSuccess = {
 
@@ -354,6 +451,10 @@ class SparePartsActivity : AppCompatActivity() {
             )
     }
 
+    // =========================================================
+    // LOADING STATE
+    // =========================================================
+
     private fun showLoading() {
 
         progressSpareParts.visibility =
@@ -365,6 +466,10 @@ class SparePartsActivity : AppCompatActivity() {
         layoutSparePartsEmpty.visibility =
             View.GONE
     }
+
+    // =========================================================
+    // EMPTY STATE
+    // =========================================================
 
     private fun showEmptyState() {
 

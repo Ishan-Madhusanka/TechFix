@@ -1,159 +1,292 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F8FF"
-    android:fillViewport="true">
+    android:background="@color/techfix_background"
+    android:fillViewport="true"
+    android:overScrollMode="never">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="28dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="32dp">
 
-        <!-- Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="#246BC4"
-            android:gravity="center_vertical"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp">
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Repair Management"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TechFix"
+            android:textColor="@color/techfix_text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Repair Management"
+            android:textColor="@color/techfix_primary_light"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        <!-- Repair Details Card -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Manage repair progress and service details"
+            android:textColor="@color/techfix_text_secondary"
+            android:textSize="13sp" />
+
+        <!-- ================================================= -->
+        <!-- REPAIR DETAILS CARD -->
+        <!-- ================================================= -->
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D7E7FA"
+            android:layout_marginTop="24dp"
+            app:cardBackgroundColor="@color/techfix_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
+                <!-- Card Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_icon_circle"
+                        android:gravity="center"
+                        android:text="Γûñ"
+                        android:textColor="@color/white"
+                        android:textSize="19sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Repair Details"
+                            android:textColor="@color/techfix_text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Current repair information"
+                            android:textColor="@color/techfix_text_secondary"
+                            android:textSize="11sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- Repair ID Label -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Repair Details"
-                    android:textColor="#246BC4"
-                    android:textSize="18sp"
+                    android:layout_marginTop="22dp"
+                    android:text="REPAIR ID"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtTechRepairId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Repair ID: -"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/techfix_border" />
+
+                <!-- Device -->
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="Repair ID: -"
-                    android:textColor="#111827"
-                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"
+                    android:text="DEVICE"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtTechDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Device: -"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <!-- Problem -->
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Device: -"
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="18dp"
+                    android:text="PROBLEM DESCRIPTION"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtTechDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Description: -"
+                    android:textColor="@color/techfix_text_primary"
+                    android:textSize="14sp" />
+
+                <!-- Appointment -->
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Description: -"
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="18dp"
+                    android:text="APPOINTMENT"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtTechAppointment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     android:text="Appointment: -"
-                    android:textColor="#374151"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/txtTechCurrentStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Current Status: -"
-                    android:textColor="#246BC4"
+                    android:textColor="@color/techfix_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
+
+                <!-- Current Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/techfix_background"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="13dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Current Status"
+                        android:textColor="@color/techfix_text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtTechCurrentStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Status: -"
+                        android:textColor="@color/techfix_primary_light"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Update Status Card -->
+        <!-- ================================================= -->
+        <!-- UPDATE STATUS -->
+        <!-- ================================================= -->
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D7E7FA"
+            app:cardBackgroundColor="@color/techfix_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Update Repair Status"
-                    android:textColor="#246BC4"
+                    android:textColor="@color/techfix_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="6dp"
-                    android:text="Select Status"
-                    android:textColor="#374151"
-                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"
+                    android:text="Change the current repair progress"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="SELECT STATUS"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="10sp"
                     android:textStyle="bold" />
 
+                <!-- IMPORTANT: Kotlin uses spinnerRepairStatus -->
                 <Spinner
                     android:id="@+id/spinnerRepairStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="#F4F8FF"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp" />
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/techfix_background"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:popupBackground="@color/techfix_card"
+                    android:spinnerMode="dropdown" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnUpdateStatus"
@@ -162,63 +295,77 @@
                     android:layout_marginTop="16dp"
                     android:text="Update Repair Status"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:backgroundTint="#246BC4"
-                    app:cornerRadius="10dp" />
+                    app:backgroundTint="@color/techfix_primary"
+                    app:cornerRadius="12dp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Repair Notes Card -->
+        <!-- ================================================= -->
+        <!-- REPAIR NOTES -->
+        <!-- ================================================= -->
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="2dp"
-            app:strokeColor="#D7E7FA"
+            app:cardBackgroundColor="@color/techfix_card"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/techfix_border"
             app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Repair Notes"
-                    android:textColor="#246BC4"
+                    android:textColor="@color/techfix_text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Add notes about the repair process"
+                    android:textColor="@color/techfix_text_secondary"
+                    android:textSize="12sp" />
+
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusBottomEnd="10dp"
-                    app:boxCornerRadiusBottomStart="10dp"
-                    app:boxCornerRadiusTopEnd="10dp"
-                    app:boxCornerRadiusTopStart="10dp"
-                    app:boxStrokeColor="#246BC4">
+                    android:layout_marginTop="16dp"
+                    android:hint="Repair notes"
+                    app:boxBackgroundColor="@color/techfix_background"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/techfix_primary"
+                    app:hintTextColor="@color/techfix_text_secondary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editRepairNotes"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:gravity="top"
-                        android:hint="Enter repair notes"
+                        android:gravity="top|start"
+                        android:hint="Enter repair notes..."
                         android:inputType="textMultiLine"
-                        android:padding="12dp"
-                        android:textColor="#111827"
-                        android:textColorHint="#9CA3AF" />
+                        android:padding="14dp"
+                        android:textColor="@color/techfix_text_primary"
+                        android:textColorHint="@color/techfix_text_secondary"
+                        android:textSize="14sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -229,49 +376,66 @@
                     android:layout_marginTop="14dp"
                     android:text="Save Repair Notes"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    app:backgroundTint="#246BC4"
-                    app:cornerRadius="10dp" />
+                    app:backgroundTint="@color/techfix_primary"
+                    app:cornerRadius="12dp" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Use Spare Parts Button -->
+        <!-- ================================================= -->
+        <!-- REPAIR ACTIONS -->
+        <!-- ================================================= -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Repair Actions"
+            android:textColor="@color/techfix_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="Manage parts and payment for this repair"
+            android:textColor="@color/techfix_text_secondary"
+            android:textSize="12sp" />
+
+        <!-- Spare Parts -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUseSpareParts"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="14dp"
             android:text="Use Spare Parts"
             android:textAllCaps="false"
-            android:textColor="#246BC4"
-            android:textSize="16sp"
+            android:textColor="@color/techfix_primary_light"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:backgroundTint="#FFFFFF"
-            app:cornerRadius="10dp"
-            app:strokeColor="#246BC4"
+            app:backgroundTint="@color/techfix_card"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/techfix_primary"
             app:strokeWidth="1dp" />
 
-        <!-- Record Payment Button -->
+        <!-- Payment -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRecordPayment"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="24dp"
             android:text="Record Payment"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:backgroundTint="#246BC4"
-            app:cornerRadius="10dp" />
+            app:backgroundTint="@color/techfix_primary"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 

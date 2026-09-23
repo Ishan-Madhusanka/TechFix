@@ -1,4 +1,4 @@
-package com.techfix.app.technician
+﻿package com.techfix.app.technician
 
 import android.os.Bundle
 import android.view.View
@@ -92,12 +92,12 @@ class PaymentActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_payment_item,
             paymentMethods
         )
 
         adapter.setDropDownViewResource(
-            android.R.layout.simple_spinner_dropdown_item
+            R.layout.spinner_payment_dropdown_item
         )
 
         spinnerPaymentMethod.adapter = adapter
