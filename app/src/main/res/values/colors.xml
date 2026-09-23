@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Existing TechFix Colors -->
     <color name="techfix_blue">#246BC4</color>
     <color name="techfix_gray">#6B7280</color>
+
+    <!-- TechFix Dark Theme -->
+    <color name="techfix_background">#080D18</color>
+    <color name="techfix_card">#111827</color>
+    <color name="techfix_border">#334155</color>
+
+    <!-- Primary Blue -->
+    <color name="techfix_primary">#3B82F6</color>
+    <color name="techfix_primary_dark">#2563EB</color>
+    <color name="techfix_primary_light">#60A5FA</color>
+
+    <!-- Text Colors -->
+    <color name="techfix_text_primary">#FFFFFF</color>
+    <color name="techfix_text_secondary">#94A3B8</color>
+
+    <!-- Status Colors -->
+    <color name="techfix_success">#22C55E</color>
+    <color name="techfix_error">#EF4444</color>
+    <color name="techfix_warning">#F59E0B</color>
+
 </resources>

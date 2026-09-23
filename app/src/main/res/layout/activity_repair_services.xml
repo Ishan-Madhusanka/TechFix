@@ -73,122 +73,63 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="14dp"
-            android:text="Services for: Device"
+            android:text="Select a device category"
             android:textColor="#60A5FA"
             android:textSize="14sp"
             android:textStyle="bold" />
 
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Screen Repair -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnScreenRepair"
+    <!-- Dynamic Services Area -->
+    <ScrollView
+        android:id="@+id/servicesScrollView"
         android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="22dp"
-        android:paddingEnd="20dp"
-        android:text="Screen Repair"
+        android:layout_marginBottom="16dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@id/btnDeviceCategories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryCard">
+
+        <!--
+            IMPORTANT:
+            RepairServicesActivity.kt dynamically adds
+            Firestore repair service buttons to this container.
+        -->
+        <LinearLayout
+            android:id="@+id/servicesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp" />
+
+    </ScrollView>
+
+    <!-- Device Categories Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDeviceCategories"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="18dp"
+        android:gravity="center"
+        android:text="Device Categories"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:textStyle="bold"
         app:backgroundTint="#3B82F6"
         app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_view"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/tvServicesFooter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryCard" />
-
-    <!-- Battery Replacement -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnBatteryRepair"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="22dp"
-        android:paddingEnd="20dp"
-        android:text="Battery Replacement"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#111827"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_lock_idle_charging"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#60A5FA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnScreenRepair"
-        app:strokeColor="#334155"
-        app:strokeWidth="1dp" />
-
-    <!-- Charging Port Repair -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnChargingRepair"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="22dp"
-        android:paddingEnd="20dp"
-        android:text="Charging Port Repair"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#111827"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_manage"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#60A5FA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnBatteryRepair"
-        app:strokeColor="#334155"
-        app:strokeWidth="1dp" />
-
-    <!-- Software Repair -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSoftwareRepair"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="22dp"
-        android:paddingEnd="20dp"
-        android:text="Software Repair"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#111827"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_preferences"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#60A5FA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnChargingRepair"
-        app:strokeColor="#334155"
-        app:strokeWidth="1dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Footer -->
     <TextView
