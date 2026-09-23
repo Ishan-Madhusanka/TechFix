@@ -2,15 +2,15 @@ package com.techfix.app
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 class DeviceCategoriesActivity : AppCompatActivity() {
 
-    private lateinit var btnMobile: Button
-    private lateinit var btnLaptop: Button
-    private lateinit var btnDesktop: Button
-    private lateinit var btnGaming: Button
+    private lateinit var btnMobile: View
+    private lateinit var btnLaptop: View
+    private lateinit var btnDesktop: View
+    private lateinit var btnGaming: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

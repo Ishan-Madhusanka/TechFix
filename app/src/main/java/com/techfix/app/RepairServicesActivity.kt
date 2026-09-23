@@ -2,6 +2,7 @@ package com.techfix.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -13,7 +14,7 @@ class RepairServicesActivity : AppCompatActivity() {
 
     private lateinit var tvCategoryName: TextView
     private lateinit var servicesContainer: LinearLayout
-    private lateinit var btnDeviceCategories: Button
+    private lateinit var btnDeviceCategories: View
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -26,7 +27,7 @@ class RepairServicesActivity : AppCompatActivity() {
         servicesContainer = findViewById(R.id.servicesContainer)
         btnDeviceCategories = findViewById(R.id.btnDeviceCategories)
 
-        // Device Categories button
+        // Device Categories
         btnDeviceCategories.setOnClickListener {
 
             val intent = Intent(
@@ -37,7 +38,7 @@ class RepairServicesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Check if a category was selected from Device Categories
+        // Check if a category was selected
         val categoryName =
             intent.getStringExtra("categoryName")
 

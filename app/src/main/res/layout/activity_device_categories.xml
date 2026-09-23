@@ -1,172 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F9FF"
-    android:paddingStart="28dp"
-    android:paddingEnd="28dp">
+    android:fillViewport="true">
 
-    <!-- TechFix Logo -->
-    <TextView
-        android:id="@+id/tvCategoryLogo"
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="55dp"
-        android:background="@drawable/bg_icon_circle"
-        android:gravity="center"
-        android:text="TF"
-        android:textColor="#FFFFFF"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Page Title -->
-    <TextView
-        android:id="@+id/tvCategoriesTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Device Categories"
-        android:textColor="#1565C0"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCategoryLogo" />
-
-    <!-- Small Blue Line -->
-    <View
-        android:id="@+id/categoryLine"
-        android:layout_width="45dp"
-        android:layout_height="4dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/bg_small_line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCategoriesTitle" />
-
-    <!-- Mobile -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMobile"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingStart="24dp"
-        android:text="Mobile"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#1565C0"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_call"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryLine" />
+        android:paddingTop="45dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="30dp">
 
-    <!-- Laptop -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLaptop"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:text="Laptop"
-        android:textAllCaps="false"
-        android:textColor="#1565C0"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#FFFFFF"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_manage"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#1565C0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnMobile"
-        app:strokeColor="#BBDEFB"
-        app:strokeWidth="1dp" />
+        <!-- TechFix Logo -->
+        <TextView
+            android:id="@+id/tvCategoryLogo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_icon_circle"
+            android:gravity="center"
+            android:text="TF"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:textStyle="bold" />
 
-    <!-- Desktop -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnDesktop"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:text="Desktop"
-        android:textAllCaps="false"
-        android:textColor="#1565C0"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#FFFFFF"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_menu_view"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#1565C0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLaptop"
-        app:strokeColor="#BBDEFB"
-        app:strokeWidth="1dp" />
+        <!-- Page Title -->
+        <TextView
+            android:id="@+id/tvCategoriesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="14dp"
+            android:text="Device Categories"
+            android:textColor="#1565C0"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
-    <!-- Gaming Console -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnGaming"
-        android:layout_width="0dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:text="Gaming Console"
-        android:textAllCaps="false"
-        android:textColor="#1565C0"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:backgroundTint="#FFFFFF"
-        app:cornerRadius="14dp"
-        app:icon="@android:drawable/ic_media_play"
-        app:iconGravity="textStart"
-        app:iconPadding="14dp"
-        app:iconTint="#1565C0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnDesktop"
-        app:strokeColor="#BBDEFB"
-        app:strokeWidth="1dp" />
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="3dp"
+            android:text="Select your device to find repair services"
+            android:textColor="#64748B"
+            android:textSize="13sp" />
 
-    <!-- Footer -->
-    <TextView
-        android:id="@+id/tvCategoryFooter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
-        android:text="TechFix Repair Services"
-        android:textColor="#90A4AE"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <!-- Small Blue Line -->
+        <View
+            android:id="@+id/categoryLine"
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/bg_small_line" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Mobile -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            app:cardBackgroundColor="#1565C0"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:id="@+id/btnMobile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <TextView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_icon_light"
+                    android:gravity="center"
+                    android:text="📱"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Mobile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Laptop -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#D6E9FA"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:id="@+id/btnLaptop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <TextView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_icon_light"
+                    android:gravity="center"
+                    android:text="💻"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Laptop"
+                    android:textColor="#1565C0"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#1565C0"
+                    android:textSize="34sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Desktop -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#D6E9FA"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:id="@+id/btnDesktop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <TextView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_icon_light"
+                    android:gravity="center"
+                    android:text="🖥"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Desktop"
+                    android:textColor="#1565C0"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#1565C0"
+                    android:textSize="34sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Gaming Console -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:layout_marginTop="12dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#D6E9FA"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:id="@+id/btnGaming"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp">
+
+                <TextView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_icon_light"
+                    android:gravity="center"
+                    android:text="🎮"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Gaming Console"
+                    android:textColor="#1565C0"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#1565C0"
+                    android:textSize="34sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Footer -->
+        <TextView
+            android:id="@+id/tvCategoryFooter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="TechFix Repair Services"
+            android:textColor="#90A4AE"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="FAST  •  RELIABLE  •  TRUSTED"
+            android:textColor="#B0BEC5"
+            android:textSize="9sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
