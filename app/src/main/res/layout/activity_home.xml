@@ -61,77 +61,10 @@
             android:layout_marginBottom="26dp"
             android:background="@drawable/bg_small_line" />
 
-        <!-- DEVICE CATEGORIES -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="76dp"
-            app:cardBackgroundColor="#1565C0"
-            app:cardCornerRadius="18dp"
-            app:cardElevation="3dp">
-
-            <LinearLayout
-                android:id="@+id/btnCategories"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp">
-
-                <TextView
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
-                    android:background="@drawable/bg_icon_light"
-                    android:gravity="center"
-                    android:text="▣"
-                    android:textColor="#FFFFFF"
-                    android:textSize="23sp" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Device Categories"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Browse devices we repair"
-                        android:textColor="#DCEEFF"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="›"
-                    android:textColor="#FFFFFF"
-                    android:textSize="34sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-
         <!-- REPAIR SERVICES -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="76dp"
-            android:layout_marginTop="12dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="18dp"
             app:cardElevation="2dp"

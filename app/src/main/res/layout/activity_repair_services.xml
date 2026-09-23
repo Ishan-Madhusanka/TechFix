@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F9FF"
     android:padding="24dp">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Repair Services"
+        android:textColor="#1565C0"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,13 +21,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDeviceCategories"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:text="Device Categories"
         android:textSize="17sp"
         android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#1565C0"
+        app:cornerRadius="14dp"
         app:layout_constraintTop_toBottomOf="@id/tvServicesTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Select a device category"
+        android:textColor="#1565C0"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/btnDeviceCategories"
