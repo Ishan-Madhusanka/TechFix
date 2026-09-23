@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
-    app:cardBackgroundColor="#FFFFFF"
+    app:cardBackgroundColor="#111827"
     app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    app:strokeColor="#1565C0"
+    app:cardElevation="0dp"
+    app:strokeColor="#334155"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -18,15 +18,17 @@
         android:orientation="vertical"
         android:padding="18dp">
 
+        <!-- Service Name -->
         <TextView
             android:id="@+id/tvServiceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Screen Replacement"
-            android:textColor="#1565C0"
+            android:textColor="#60A5FA"
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!-- Category -->
         <TextView
             android:id="@+id/tvServiceCategory"
             android:layout_width="match_parent"
@@ -35,9 +37,10 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:text="Category: desktop"
-            android:textColor="#444444"
+            android:textColor="#CBD5E1"
             android:textSize="15sp" />
 
+        <!-- Price -->
         <TextView
             android:id="@+id/tvServicePrice"
             android:layout_width="match_parent"
@@ -45,10 +48,11 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:text="Price: Rs. 5000.00"
-            android:textColor="#1A1A1A"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
-
+        <!-- Description -->
         <TextView
             android:id="@+id/tvServiceDescription"
             android:layout_width="match_parent"
@@ -56,56 +60,67 @@
             android:layout_marginTop="6dp"
             android:lineSpacingExtra="4dp"
             android:text="Duration: 2-3 days&#10;Required Part: desktop_part_01"
-            android:textColor="#555555"
+            android:textColor="#94A3B8"
             android:textSize="14sp" />
 
+        <!-- Status -->
         <TextView
             android:id="@+id/tvServiceStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:background="#E3F2FD"
+            android:background="@drawable/bg_icon_circle"
             android:paddingStart="12dp"
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
             android:paddingBottom="6dp"
             android:text="Active"
-            android:textColor="#1565C0"
-            android:textSize="14sp"
+            android:textColor="#22C55E"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#334155" />
+
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
+            <!-- Edit -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEditService"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:layout_marginEnd="6dp"
+                android:layout_weight="1"
                 android:text="Edit"
                 android:textAllCaps="false"
-                android:textColor="#1565C0"
+                android:textColor="#60A5FA"
                 android:textStyle="bold"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="#111827"
                 app:cornerRadius="10dp"
-                app:strokeColor="#1565C0"
-                app:strokeWidth="2dp" />
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
+            <!-- Activate / Deactivate -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnToggleService"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:layout_weight="1"
                 android:text="Deactivate"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                app:backgroundTint="#1565C0"
+                app:backgroundTint="#3B82F6"
                 app:cornerRadius="10dp" />
 
         </LinearLayout>

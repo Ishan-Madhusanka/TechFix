@@ -7,14 +7,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="#080D18"
     tools:context=".admin.ManageTechniciansActivity">
 
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
         android:layout_height="140dp"
-        android:background="#1565C0"
+        android:background="#111827"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingStart="24dp"
@@ -36,11 +37,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Manage TechFix technicians"
-            android:textColor="#DCEBFF"
+            android:textColor="#94A3B8"
             android:textSize="14sp" />
 
     </LinearLayout>
 
+    <!-- Technician List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerTechnicians"
         android:layout_width="0dp"
@@ -56,23 +58,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Loading -->
     <ProgressBar
         android:id="@+id/progressBarTechnicians"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:indeterminateTint="#3B82F6"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/recyclerTechnicians"
         app:layout_constraintBottom_toBottomOf="@id/recyclerTechnicians"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Empty Message -->
     <TextView
         android:id="@+id/tvEmptyTechnicians"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="No technicians found"
-        android:textColor="#555555"
+        android:textColor="#94A3B8"
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/recyclerTechnicians"
@@ -80,6 +85,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Add Technician -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnAddTechnician"
         android:layout_width="wrap_content"
@@ -88,7 +94,8 @@
         android:layout_marginBottom="20dp"
         android:text="Add Technician"
         android:textColor="#FFFFFF"
-        app:backgroundTint="#1565C0"
+        android:textStyle="bold"
+        app:backgroundTint="#3B82F6"
         app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

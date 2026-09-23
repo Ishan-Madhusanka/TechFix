@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
-    app:cardBackgroundColor="#FFFFFF"
+    app:cardBackgroundColor="#111827"
     app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:strokeColor="#1565C0"
+    app:cardElevation="0dp"
+    app:strokeColor="#334155"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -18,94 +18,120 @@
         android:orientation="vertical"
         android:padding="18dp">
 
+        <!-- Spare Part Name -->
         <TextView
             android:id="@+id/tvSparePartName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Laptop Screen"
-            android:textColor="#1565C0"
-            android:textSize="18sp"
+            android:textColor="#60A5FA"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
+        <!-- Category -->
         <TextView
             android:id="@+id/tvSparePartCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:text="Category: laptop"
-            android:textColor="#444444"
+            android:textColor="#CBD5E1"
             android:textSize="15sp" />
 
+        <!-- Branch -->
         <TextView
             android:id="@+id/tvSparePartBranch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:text="Branch: colombo"
-            android:textColor="#444444"
+            android:textColor="#CBD5E1"
             android:textSize="15sp" />
 
+        <!-- Quantity -->
         <TextView
             android:id="@+id/tvSparePartQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:text="Quantity: 5"
-            android:textColor="#444444"
-            android:textSize="15sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
+        <!-- Price -->
         <TextView
             android:id="@+id/tvSparePartPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:text="Price: Rs. 12000.00"
-            android:textColor="#444444"
-            android:textSize="15sp" />
+            android:textColor="#60A5FA"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
+        <!-- Availability -->
         <TextView
             android:id="@+id/tvSparePartAvailability"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="#E8F5E9"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_icon_circle"
             android:paddingStart="12dp"
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
             android:paddingBottom="6dp"
             android:text="Available"
-            android:textColor="#2E7D32"
-            android:textSize="14sp"
+            android:textColor="#22C55E"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#334155" />
+
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
+            <!-- Edit -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEditSparePart"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="Edit"
-                android:textColor="#1565C0"
-                app:strokeColor="#1565C0" />
+                android:textAllCaps="false"
+                android:textColor="#60A5FA"
+                android:textStyle="bold"
+                app:backgroundTint="#111827"
+                app:cornerRadius="10dp"
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
             <Space
                 android:layout_width="10dp"
                 android:layout_height="1dp" />
 
+            <!-- Available / Unavailable -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnToggleSparePart"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="Unavailable"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                app:backgroundTint="#1565C0" />
+                android:textStyle="bold"
+                app:backgroundTint="#3B82F6"
+                app:cornerRadius="10dp" />
 
         </LinearLayout>
 

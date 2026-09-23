@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F9FF"
+    android:background="#080D18"
     android:fillViewport="true"
     tools:context=".admin.AdminDashboardActivity">
 
@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:background="#1565C0"
+            android:background="#111827"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:paddingStart="24dp"
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TechFix"
-                android:textColor="#FFFFFF"
+                android:textColor="#60A5FA"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Manage branch operations"
-                android:textColor="#DCEBFF"
+                android:textColor="#94A3B8"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -63,11 +63,12 @@
             android:paddingEnd="20dp"
             android:paddingBottom="32dp">
 
+            <!-- OVERVIEW -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Overview"
-                android:textColor="#1F2937"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -88,10 +89,10 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="#111827"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp"
-                    app:strokeColor="#D7E6FA"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#334155"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -105,14 +106,15 @@
                             android:layout_height="32dp"
                             android:layout_marginBottom="5dp"
                             android:contentDescription="Branches"
-                            android:src="@drawable/ic_branch" />
+                            android:src="@drawable/ic_branch"
+                            app:tint="#60A5FA" />
 
                         <TextView
                             android:id="@+id/tvBranchCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="#1565C0"
+                            android:textColor="#60A5FA"
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
@@ -121,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="Branches"
-                            android:textColor="#6B7280"
+                            android:textColor="#94A3B8"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -138,10 +140,10 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="#111827"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp"
-                    app:strokeColor="#D7E6FA"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#334155"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -155,14 +157,15 @@
                             android:layout_height="32dp"
                             android:layout_marginBottom="5dp"
                             android:contentDescription="Services"
-                            android:src="@drawable/ic_service" />
+                            android:src="@drawable/ic_service"
+                            app:tint="#60A5FA" />
 
                         <TextView
                             android:id="@+id/tvServiceCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="#1565C0"
+                            android:textColor="#60A5FA"
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
@@ -171,7 +174,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="Services"
-                            android:textColor="#6B7280"
+                            android:textColor="#94A3B8"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -197,10 +200,10 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="#111827"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp"
-                    app:strokeColor="#D7E6FA"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#334155"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -214,14 +217,15 @@
                             android:layout_height="32dp"
                             android:layout_marginBottom="5dp"
                             android:contentDescription="Technicians"
-                            android:src="@drawable/ic_technician" />
+                            android:src="@drawable/ic_technician"
+                            app:tint="#60A5FA" />
 
                         <TextView
                             android:id="@+id/tvTechnicianCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="#1565C0"
+                            android:textColor="#60A5FA"
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
@@ -230,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="Technicians"
-                            android:textColor="#6B7280"
+                            android:textColor="#94A3B8"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -247,10 +251,10 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardBackgroundColor="#111827"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="3dp"
-                    app:strokeColor="#D7E6FA"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#334155"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -264,14 +268,15 @@
                             android:layout_height="32dp"
                             android:layout_marginBottom="5dp"
                             android:contentDescription="Spare Parts"
-                            android:src="@drawable/ic_spare_part" />
+                            android:src="@drawable/ic_spare_part"
+                            app:tint="#60A5FA" />
 
                         <TextView
                             android:id="@+id/tvSparePartCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="#1565C0"
+                            android:textColor="#60A5FA"
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
@@ -280,7 +285,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="Spare Parts"
-                            android:textColor="#6B7280"
+                            android:textColor="#94A3B8"
                             android:textSize="14sp" />
 
                     </LinearLayout>
@@ -295,10 +300,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:text="Management"
-                android:textColor="#1F2937"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <!-- MANAGE BRANCHES -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageBranches"
                 android:layout_width="match_parent"
@@ -309,9 +315,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#1565C0"
+                app:backgroundTint="#3B82F6"
                 app:cornerRadius="14dp" />
 
+            <!-- MANAGE SERVICES -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageServices"
                 android:layout_width="match_parent"
@@ -319,14 +326,15 @@
                 android:layout_marginTop="12dp"
                 android:text="Manage Services"
                 android:textAllCaps="false"
-                android:textColor="#1565C0"
+                android:textColor="#60A5FA"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="#111827"
                 app:cornerRadius="14dp"
-                app:strokeColor="#1565C0"
-                app:strokeWidth="2dp" />
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
+            <!-- MANAGE TECHNICIANS -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageTechnicians"
                 android:layout_width="match_parent"
@@ -337,9 +345,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#1565C0"
+                app:backgroundTint="#3B82F6"
                 app:cornerRadius="14dp" />
 
+            <!-- MANAGE SPARE PARTS -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnManageSpareParts"
                 android:layout_width="match_parent"
@@ -347,14 +356,15 @@
                 android:layout_marginTop="12dp"
                 android:text="Manage Spare Parts"
                 android:textAllCaps="false"
-                android:textColor="#1565C0"
+                android:textColor="#60A5FA"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#FFFFFF"
+                app:backgroundTint="#111827"
                 app:cornerRadius="14dp"
-                app:strokeColor="#1565C0"
-                app:strokeWidth="2dp" />
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
+            <!-- VIEW BRANCH MAP -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnViewBranchMap"
                 android:layout_width="match_parent"
@@ -365,7 +375,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#1565C0"
+                app:backgroundTint="#3B82F6"
                 app:cornerRadius="14dp" />
 
         </LinearLayout>
