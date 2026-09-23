@@ -4,13 +4,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F1F4F8"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:paddingStart="24dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="35dp">
 
+        <!-- Header Title -->
         <TextView
             android:id="@+id/tvConfirmationTitle"
             android:layout_width="0dp"
@@ -18,92 +24,121 @@
             android:text="Booking Confirmed!"
             android:textSize="28sp"
             android:textStyle="bold"
+            android:textColor="#1565C0"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="30dp" />
 
+        <!-- Confirmation Message -->
         <TextView
             android:id="@+id/tvConfirmationMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Your repair booking has been submitted successfully."
-            android:textSize="17sp"
+            android:textSize="16sp"
+            android:textColor="#455A64"
             android:gravity="center"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="14dp" />
 
+        <!-- Blue Divider -->
+        <View
+            android:layout_width="65dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="14dp"
+            android:background="#1565C0"
+            app:layout_constraintTop_toBottomOf="@id/tvConfirmationMessage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Service -->
         <TextView
             android:id="@+id/tvConfirmationService"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Service: Screen Repair"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:textStyle="bold"
+            android:textColor="#263238"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationMessage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="40dp" />
 
+        <!-- Price -->
         <TextView
             android:id="@+id/tvConfirmationPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Estimated Price: Rs. 8000"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:textStyle="bold"
+            android:textColor="#263238"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationService"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
+        <!-- Device -->
         <TextView
             android:id="@+id/tvConfirmationDevice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Device: Samsung A15"
-            android:textSize="17sp"
+            android:textSize="16sp"
+            android:textColor="#455A64"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
+        <!-- Appointment Date -->
         <TextView
             android:id="@+id/tvConfirmationDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Appointment Date: 2026-09-15"
-            android:textSize="17sp"
+            android:textSize="16sp"
+            android:textColor="#455A64"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationDevice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
+        <!-- Status -->
         <TextView
             android:id="@+id/tvConfirmationStatus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Status: PENDING"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:textStyle="bold"
+            android:textColor="#1565C0"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationDate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="20dp" />
 
+        <!-- Back to Home -->
         <Button
             android:id="@+id/btnBackToHome"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:text="Back to Home"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1565C0"
             app:layout_constraintTop_toBottomOf="@id/tvConfirmationStatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp" />
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
