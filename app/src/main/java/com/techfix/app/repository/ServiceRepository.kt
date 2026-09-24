@@ -28,22 +28,57 @@ class ServiceRepository {
             }
     }
 
+    fun getActiveServices(
+        onSuccess: (List<Service>) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("services")
+            .whereEqualTo("isActive", true)
+            .get()
+            .addOnSuccessListener { result ->
+
+                val services = result.documents.mapNotNull { document ->
+                    document.toObject(Service::class.java)?.apply {
+                        id = document.id
+                    }
+                }
+
+                onSuccess(services)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+    fun getServiceById(
+        serviceId: String,
+        onSuccess: (Service?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        db.collection("services")
+            .document(serviceId)
+            .get()
+            .addOnSuccessListener { document ->
+
+
+                val service = document.toObject(Service::class.java)?.apply {
+                    id = document.id
+                }
+
+                onSuccess(service)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
     fun addService(
         service: Service,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
-        val serviceData = hashMapOf<String, Any>(
-            "name" to service.name,
-            "categoryId" to service.categoryId,
-            "duration" to service.duration,
-            "price" to service.price,
-            "requiredPartId" to service.requiredPartId,
-            "isActive" to service.isActive
-        )
-
         db.collection("services")
-            .add(serviceData)
+            .add(service)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -62,18 +97,9 @@ class ServiceRepository {
             return
         }
 
-        val serviceData = hashMapOf<String, Any>(
-            "name" to service.name,
-            "categoryId" to service.categoryId,
-            "duration" to service.duration,
-            "price" to service.price,
-            "requiredPartId" to service.requiredPartId,
-            "isActive" to service.isActive
-        )
-
         db.collection("services")
             .document(service.id)
-            .update(serviceData)
+            .set(service)
             .addOnSuccessListener {
                 onSuccess()
             }
@@ -97,23 +123,18 @@ class ServiceRepository {
             .addOnFailureListener { exception ->
                 onFailure(exception)
             }
-
     }
-    fun getServiceById(
+
+    fun deleteService(
         serviceId: String,
-        onSuccess: (Service?) -> Unit,
+        onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         db.collection("services")
             .document(serviceId)
-            .get()
-            .addOnSuccessListener { document ->
-
-                val service = document.toObject(Service::class.java)?.apply {
-                    id = document.id
-                }
-
-                onSuccess(service)
+            .delete()
+            .addOnSuccessListener {
+                onSuccess()
             }
             .addOnFailureListener { exception ->
                 onFailure(exception)
