@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#111827"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,133 +13,231 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp"
-        android:background="#FFFFFF">
+        android:background="#111827">
 
+        <!-- Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Spare Part Details"
-            android:textColor="#1565C0"
-            android:textSize="22sp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- Subtitle -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
             android:text="Enter stock and branch information"
-            android:textColor="#666666"
+            android:textColor="#94A3B8"
             android:textSize="14sp" />
 
+        <!-- Spare Part Name -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Spare Part Name">
+            android:hint="Spare Part Name"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSparePartName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Part ID -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Category ID">
+            android:hint="Part ID"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editSparePartPartId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Category ID -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Category ID"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSparePartCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Branch ID -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Branch ID">
+            android:hint="Branch ID"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSparePartBranch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Quantity -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Quantity">
+            android:hint="Quantity"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSparePartQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Price -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="Price">
+            android:hint="Price"
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSparePartPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Available Switch -->
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchSparePartAvailable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:text="Available"
-            android:textColor="#333333"
-            app:buttonTint="#1565C0"
-            app:thumbTint="#1565C0"
-            app:trackTint="#90CAF9" />
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:buttonTint="#3B82F6"
+            app:thumbTint="#3B82F6"
+            app:trackTint="#334155" />
 
+        <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:orientation="horizontal">
 
+            <!-- Cancel -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancelSparePart"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="Cancel"
-                android:textColor="#1565C0"
-                app:strokeColor="#1565C0" />
+                android:textAllCaps="false"
+                android:textColor="#60A5FA"
+                android:textStyle="bold"
+                app:backgroundTint="#080D18"
+                app:cornerRadius="12dp"
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
             <Space
                 android:layout_width="10dp"
                 android:layout_height="1dp" />
 
+            <!-- Save -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSaveSparePart"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="Save"
+                android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                app:backgroundTint="#1565C0" />
+                android:textStyle="bold"
+                app:backgroundTint="#3B82F6"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 

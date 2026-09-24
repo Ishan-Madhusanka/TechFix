@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -51,11 +50,8 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
 
             if (fineLocationGranted || coarseLocationGranted) {
-
                 enableLocationAndFindNearestBranch()
-
             } else {
-
                 Toast.makeText(
                     this,
                     "Location permission is required",
@@ -66,36 +62,20 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_branch_map)
 
-        tvNearestBranchName =
-            findViewById(R.id.tvNearestBranchName)
-
-        tvNearestBranchCity =
-            findViewById(R.id.tvNearestBranchCity)
-
-        tvNearestBranchDistance =
-            findViewById(R.id.tvNearestBranchDistance)
-
-        btnMyLocation =
-            findViewById(R.id.btnMyLocation)
+        tvNearestBranchName = findViewById(R.id.tvNearestBranchName)
+        tvNearestBranchCity = findViewById(R.id.tvNearestBranchCity)
+        tvNearestBranchDistance = findViewById(R.id.tvNearestBranchDistance)
+        btnMyLocation = findViewById(R.id.btnMyLocation)
 
         val mapFragment =
-            supportFragmentManager.findFragmentById(
-                R.id.map
-            ) as SupportMapFragment
+            supportFragmentManager.findFragmentById(R.id.map)
+                    as SupportMapFragment
 
         mapFragment.getMapAsync(this)
 
         btnMyLocation.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "Finding nearest branch...",
-                Toast.LENGTH_SHORT
-            ).show()
-
             checkLocationPermission()
         }
     }
@@ -107,29 +87,19 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
         loadBranches()
     }
 
-    // ---------------------------------------------------------
-    // LOAD ACTIVE BRANCHES
-    // ---------------------------------------------------------
-
     private fun loadBranches() {
 
         branchRepository.getBranches(
-
             onSuccess = { branchList ->
 
-                branches = branchList.filter {
-                    it.isActive
-                }
+                branches = branchList
 
                 googleMap.clear()
 
-                branches.forEach { branch ->
+                branchList.forEach { branch ->
 
                     val branchLocation =
-                        LatLng(
-                            branch.latitude,
-                            branch.longitude
-                        )
+                        LatLng(branch.latitude, branch.longitude)
 
                     googleMap.addMarker(
                         MarkerOptions()
@@ -139,10 +109,9 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     )
                 }
 
-                if (branches.isNotEmpty()) {
+                if (branchList.isNotEmpty()) {
 
-                    val firstBranch =
-                        branches.first()
+                    val firstBranch = branchList.first()
 
                     googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngZoom(
@@ -155,11 +124,8 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     )
                 }
 
-                // Enable blue current-location dot if permission
-                // already exists, but don't force nearest search.
-                enableMyLocationOnly()
+                checkLocationPermission()
             },
-
             onFailure = { exception ->
 
                 Toast.makeText(
@@ -170,10 +136,6 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         )
     }
-
-    // ---------------------------------------------------------
-    // CHECK LOCATION PERMISSION
-    // ---------------------------------------------------------
 
     private fun checkLocationPermission() {
 
@@ -204,32 +166,6 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    // ---------------------------------------------------------
-    // ENABLE CURRENT LOCATION DOT ONLY
-    // ---------------------------------------------------------
-
-    private fun enableMyLocationOnly() {
-
-        if (
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-
-        googleMap.isMyLocationEnabled = true
-    }
-
-    // ---------------------------------------------------------
-    // FIND CURRENT GPS LOCATION + NEAREST BRANCH
-    // ---------------------------------------------------------
-
     private fun enableLocationAndFindNearestBranch() {
 
         if (
@@ -247,40 +183,33 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         googleMap.isMyLocationEnabled = true
 
-        if (branches.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "No active branches available",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            return
-        }
-
-        fusedLocationClient
-            .getCurrentLocation(
-                Priority.PRIORITY_HIGH_ACCURACY,
-                null
-            )
+        fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
 
                 if (location == null) {
 
                     Toast.makeText(
                         this,
-                        "Current location not available. Please enable GPS.",
-                        Toast.LENGTH_LONG
+                        "Current location not available",
+                        Toast.LENGTH_SHORT
                     ).show()
 
                     return@addOnSuccessListener
                 }
 
-                val userLatitude =
-                    location.latitude
+                if (branches.isEmpty()) {
 
-                val userLongitude =
-                    location.longitude
+                    Toast.makeText(
+                        this,
+                        "No active branches available",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    return@addOnSuccessListener
+                }
+
+                val userLatitude = location.latitude
+                val userLongitude = location.longitude
 
                 val nearestBranch =
                     LocationUtils.findNearestBranch(
@@ -289,56 +218,39 @@ class BranchMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         branches
                     )
 
-                if (nearestBranch == null) {
+                if (nearestBranch != null) {
 
-                    Toast.makeText(
-                        this,
-                        "Nearest branch not found",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val distance =
+                        LocationUtils.calculateDistance(
+                            userLatitude,
+                            userLongitude,
+                            nearestBranch.latitude,
+                            nearestBranch.longitude
+                        )
 
-                    return@addOnSuccessListener
+                    tvNearestBranchName.text =
+                        nearestBranch.name
+
+                    tvNearestBranchCity.text =
+                        "City: ${nearestBranch.city}"
+
+                    tvNearestBranchDistance.text =
+                        "Distance: %.2f km".format(distance)
+
+                    val nearestLocation =
+                        LatLng(
+                            nearestBranch.latitude,
+                            nearestBranch.longitude
+                        )
+
+                    googleMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            nearestLocation,
+                            12f
+                        )
+                    )
                 }
-
-                val distance =
-                    LocationUtils.calculateDistance(
-                        userLatitude,
-                        userLongitude,
-                        nearestBranch.latitude,
-                        nearestBranch.longitude
-                    )
-
-                // Show nearest branch details
-                tvNearestBranchName.text =
-                    nearestBranch.name
-
-                tvNearestBranchCity.text =
-                    "City: ${nearestBranch.city}"
-
-                tvNearestBranchDistance.text =
-                    "Distance: %.2f km".format(distance)
-
-                val nearestLocation =
-                    LatLng(
-                        nearestBranch.latitude,
-                        nearestBranch.longitude
-                    )
-
-                // Zoom map to nearest branch
-                googleMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        nearestLocation,
-                        12f
-                    )
-                )
-
-                Toast.makeText(
-                    this,
-                    "Nearest branch: ${nearestBranch.name}",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
-
             .addOnFailureListener { exception ->
 
                 Toast.makeText(

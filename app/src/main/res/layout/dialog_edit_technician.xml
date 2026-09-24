@@ -5,46 +5,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#111827"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF"
+        android:background="#111827"
         android:padding="24dp">
 
+        <!-- Title -->
         <TextView
             android:id="@+id/tvTechnicianDialogTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Technician Details"
-            android:textColor="#1565C0"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <!-- Subtitle -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="5dp"
             android:text="Add or update technician information"
-            android:textColor="#6B7280"
+            android:textColor="#94A3B8"
             android:textSize="14sp" />
 
-        <!-- Name -->
+        <!-- Technician Name -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:hint="Technician Name"
-            app:boxStrokeColor="#1565C0">
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTechnicianName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,47 +66,71 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Speciality"
-            app:boxStrokeColor="#1565C0">
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTechnicianSpeciality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Phone -->
+        <!-- Phone Number -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Phone Number"
-            app:boxStrokeColor="#1565C0">
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTechnicianPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Branch -->
+        <!-- Branch ID -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="Branch ID"
-            app:boxStrokeColor="#1565C0">
+            app:boxBackgroundColor="#080D18"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxStrokeColor="#3B82F6"
+            app:hintTextColor="#94A3B8">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTechnicianBranch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#94A3B8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,45 +140,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
             android:text="Available for repair jobs"
-            android:textColor="#333333"
+            android:textColor="#FFFFFF"
             android:textSize="15sp"
-            app:thumbTint="#1565C0"
-            app:trackTint="#90CAF9" />
+            android:textStyle="bold"
+            app:thumbTint="#3B82F6"
+            app:trackTint="#334155" />
 
         <!-- Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:orientation="horizontal">
 
+            <!-- Cancel -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancelTechnician"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="1"
                 android:layout_marginEnd="6dp"
+                android:layout_weight="1"
                 android:text="Cancel"
                 android:textAllCaps="false"
-                android:textColor="#1565C0"
-                app:backgroundTint="#FFFFFF"
-                app:cornerRadius="10dp"
-                app:strokeColor="#1565C0"
-                app:strokeWidth="2dp" />
+                android:textColor="#60A5FA"
+                android:textStyle="bold"
+                app:backgroundTint="#080D18"
+                app:cornerRadius="12dp"
+                app:strokeColor="#3B82F6"
+                app:strokeWidth="1dp" />
 
+            <!-- Save -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSaveTechnician"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:layout_weight="1"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                app:backgroundTint="#1565C0"
-                app:cornerRadius="10dp" />
+                app:backgroundTint="#3B82F6"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
 

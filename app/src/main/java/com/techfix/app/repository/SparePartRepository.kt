@@ -143,7 +143,7 @@ class SparePartRepository {
                         }
                     }
                     .firstOrNull { sparePart ->
-                        sparePart.id == requiredPartId &&
+                        sparePart.partId == requiredPartId &&
                                 sparePart.quantity > 0
                     }
 

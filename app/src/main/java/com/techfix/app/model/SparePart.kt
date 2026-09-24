@@ -6,6 +6,8 @@ data class SparePart(
 
     var id: String = "",
 
+    var partId: String = "",
+
     var name: String = "",
 
     var categoryId: String = "",

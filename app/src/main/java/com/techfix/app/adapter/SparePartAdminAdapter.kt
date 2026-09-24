@@ -83,7 +83,7 @@ class SparePartAdminAdapter(
         } else {
 
             holder.tvSparePartAvailability.text = "Unavailable"
-            holder.btnToggleSparePart.text = "Make Available"
+            holder.btnToggleSparePart.text = "Available"
         }
 
         holder.btnEditSparePart.setOnClickListener {
